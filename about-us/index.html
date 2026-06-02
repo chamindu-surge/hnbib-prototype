@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="About HNB Investment Bank — 30+ years of capital market leadership in Sri Lanka. Subsidiary of Hatton National Bank PLC, CBSL Licensed Primary Dealer, SEC Registered Stockbroker.">
+  <meta name="theme-color" content="#3d6db5">
+  <title>About Us — HNB Investment Bank</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="About Us — HNB Investment Bank">
+  <meta property="og:description" content="30+ years of capital market leadership in Sri Lanka. Subsidiary of HNB PLC.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* ── About Us page-specific ── */
+
+    /* Heritage A: two-col text + milestone list */
+    .heritage-a { background: var(--bg); }
+    .heritage-a-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 64px;
+      align-items: start;
+    }
+    .heritage-copy p { font-size: 16px; color: var(--ink-2); line-height: 1.75; }
+    .heritage-copy p + p { margin-top: 16px; }
+    .milestone-list {
+      border-left: 2px solid var(--line);
+      padding-left: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .milestone { position: relative; }
+    .milestone::before {
+      content: '';
+      position: absolute;
+      left: -35px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--primary);
+    }
+    .ms-year {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 3px;
+    }
+    .ms-event { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .ms-desc  { font-size: 13px; color: var(--ink-2); margin-top: 3px; line-height: 1.5; }
+
+    /* Heritage B: horizontal timeline */
+    .heritage-b { background: var(--bg-2); }
+    .hb-intro { max-width: 600px; margin-bottom: 56px; }
+    .hb-intro p { color: var(--ink-2); font-size: 16px; margin-top: 12px; }
+    .timeline-h {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      position: relative;
+      padding-top: 32px;
+    }
+    .timeline-h::before {
+      content: '';
+      position: absolute;
+      top: 7px;
+      left: 5%;
+      right: 5%;
+      height: 2px;
+      background: linear-gradient(to right, var(--primary), var(--accent), var(--primary));
+    }
+    .tl-node {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .tl-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 2px solid var(--bg-2);
+      box-shadow: 0 0 0 3px var(--primary);
+      position: relative;
+      top: -24px;
+      flex-shrink: 0;
+    }
+    .tl-dot.accent { background: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
+    .tl-year  { font-size: 13px; font-weight: 800; color: var(--primary); margin-top: -10px; }
+    .tl-event { font-size: 13px; font-weight: 700; color: var(--ink); margin-top: 8px; line-height: 1.3; }
+    .tl-body  { font-size: 12px; color: var(--ink-2); margin-top: 4px; line-height: 1.45; max-width: 120px; }
+
+    /* Heritage C: editorial on primary bg */
+    .heritage-c { background: var(--primary); }
+    .heritage-c .section-label { color: oklch(1 0 0 / 0.55); }
+    .hc-quote {
+      font-size: clamp(26px, 3.8vw, 46px);
+      font-weight: 800;
+      color: oklch(1 0 0);
+      line-height: 1.15;
+      max-width: 760px;
+      margin: 20px 0 12px;
+    }
+    .hc-attr { font-size: 14px; font-weight: 600; color: oklch(1 0 0 / 0.6); margin-bottom: 56px; }
+    .hc-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid oklch(1 0 0 / 0.15);
+      padding-top: 40px;
+    }
+    .hc-stat + .hc-stat {
+      border-left: 1px solid oklch(1 0 0 / 0.15);
+      padding-left: 32px;
+    }
+    .hc-fig   { font-size: 40px; font-weight: 800; color: oklch(1 0 0); line-height: 1; }
+    .hc-label { font-size: 13px; color: oklch(1 0 0 / 0.65); margin-top: 6px; }
+
+    /* Leadership A: 3-col card grid */
+    .leadership-a { background: var(--bg-2); }
+    .leader-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .leader-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .leader-initial {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-weight: 800; color: oklch(1 0 0);
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+    .leader-name { font-size: 18px; font-weight: 700; color: var(--ink); }
+    .leader-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--primary); margin: 4px 0 12px;
+    }
+    .leader-bio { font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+
+    /* Leadership B: featured pair + secondary row */
+    .leadership-b { background: var(--bg); }
+    .leaders-feat { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
+    .leader-feat-card {
+      background: var(--card);
+      border: 1px solid var(--frame);
+      border-radius: var(--radius);
+      padding: 40px;
+      border-top: 3px solid var(--primary);
+    }
+    .leader-feat-card.accent-top { border-top-color: var(--accent); }
+    .leader-feat-card .leader-initial { width: 80px; height: 80px; font-size: 28px; }
+    .leader-feat-card .leader-name { font-size: 22px; margin-top: 16px; }
+    .leaders-sec { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .leader-sm {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      text-align: center;
+    }
+    .leader-sm-init {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: oklch(0.43 0.150 248 / 0.12);
+      color: var(--primary);
+      font-size: 16px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 10px;
+    }
+    .leader-sm-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+    .leader-sm-role { font-size: 11px; color: var(--primary); font-weight: 600; margin-top: 3px; }
+
+    /* Leadership C: org chart */
+    .leadership-c { background: var(--bg-2); }
+    .org-wrap { max-width: 780px; }
+    .org-tier { display: flex; justify-content: center; gap: 20px; margin-bottom: 0; }
+    .org-connector {
+      display: flex;
+      justify-content: center;
+      height: 32px;
+    }
+    .org-connector::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 100%;
+      background: var(--line);
+    }
+    .org-node {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 24px;
+      text-align: center;
+      min-width: 180px;
+    }
+    .org-node.primary-node { border-top: 3px solid var(--primary); }
+    .org-node.accent-node  { border-top: 3px solid var(--accent); }
+    .on-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .on-role { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary); margin-top: 3px; }
+    .org-tier-multi { gap: 12px; }
+    .org-tier-multi .org-node { min-width: 140px; padding: 14px 16px; }
+    .org-tier-multi .on-name { font-size: 13px; }
+    .org-branch {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      padding-top: 32px;
+    }
+    .org-branch::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* Scope A: 3-col capability cards */
+    .scope-a { background: var(--bg); }
+    .scope-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .scope-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .scope-icon {
+      width: 48px; height: 48px;
+      background: oklch(0.43 0.150 248 / 0.10);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .scope-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .scope-body  { font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+    .scope-link  {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 13px; font-weight: 600; color: var(--primary);
+      margin-top: 14px; transition: gap 180ms;
+    }
+    .scope-link:hover { gap: 9px; }
+
+    /* Scope B: credentials left + numbered list right */
+    .scope-b { background: var(--bg-2); }
+    .scope-b-grid { display: grid; grid-template-columns: 320px 1fr; gap: 64px; align-items: start; }
+    .cred-stack { display: flex; flex-direction: column; gap: 16px; }
+    .cred-tile {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .cred-badge {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .cred-badge svg { width: 18px; height: 18px; stroke: oklch(1 0 0); fill: none; stroke-width: 2; }
+    .cred-name { font-size: 14px; font-weight: 700; }
+    .cred-desc { font-size: 12px; color: var(--ink-2); margin-top: 2px; }
+    .service-rows { display: flex; flex-direction: column; }
+    .service-row {
+      display: flex; align-items: flex-start; gap: 20px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .service-row:first-child { padding-top: 0; }
+    .service-row:last-child  { border-bottom: none; padding-bottom: 0; }
+    .sr-num { font-size: 13px; font-weight: 800; color: var(--primary); min-width: 28px; padding-top: 3px; }
+    .sr-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+    .sr-body  { font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+
+    /* Scope C: ecosystem diagram */
+    .scope-c { background: var(--bg); }
+    .eco-wrap { position: relative; width: 100%; max-width: 680px; margin: 0 auto; height: 420px; }
+    .eco-center {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 156px; height: 156px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; z-index: 2;
+    }
+    .eco-c-name { font-size: 12px; font-weight: 800; color: oklch(1 0 0); line-height: 1.2; padding: 0 12px; }
+    .eco-c-sub  { font-size: 10px; color: oklch(1 0 0 / 0.6); margin-top: 4px; }
+    .eco-satellite {
+      position: absolute;
+      width: 128px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      text-align: center; z-index: 2;
+    }
+    .eco-satellite:nth-child(2) { top: 10px;  left: 50%; transform: translateX(-50%); }
+    .eco-satellite:nth-child(3) { top: 50%;  right: 12px; transform: translateY(-50%); }
+    .eco-satellite:nth-child(4) { bottom: 10px; left: 50%; transform: translateX(-50%); }
+    .eco-satellite:nth-child(5) { top: 50%;  left: 12px; transform: translateY(-50%); }
+    .eco-s-name { font-size: 12px; font-weight: 700; color: var(--ink); }
+    .eco-s-role { font-size: 11px; color: var(--primary); margin-top: 3px; }
+    .eco-lines  { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .heritage-a-grid  { grid-template-columns: 1fr; gap: 40px; }
+      .leader-grid-3    { grid-template-columns: 1fr 1fr; }
+      .leaders-feat     { grid-template-columns: 1fr; }
+      .leaders-sec      { grid-template-columns: 1fr 1fr; }
+      .scope-grid-3     { grid-template-columns: 1fr 1fr; }
+      .scope-b-grid     { grid-template-columns: 1fr; gap: 36px; }
+      .hc-stats         { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .hc-stat + .hc-stat { border-left: none; padding-left: 0; border-top: 1px solid oklch(1 0 0 / 0.15); padding-top: 24px; }
+    }
+    @media (max-width: 700px) {
+      .timeline-h       { flex-direction: column; gap: 24px; padding-top: 0; }
+      .timeline-h::before { display: none; }
+      .tl-node          { flex-direction: row; text-align: left; align-items: flex-start; gap: 16px; }
+      .tl-dot           { top: 0; flex-shrink: 0; }
+      .tl-year          { margin-top: 0; }
+      .leader-grid-3    { grid-template-columns: 1fr; }
+      .scope-grid-3     { grid-template-columns: 1fr; }
+      .hc-stats         { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── Ticker ───────────────────────────────────────────── -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track motion-continuous">
+    <span class="ticker-item">ASPI <span class="ticker-val">22,622.34</span> <span class="ticker-up">▲ 0.32%</span></span>
+    <span class="ticker-item">S&amp;P SL20 <span class="ticker-val">6,225.28</span> <span class="ticker-dn">▼ 0.12%</span></span>
+    <span class="ticker-item">10Y T-Bond <span class="ticker-val">11.25%</span></span>
+    <span class="ticker-item">91-Day T-Bill <span class="ticker-val">9.48%</span></span>
+    <span class="ticker-item">Repo Rate <span class="ticker-val">8.50%</span></span>
+    <span class="ticker-item">USD/LKR <span class="ticker-val">298.45</span></span>
+    <span class="ticker-item">ASPI <span class="ticker-val">22,622.34</span> <span class="ticker-up">▲ 0.32%</span></span>
+    <span class="ticker-item">S&amp;P SL20 <span class="ticker-val">6,225.28</span> <span class="ticker-dn">▼ 0.12%</span></span>
+    <span class="ticker-item">10Y T-Bond <span class="ticker-val">11.25%</span></span>
+    <span class="ticker-item">91-Day T-Bill <span class="ticker-val">9.48%</span></span>
+    <span class="ticker-item">Repo Rate <span class="ticker-val">8.50%</span></span>
+    <span class="ticker-item">USD/LKR <span class="ticker-val">298.45</span></span>
+  </div>
+</div>
+
+<!-- ─── Nav ─────────────────────────────────────────────── -->
+<nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../about-us/index.html">About Us</a></li>
+    <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../news/index.html">News</a></li>
+    <li><a href="../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+<!-- ─── Page header ─────────────────────────────────────── -->
+<header class="page-header">
+  <div class="page-header-inner">
+    <span class="section-label">About HNB Investment Bank</span>
+    <h1>Built on three decades<br>of capital market leadership</h1>
+    <p class="page-header-sub">A subsidiary of Hatton National Bank PLC — Sri Lanka's largest listed private bank. CBSL Licensed Primary Dealer. SEC Registered Stockbroker. LKR&nbsp;200Bn+ raised across 47+ transactions since 1992.</p>
+    <div class="page-header-meta">
+      <span class="pill">CBSL Licensed</span>
+      <span class="pill">SEC Registered</span>
+      <span class="pill">HNB Group</span>
+    </div>
+  </div>
+</header>
+
+<!-- ─── Page body ────────────────────────────────────────── -->
+<div class="page-body">
+
+  <!-- ══════════════════════════════════════════════════════
+       S1 — Heritage
+       ══════════════════════════════════════════════════════ -->
+  <section class="section-host" data-section-id="heritage" data-section-label="Heritage">
+
+    <!-- A: two-col text + milestone list -->
+    <div class="variant section-wrap heritage-a" data-variant="A" data-variant-label="Simple · Two-col + milestones">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Our Heritage</span>
+          <h2>Thirty years of capital markets, one trusted name</h2>
+        </div>
+        <div class="heritage-a-grid">
+          <div class="heritage-copy scroll-fade">
+            <p>HNB Investment Bank is the capital markets subsidiary of Hatton National Bank PLC — Sri Lanka's largest listed private bank. Our roots extend to 1992, when Lanka Ventures was established as one of the country's first licensed venture capital companies.</p>
+            <p>Through three decades of market cycles, privatisations, and landmark transactions, we built a depth of experience that few institutions in this market can match. Our teams have structured IPOs, advised on mergers, arranged LKR billion-scale debt issuances, and managed fixed-income portfolios through every episode of market stress.</p>
+            <p>Today HNB Investment Bank consolidates four distinct businesses — Stockbrokers, Securities, Corporate Finance, and Lanka Ventures — under one capital-market brand, backed by the balance sheet strength and regulatory standing of HNB PLC.</p>
+            <a href="../hnb-stockbrokers/index.html" class="btn-primary" style="margin-top:28px;display:inline-flex;">Explore our businesses</a>
+          </div>
+          <div class="milestone-list scroll-fade">
+            <div class="milestone">
+              <div class="ms-year">1992</div>
+              <div class="ms-event">Lanka Ventures founded</div>
+              <div class="ms-desc">One of Sri Lanka's first licensed venture capital companies established.</div>
+            </div>
+            <div class="milestone">
+              <div class="ms-year">1995</div>
+              <div class="ms-event">Listed on the CSE</div>
+              <div class="ms-desc">Lanka Ventures listed, enabling broader public participation in venture capital.</div>
+            </div>
+            <div class="milestone">
+              <div class="ms-year">2000</div>
+              <div class="ms-event">CBSL Primary Dealer licence</div>
+              <div class="ms-desc">HNB Securities authorised to deal in government securities.</div>
+            </div>
+            <div class="milestone">
+              <div class="ms-year">2006</div>
+              <div class="ms-event">LVL Energy Fund</div>
+              <div class="ms-desc">Pioneer energy sector investment vehicle established in Sri Lanka.</div>
+            </div>
+            <div class="milestone">
+              <div class="ms-year">2024</div>
+              <div class="ms-event">HNB Investment Bank brand</div>
+              <div class="ms-desc">Four businesses consolidated under one capital-market identity.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B: horizontal visual timeline -->
+    <div class="variant section-wrap heritage-b" data-variant="B" data-variant-label="Middle · Visual timeline">
+      <div class="section-inner">
+        <div class="hb-intro scroll-fade">
+          <span class="section-label">Our Heritage</span>
+          <h2>A timeline of capital market firsts</h2>
+          <p>From Sri Lanka's earliest venture capital venture in 1992 to a fully consolidated investment bank today. Each milestone built the expertise that now serves Sri Lanka's capital markets.</p>
+        </div>
+        <div class="timeline-h scroll-fade">
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div>
+              <div class="tl-year">1992</div>
+              <div class="tl-event">Lanka Ventures founded</div>
+              <div class="tl-body">Sri Lanka's first licensed VC firm. CSE-listed 1995.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot accent"></div>
+            <div>
+              <div class="tl-year" style="color:var(--accent-2)">2000</div>
+              <div class="tl-event">CBSL Primary Dealer</div>
+              <div class="tl-body">Authorised to deal in government securities.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div>
+              <div class="tl-year">2006</div>
+              <div class="tl-event">LVL Energy Fund</div>
+              <div class="tl-body">Pioneer in Sri Lanka's renewables sector.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot accent"></div>
+            <div>
+              <div class="tl-year" style="color:var(--accent-2)">2012</div>
+              <div class="tl-event">LKR 100Bn milestone</div>
+              <div class="tl-body">Corporate Finance capital raised passes LKR 100 billion.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div>
+              <div class="tl-year">2024</div>
+              <div class="tl-event">HNB Investment Bank</div>
+              <div class="tl-body">Four businesses, one capital-market brand.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C: editorial on primary surface -->
+    <div class="variant section-wrap heritage-c" data-variant="C" data-variant-label="Ambitious · Editorial on primary">
+      <div class="section-inner">
+        <span class="section-label">Our Heritage</span>
+        <p class="hc-quote">"Capital markets are built on trust earned over time — not claimed overnight."</p>
+        <p class="hc-attr">— Ray Abeywardena, CEO, HNB Investment Bank</p>
+        <div class="hc-stats">
+          <div class="hc-stat scroll-fade">
+            <div class="hc-fig" data-target="32" data-suffix="+">32+</div>
+            <div class="hc-label">Years in Sri Lanka's capital markets</div>
+          </div>
+          <div class="hc-stat scroll-fade">
+            <div class="hc-fig">LKR&nbsp;200Bn+</div>
+            <div class="hc-label">Capital raised across 47+ transactions</div>
+          </div>
+          <div class="hc-stat scroll-fade">
+            <div class="hc-fig">4</div>
+            <div class="hc-label">Distinct businesses under one brand</div>
+          </div>
+          <div class="hc-stat scroll-fade">
+            <div class="hc-fig">HNB</div>
+            <div class="hc-label">Parent: Sri Lanka's largest listed private bank</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       S2 — Leadership
+       ══════════════════════════════════════════════════════ -->
+  <section class="section-host" data-section-id="leadership" data-section-label="Leadership">
+
+    <!-- A: 3-col card grid -->
+    <div class="variant section-wrap leadership-a" data-variant="A" data-variant-label="Simple · Card grid">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Leadership</span>
+          <h2>The team that leads Sri Lanka's markets</h2>
+        </div>
+        <div class="leader-grid-3">
+          <div class="leader-card scroll-fade">
+            <div class="leader-initial">RA</div>
+            <div class="leader-name">Ray Abeywardena</div>
+            <div class="leader-title">Chief Executive Officer</div>
+            <p class="leader-bio">Over two decades in Sri Lanka's capital markets. Led HNB Investment Bank's expansion across equity, debt, and advisory services.</p>
+          </div>
+          <div class="leader-card scroll-fade">
+            <div class="leader-initial" style="background:var(--accent);">DP</div>
+            <div class="leader-name">Damith Pallewatte</div>
+            <div class="leader-title">Managing Director &amp; COO</div>
+            <p class="leader-bio">Leads day-to-day operations across all four business lines. Deep expertise in fixed-income markets and regulatory engagement.</p>
+          </div>
+          <div class="leader-card scroll-fade" style="background:var(--bg-2);">
+            <div class="leader-initial" style="background:oklch(0.43 0.150 248 / 0.15);color:var(--primary);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="leader-name">Our Extended Team</div>
+            <div class="leader-title">Analysts · Advisors · Dealers</div>
+            <p class="leader-bio">CFA charterholders, licensed investment advisors, and market specialists across all business lines.</p>
+            <a href="../careers/index.html" class="btn-text" style="margin-top:14px;">Join the team →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B: featured pair + secondary grid -->
+    <div class="variant section-wrap leadership-b" data-variant="B" data-variant-label="Middle · Featured pair">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Leadership</span>
+          <h2>Guided by experience, built for Sri Lanka's markets</h2>
+        </div>
+        <div class="leaders-feat">
+          <div class="leader-feat-card scroll-fade">
+            <div class="leader-initial" style="width:80px;height:80px;font-size:28px;">RA</div>
+            <div class="leader-name" style="font-size:22px;margin-top:16px;">Ray Abeywardena</div>
+            <div class="leader-title">Chief Executive Officer</div>
+            <p class="leader-bio" style="margin-top:12px;font-size:15px;max-width:none;">Ray has spent over two decades building HNB Investment Bank into Sri Lanka's most trusted capital markets institution. Under his leadership the bank has raised LKR 200Bn+ in capital and expanded across equity, fixed income, and corporate advisory.</p>
+          </div>
+          <div class="leader-feat-card accent-top scroll-fade">
+            <div class="leader-initial" style="width:80px;height:80px;font-size:28px;background:var(--accent);">DP</div>
+            <div class="leader-name" style="font-size:22px;margin-top:16px;">Damith Pallewatte</div>
+            <div class="leader-title">Managing Director &amp; COO</div>
+            <p class="leader-bio" style="margin-top:12px;font-size:15px;max-width:none;">Damith oversees the operational backbone connecting four distinct businesses. His background in fixed-income trading and treasury has shaped HNB Securities into one of the market's leading Primary Dealers.</p>
+          </div>
+        </div>
+        <div class="leaders-sec scroll-fade">
+          <div class="leader-sm">
+            <div class="leader-sm-init">CF</div>
+            <div class="leader-sm-name">Corporate Finance</div>
+            <div class="leader-sm-role">Advisory Team</div>
+          </div>
+          <div class="leader-sm">
+            <div class="leader-sm-init">SB</div>
+            <div class="leader-sm-name">HNB Stockbrokers</div>
+            <div class="leader-sm-role">Equity &amp; Research</div>
+          </div>
+          <div class="leader-sm">
+            <div class="leader-sm-init">FI</div>
+            <div class="leader-sm-name">HNB Securities</div>
+            <div class="leader-sm-role">Fixed Income</div>
+          </div>
+          <div class="leader-sm">
+            <div class="leader-sm-init">LV</div>
+            <div class="leader-sm-name">Lanka Ventures</div>
+            <div class="leader-sm-role">Investment</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C: org chart tier visualization -->
+    <div class="variant section-wrap leadership-c" data-variant="C" data-variant-label="Ambitious · Org chart">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Leadership</span>
+          <h2>How we are organised</h2>
+        </div>
+        <div class="org-wrap scroll-fade">
+          <div class="org-tier">
+            <div class="org-node primary-node">
+              <div class="on-name">Ray Abeywardena</div>
+              <div class="on-role">Chief Executive Officer</div>
+            </div>
+          </div>
+          <div class="org-connector"></div>
+          <div class="org-tier">
+            <div class="org-node accent-node">
+              <div class="on-name">Damith Pallewatte</div>
+              <div class="on-role">Managing Director &amp; COO</div>
+            </div>
+          </div>
+          <div class="org-connector"></div>
+          <div class="org-tier org-tier-multi">
+            <div class="org-node">
+              <div class="on-name">HNB Stockbrokers</div>
+              <div class="on-role">Equity &amp; Research</div>
+            </div>
+            <div class="org-node">
+              <div class="on-name">HNB Securities</div>
+              <div class="on-role">Fixed Income</div>
+            </div>
+            <div class="org-node">
+              <div class="on-name">Corporate Finance</div>
+              <div class="on-role">Advisory &amp; M&amp;A</div>
+            </div>
+            <div class="org-node">
+              <div class="on-name">Lanka Ventures</div>
+              <div class="on-role">Venture Capital</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       S3 — Scope
+       ══════════════════════════════════════════════════════ -->
+  <section class="section-host" data-section-id="scope" data-section-label="Scope">
+
+    <!-- A: 3-col capability cards -->
+    <div class="variant section-wrap scope-a" data-variant="A" data-variant-label="Simple · Capability cards">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">What We Do</span>
+          <h2>End-to-end capital market services</h2>
+        </div>
+        <div class="scope-grid-3">
+          <div class="scope-card scroll-fade">
+            <div class="scope-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            </div>
+            <div class="scope-title">Equity Capital Markets</div>
+            <p class="scope-body">CSE trading, IPO management, rights issues, and research-led advisory for private investors and institutions.</p>
+            <a href="../hnb-stockbrokers/index.html" class="scope-link">HNB Stockbrokers →</a>
+          </div>
+          <div class="scope-card scroll-fade">
+            <div class="scope-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 3L12 7 8 3"/></svg>
+            </div>
+            <div class="scope-title">Debt Capital Markets</div>
+            <p class="scope-body">Government securities primary dealing, corporate debentures, trust certificates, and repo facilities. CBSL Licensed.</p>
+            <a href="../hnb-securities/index.html" class="scope-link">HNB Securities →</a>
+          </div>
+          <div class="scope-card scroll-fade">
+            <div class="scope-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="scope-title">Advisory &amp; M&amp;A</div>
+            <p class="scope-body">Capital raising, mergers and acquisitions, privatisation advisory, and structured finance. LKR&nbsp;200Bn+ arranged.</p>
+            <a href="../corporate-finance/index.html" class="scope-link">Corporate Finance →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B: credentials left + numbered service list right -->
+    <div class="variant section-wrap scope-b" data-variant="B" data-variant-label="Middle · Credentials split">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Regulated. Trusted. Proven.</span>
+          <h2>Authority across every layer of the market</h2>
+        </div>
+        <div class="scope-b-grid">
+          <div class="cred-stack scroll-fade">
+            <div class="cred-tile">
+              <div class="cred-badge">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.5C17.25 22.15 21 17.25 21 12V6L12 2z" stroke="oklch(1 0 0)" fill="none" stroke-width="2"/></svg>
+              </div>
+              <div>
+                <div class="cred-name">CBSL Primary Dealer</div>
+                <div class="cred-desc">Authorised by the Central Bank of Sri Lanka to deal in government securities.</div>
+              </div>
+            </div>
+            <div class="cred-tile">
+              <div class="cred-badge" style="background:var(--accent);">
+                <svg viewBox="0 0 24 24" width="18" height="18"><polyline points="20 6 9 17 4 12" stroke="oklch(1 0 0)" fill="none" stroke-width="2.5"/></svg>
+              </div>
+              <div>
+                <div class="cred-name">SEC Registered Stockbroker</div>
+                <div class="cred-desc">Licensed member of the Colombo Stock Exchange under the Securities &amp; Exchange Commission.</div>
+              </div>
+            </div>
+            <div class="cred-tile">
+              <div class="cred-badge" style="background:oklch(0.34 0.120 248);">
+                <svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="11" width="18" height="11" rx="2" stroke="oklch(1 0 0)" fill="none" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="oklch(1 0 0)" fill="none" stroke-width="2"/></svg>
+              </div>
+              <div>
+                <div class="cred-name">HNB Group</div>
+                <div class="cred-desc">Subsidiary of Hatton National Bank PLC — Sri Lanka's largest listed private bank.</div>
+              </div>
+            </div>
+          </div>
+          <div class="service-rows scroll-fade">
+            <div class="service-row">
+              <div class="sr-num">01</div>
+              <div>
+                <div class="sr-title">Equity broking and research</div>
+                <p class="sr-body">Online and advisory CSE trading. Research coverage across sectors. CDS account opening in 24 hours.</p>
+              </div>
+            </div>
+            <div class="service-row">
+              <div class="sr-num">02</div>
+              <div>
+                <div class="sr-title">Government securities and repo</div>
+                <p class="sr-body">Treasury Bills, Treasury Bonds, and Repo facilities at Primary Dealer rates. Direct access to CBSL auctions.</p>
+              </div>
+            </div>
+            <div class="service-row">
+              <div class="sr-num">03</div>
+              <div>
+                <div class="sr-title">Capital raising and M&amp;A advisory</div>
+                <p class="sr-body">Debt and equity capital markets for Sri Lanka's leading corporates. LKR 200Bn+ across 47+ transactions since 1992.</p>
+              </div>
+            </div>
+            <div class="service-row">
+              <div class="sr-num">04</div>
+              <div>
+                <div class="sr-title">Venture capital and energy investment</div>
+                <p class="sr-body">Lanka Ventures PLC (CSE: LVEF) — Sri Lanka's pioneering venture capital and energy sector investment vehicle since 1992.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C: ecosystem diagram -->
+    <div class="variant section-wrap scope-c" data-variant="C" data-variant-label="Ambitious · Ecosystem diagram">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Our Ecosystem</span>
+          <h2>Four businesses. One capital market partner.</h2>
+          <p style="color:var(--ink-2);margin-top:12px;font-size:16px;max-width:560px;">Each business serves a distinct layer of Sri Lanka's capital markets, connected through shared infrastructure and the strength of the HNB parent.</p>
+        </div>
+        <div class="eco-wrap scroll-fade">
+          <div class="eco-center">
+            <div class="eco-c-name">HNB Investment Bank</div>
+            <div class="eco-c-sub">Subsidiary of HNB PLC</div>
+          </div>
+          <div class="eco-satellite">
+            <div class="eco-s-name">HNB Stockbrokers</div>
+            <div class="eco-s-role">Equity &amp; CSE</div>
+          </div>
+          <div class="eco-satellite">
+            <div class="eco-s-name">HNB Securities</div>
+            <div class="eco-s-role">Gov Securities</div>
+          </div>
+          <div class="eco-satellite">
+            <div class="eco-s-name">Lanka Ventures</div>
+            <div class="eco-s-role">Venture Capital</div>
+          </div>
+          <div class="eco-satellite">
+            <div class="eco-s-name">Corporate Finance</div>
+            <div class="eco-s-role">Advisory &amp; M&amp;A</div>
+          </div>
+          <svg class="eco-lines" viewBox="0 0 680 420">
+            <line x1="340" y1="74"  x2="340" y2="172" stroke="oklch(0.43 0.150 248 / 0.22)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line x1="558" y1="210" x2="418" y2="210" stroke="oklch(0.43 0.150 248 / 0.22)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line x1="340" y1="346" x2="340" y2="248" stroke="oklch(0.43 0.150 248 / 0.22)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line x1="122" y1="210" x2="262" y2="210" stroke="oklch(0.43 0.150 248 / 0.22)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          </svg>
+        </div>
+        <div style="text-align:center;margin-top:36px;">
+          <a href="../hnb-stockbrokers/index.html" class="btn-primary">Explore our businesses</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       CTA Final (shared S7 B pattern)
+       ══════════════════════════════════════════════════════ -->
+  <section class="section-cta-final">
+    <div class="cta-final-inner">
+      <div class="cta-final-copy scroll-fade">
+        <span class="section-label">Work with us</span>
+        <h2>Ready to put Sri Lanka's capital markets to work?</h2>
+        <p>Whether you're raising capital, managing fixed-income risk, or looking to invest in Sri Lanka's equity markets — our teams are ready. Or call <strong style="color:oklch(1 0 0);">+94 112 206 206</strong>.</p>
+      </div>
+      <div class="cta-final-form scroll-fade">
+        <div class="form-group">
+          <label for="cf-name">Full Name</label>
+          <input type="text" id="cf-name" placeholder="Your name" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" placeholder="you@company.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="cf-org">Company / Organisation</label>
+          <input type="text" id="cf-org" placeholder="Your organisation" autocomplete="organization">
+        </div>
+        <div class="form-group">
+          <label for="cf-svc">Service Interest</label>
+          <select id="cf-svc">
+            <option value="">Select a service</option>
+            <option>HNB Stockbrokers — Equity Trading</option>
+            <option>HNB Securities — Government Securities</option>
+            <option>Corporate Finance — Advisory</option>
+            <option>Lanka Ventures — Investment</option>
+          </select>
+        </div>
+        <button type="submit" class="cta-submit">Request a conversation</button>
+        <p class="form-reassurance">CBSL Licensed · SEC Regulated · 30+ Years</p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /.page-body -->
+
+<!-- ─── Footer ───────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="nav-logo" href="../index.html">
+          <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="28">
+        </a>
+        <p class="footer-tagline">A subsidiary of Hatton National Bank PLC. CBSL Licensed Primary Dealer. SEC Registered Stockbroker. Registered No. PV 62973.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Our Businesses</h4>
+        <ul>
+          <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+          <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+          <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+          <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../about-us/index.html">About Us</a></li>
+          <li><a href="../careers/index.html">Careers</a></li>
+          <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+          <li><a href="../contact-us/index.html">Contact</a></li>
+          <li><a href="../news/index.html">News</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>© 2025 HNB Investment Bank Ltd (PV 62973). All rights reserved. Registered at No. 53, Dharmapala Mawatha, Colombo 3.</p>
+      <div class="footer-legal-links">
+        <a href="../privacy-policy/index.html">Privacy Policy</a>
+        <a href="../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<link rel="stylesheet" href="../section-toggle.css">
+<script src="../scripts.js"></script>
+<script src="../section-toggle.js"></script>
+</body>
+</html>

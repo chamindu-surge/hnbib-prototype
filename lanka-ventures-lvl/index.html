@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lanka Ventures & LVL Energy Fund — HNB Investment Bank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ── Fund Overview ─────────────────────────────── */
+    .fo-a-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .fo-a-copy .section-label { margin-bottom: 0.75rem; }
+    .fo-a-copy h2 { margin-bottom: 1rem; }
+    .fo-a-copy p { color: var(--ink-2); line-height: 1.7; margin-bottom: 1rem; }
+    .fo-pillars { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+    .fo-pillar { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 1.125rem 1.25rem; }
+    .fo-pillar h4 { font-size: 0.925rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .fo-pillar p { font-size: 0.85rem; color: var(--ink-2); margin: 0; line-height: 1.55; }
+    .fo-stat-panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .fo-stat-panel h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; border-bottom: 1px solid var(--line); padding-bottom: 0.75rem; }
+    .fo-stat { display: flex; justify-content: space-between; align-items: center; padding: 0.625rem 0; border-bottom: 1px solid var(--line); }
+    .fo-stat:last-child { border-bottom: none; }
+    .fo-stat-label { font-size: 0.825rem; color: var(--ink-2); }
+    .fo-stat-val { font-size: 1.1rem; font-weight: 800; color: var(--primary); }
+
+    /* Fund overview B — timeline + listing card */
+    .fo-b-wrap { display: grid; grid-template-columns: 1fr 360px; gap: 3rem; align-items: start; }
+    .fund-timeline { display: flex; flex-direction: column; gap: 0; }
+    .ft-item { display: grid; grid-template-columns: 72px 1fr; gap: 0 1.5rem; }
+    .ft-year { font-size: 0.8rem; font-weight: 700; color: var(--primary); padding-top: 0.25rem; text-align: right; }
+    .ft-connector { display: flex; flex-direction: column; align-items: center; }
+    .ft-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--primary); flex-shrink: 0; margin-top: 0.3rem; }
+    .ft-line { width: 2px; flex: 1; background: var(--line); min-height: 40px; }
+    .ft-body { padding-bottom: 1.75rem; }
+    .ft-body h4 { font-size: 0.925rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .ft-body p { font-size: 0.83rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+    .cse-card { background: var(--primary); color: #fff; border-radius: var(--radius); padding: 2rem; }
+    .cse-card .cse-label { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.5rem; }
+    .cse-card .cse-ticker { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem; }
+    .cse-card .cse-price { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .cse-card .cse-change { font-size: 0.875rem; opacity: 0.85; margin-bottom: 1.5rem; }
+    .cse-card .cse-divider { border: none; border-top: 1px solid rgba(255,255,255,0.2); margin-bottom: 1.25rem; }
+    .cse-meta-row { display: flex; justify-content: space-between; margin-bottom: 0.625rem; }
+    .cse-meta-row .cse-meta-lbl { font-size: 0.78rem; opacity: 0.7; }
+    .cse-meta-row .cse-meta-val { font-size: 0.875rem; font-weight: 700; }
+    .cse-note { font-size: 0.72rem; opacity: 0.55; margin-top: 1.25rem; }
+
+    /* Fund overview C — editorial */
+    .fo-c-inner { background: var(--primary); border-radius: var(--radius); padding: 3.5rem; color: #fff; }
+    .fo-c-inner .section-label { color: oklch(0.65 0.165 140); margin-bottom: 1rem; }
+    .fo-c-inner h2 { color: #fff; margin-bottom: 1.5rem; font-size: 2.25rem; }
+    .fo-c-inner p { color: rgba(255,255,255,0.8); line-height: 1.75; margin-bottom: 1rem; }
+    .fo-c-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2); }
+    .fo-c-kpi { text-align: center; }
+    .fo-c-kpi .kpi-val { font-size: 2rem; font-weight: 800; color: #fff; }
+    .fo-c-kpi .kpi-label { font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-top: 0.25rem; }
+    .fo-c-ctas { display: flex; gap: 1rem; margin-top: 2rem; }
+    .btn-primary-inv { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; color: var(--primary); border: none; border-radius: var(--radius); padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+    .btn-ghost-inv { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.45); border-radius: var(--radius); padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+
+    /* ── Portfolio ────────────────────────────────── */
+    .port-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .port-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: box-shadow 0.2s; }
+    .port-card:hover { box-shadow: 0 4px 20px oklch(0.43 0.150 248 / 0.08); }
+    .port-card-header { background: var(--bg-2); border-bottom: 1px solid var(--line); padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem; }
+    .port-logo-placeholder { width: 40px; height: 40px; border-radius: 8px; background: var(--frame); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: var(--muted); flex-shrink: 0; }
+    .port-card-header h4 { font-size: 0.925rem; font-weight: 700; color: var(--ink); margin-bottom: 0.125rem; }
+    .port-card-header .port-sector { font-size: 0.75rem; color: var(--muted); }
+    .port-card-body { padding: 1.25rem 1.5rem; }
+    .port-card-body p { font-size: 0.83rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 0.875rem; }
+    .port-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .port-tag { font-size: 0.72rem; background: var(--bg-2); border: 1px solid var(--line); border-radius: 4px; padding: 0.2rem 0.5rem; color: var(--ink-2); }
+
+    /* Portfolio B — featured + list */
+    .port-b-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: start; }
+    .port-feat-card { background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--primary); border-radius: var(--radius); padding: 2rem; }
+    .port-feat-card .pf-badge { display: inline-block; background: var(--primary); color: #fff; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 4px; margin-bottom: 1rem; }
+    .port-feat-card h3 { font-size: 1.35rem; font-weight: 800; color: var(--ink); margin-bottom: 0.5rem; }
+    .port-feat-card p { font-size: 0.875rem; color: var(--ink-2); line-height: 1.7; margin-bottom: 1rem; }
+    .port-feat-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+    .port-feat-stat .pfs-val { font-size: 1.35rem; font-weight: 800; color: var(--primary); }
+    .port-feat-stat .pfs-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.125rem; }
+    .port-list { display: flex; flex-direction: column; gap: 0.875rem; }
+    .port-list-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; align-items: center; gap: 1rem; }
+    .pli-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--bg-2); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .pli-icon svg { width: 18px; height: 18px; stroke: var(--primary); fill: none; }
+    .pli-info h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.1rem; }
+    .pli-info p { font-size: 0.78rem; color: var(--ink-2); margin: 0; }
+    .pli-val { margin-left: auto; font-size: 0.875rem; font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+    /* Portfolio C — sector map */
+    .port-c-wrap { display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; align-items: start; }
+    .sector-map-title { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 1.25rem; }
+    .sector-bars-v { display: flex; flex-direction: column; gap: 0.875rem; }
+    .sbv-row { display: grid; grid-template-columns: 160px 1fr 60px; gap: 0.75rem; align-items: center; }
+    .sbv-label { font-size: 0.82rem; color: var(--ink-2); }
+    .sbv-track { height: 10px; background: var(--bg-2); border-radius: 5px; overflow: hidden; }
+    .sbv-fill { height: 100%; background: var(--primary); border-radius: 5px; transition: width 0.8s var(--ease-out-quart); }
+    .sbv-val { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-align: right; }
+    .nav-summary { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+    .nav-summary h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; border-bottom: 1px solid var(--line); padding-bottom: 0.75rem; }
+    .nav-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--line); }
+    .nav-row:last-child { border-bottom: none; }
+    .nav-row-label { font-size: 0.8rem; color: var(--ink-2); }
+    .nav-row-val { font-size: 0.925rem; font-weight: 700; color: var(--ink); }
+
+    /* ── Investment Process ─────────────────────── */
+    .ip-a-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .ip-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+    .ip-step-num { font-size: 2.25rem; font-weight: 800; color: var(--line); margin-bottom: 1rem; line-height: 1; }
+    .ip-card h4 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+    .ip-card p { font-size: 0.83rem; color: var(--ink-2); line-height: 1.65; margin-bottom: 0.875rem; }
+    .ip-card ul { padding-left: 1.1rem; }
+    .ip-card ul li { font-size: 0.8rem; color: var(--ink-2); margin-bottom: 0.3rem; }
+
+    /* IP B — horizontal flow */
+    .ip-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative; }
+    .ip-flow::before { content: ''; position: absolute; top: 28px; left: 10%; right: 10%; height: 2px; background: var(--line); z-index: 0; }
+    .ip-step { text-align: center; position: relative; z-index: 1; padding: 0 0.75rem; }
+    .ip-step-circle { width: 56px; height: 56px; border-radius: 50%; background: var(--bg); border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.1rem; font-weight: 800; color: var(--primary); }
+    .ip-step h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.375rem; }
+    .ip-step p { font-size: 0.78rem; color: var(--ink-2); line-height: 1.5; }
+    .ip-criteria { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
+    .ip-criterion { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; }
+    .ip-criterion h5 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.375rem; }
+    .ip-criterion p { font-size: 0.8rem; color: var(--ink-2); line-height: 1.55; margin: 0; }
+
+    /* IP C — editorial on primary */
+    .ip-c-outer { background: var(--primary); border-radius: var(--radius); padding: 3rem; color: #fff; }
+    .ip-c-outer .section-label { color: oklch(0.65 0.165 140); margin-bottom: 0.75rem; }
+    .ip-c-outer h2 { color: #fff; margin-bottom: 1rem; }
+    .ip-c-outer > p { color: rgba(255,255,255,0.75); margin-bottom: 2rem; line-height: 1.7; }
+    .ip-c-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+    .ip-c-tile { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); padding: 1.5rem; }
+    .ip-c-tile .tile-icon { font-size: 1.5rem; margin-bottom: 0.875rem; }
+    .ip-c-tile h4 { font-size: 0.925rem; font-weight: 700; color: #fff; margin-bottom: 0.375rem; }
+    .ip-c-tile p { font-size: 0.8rem; color: rgba(255,255,255,0.65); line-height: 1.55; margin: 0; }
+    .ip-c-bottom { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+    .ip-c-bottom p { color: rgba(255,255,255,0.75); font-size: 0.875rem; line-height: 1.6; max-width: 480px; margin: 0; }
+
+    @media (max-width: 900px) {
+      .fo-a-grid, .fo-b-wrap, .port-b-grid, .port-c-wrap { grid-template-columns: 1fr; }
+      .fo-c-kpis { grid-template-columns: repeat(2, 1fr); }
+      .port-grid-3, .ip-a-grid, .ip-criteria { grid-template-columns: repeat(2, 1fr); }
+      .ip-flow { grid-template-columns: repeat(3, 1fr); }
+      .ip-flow::before { display: none; }
+      .ip-c-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .port-grid-3, .ip-a-grid, .ip-criteria, .ip-c-grid, .fo-c-kpis { grid-template-columns: 1fr; }
+      .ip-flow { grid-template-columns: 1fr 1fr; }
+      .ip-c-bottom { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Ticker ── -->
+  <div class="ticker" aria-label="Market data">
+    <div class="ticker-track">
+      <span class="ticker-item">LVL.N0000 <strong>LKR 17.40</strong> <span class="ticker-up">▲ 0.30 (+1.75%)</span></span>
+      <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">▲ 48.16 (+0.21%)</span></span>
+      <span class="ticker-item">S&P SL20 <strong>6,225.28</strong> <span class="ticker-up">▲ 12.44 (+0.20%)</span></span>
+      <span class="ticker-item">CSE Market Cap <strong>LKR 7.82Tn</strong></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong> <span class="ticker-dn">▼ 0.15</span></span>
+      <span class="ticker-item">CBSL Repo Rate <strong>8.50%</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+      <span class="ticker-item">LVL.N0000 <strong>LKR 17.40</strong> <span class="ticker-up">▲ 0.30 (+1.75%)</span></span>
+      <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">▲ 48.16 (+0.21%)</span></span>
+      <span class="ticker-item">S&P SL20 <strong>6,225.28</strong> <span class="ticker-up">▲ 12.44 (+0.20%)</span></span>
+      <span class="ticker-item">CSE Market Cap <strong>LKR 7.82Tn</strong></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong> <span class="ticker-dn">▼ 0.15</span></span>
+      <span class="ticker-item">CBSL Repo Rate <strong>8.50%</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+    </div>
+  </div>
+
+  <!-- ── Navigation ── -->
+  <nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../about-us/index.html">About Us</a></li>
+    <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../news/index.html">News</a></li>
+    <li><a href="../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+  <!-- ── Page Header ── -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <span class="section-label">Our Businesses</span>
+      <h1>Lanka Ventures &amp; LVL Energy Fund</h1>
+      <p class="page-header-sub">Sri Lanka's dedicated listed venture capital vehicle — bridging growth capital with patient, long-term ownership.</p>
+      <div class="page-header-meta">
+        <span class="pill">CSE Listed: LVL.N0000</span>
+        <span class="pill-accent">Venture Capital</span>
+        <span class="pill">Regulated by SEC</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Page Body ── -->
+  <div class="page-body">
+    <div class="page-bg-map" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1: FUND OVERVIEW
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="fund-overview" data-section-label="Fund Overview">
+
+      <!-- VARIANT A: Two-col copy + stat panel -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="fo-a-grid">
+              <div class="fo-a-copy">
+                <span class="section-label">Fund Overview</span>
+                <h2>Growth Capital for Sri Lanka's Emerging Leaders</h2>
+                <p>Lanka Ventures Limited (LVL) is Sri Lanka's only publicly listed venture capital company on the Colombo Stock Exchange (LVL.N0000). Established to channel patient capital into high-potential enterprises, LVL focuses on sectors driving Sri Lanka's economic transformation — energy, technology, and export-led businesses.</p>
+                <p>Through LVL Energy Fund, we provide structured growth capital to companies that are past the early stage but need a committed partner with capital, governance expertise, and strategic network to achieve the next inflection point.</p>
+                <div class="fo-pillars">
+                  <div class="fo-pillar">
+                    <h4>Patient Capital Framework</h4>
+                    <p>Holding periods of 5–10 years allow portfolio companies to grow without short-term exit pressure — rare in the Sri Lankan market.</p>
+                  </div>
+                  <div class="fo-pillar">
+                    <h4>Active Ownership</h4>
+                    <p>Board representation, management advisory, and strategic introductions across the HNB Group network on every investment.</p>
+                  </div>
+                  <div class="fo-pillar">
+                    <h4>Listed Liquidity</h4>
+                    <p>As a CSE-listed vehicle, investors in LVL gain exposure to a diversified portfolio of private growth companies with daily market liquidity.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="fo-stat-panel">
+                <h3>Fund Snapshot</h3>
+                <div class="fo-stat">
+                  <span class="fo-stat-label">CSE Ticker</span>
+                  <span class="fo-stat-val">LVL.N0000</span>
+                </div>
+                <div class="fo-stat">
+                  <span class="fo-stat-label">Last Traded Price</span>
+                  <span class="fo-stat-val">LKR 17.40</span>
+                </div>
+                <div class="fo-stat">
+                  <span class="fo-stat-label">Market Capitalisation</span>
+                  <span class="fo-stat-val">LKR 1.74Bn</span>
+                </div>
+                <div class="fo-stat">
+                  <span class="fo-stat-label">NAV per Share</span>
+                  <span class="fo-stat-val">LKR 19.85</span>
+                </div>
+                <div class="fo-stat">
+                  <span class="fo-stat-label">Portfolio Companies</span>
+                  <span class="fo-stat-val">8 Active</span>
+                </div>
+                <div class="fo-stat">
+                  <span class="fo-stat-label">Total AUM</span>
+                  <span class="fo-stat-val">LKR 2.9Bn</span>
+                </div>
+                <div class="fo-stat">
+                  <span class="fo-stat-label">Fund Inception</span>
+                  <span class="fo-stat-val">2004</span>
+                </div>
+                <div class="fo-stat">
+                  <span class="fo-stat-label">Fund Manager</span>
+                  <span class="fo-stat-val">HNB Investment Bank</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Timeline + CSE listing card -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Fund Overview</span>
+              <h2>Two Decades of Growth Capital in Sri Lanka</h2>
+              <p>From a seed-stage concept to Sri Lanka's only listed venture vehicle — the story of LVL traces the arc of private market development in Sri Lanka.</p>
+            </div>
+            <div class="fo-b-wrap">
+              <div class="fund-timeline">
+                <div class="ft-item">
+                  <div class="ft-year">2004</div>
+                  <div class="ft-connector"><div class="ft-dot"></div><div class="ft-line"></div></div>
+                  <div class="ft-body">
+                    <h4>Lanka Ventures Founded</h4>
+                    <p>Established as a wholly-owned subsidiary of HNB to provide structured growth capital to Sri Lankan enterprises in underserved sectors.</p>
+                  </div>
+                </div>
+                <div class="ft-item">
+                  <div class="ft-year">2007</div>
+                  <div class="ft-connector"><div class="ft-dot"></div><div class="ft-line"></div></div>
+                  <div class="ft-body">
+                    <h4>CSE Listing</h4>
+                    <p>LVL.N0000 listed on the Colombo Stock Exchange, becoming Sri Lanka's first and only publicly traded venture capital vehicle. IPO oversubscribed 3×.</p>
+                  </div>
+                </div>
+                <div class="ft-item">
+                  <div class="ft-year">2011</div>
+                  <div class="ft-connector"><div class="ft-dot"></div><div class="ft-line"></div></div>
+                  <div class="ft-body">
+                    <h4>LVL Energy Fund Launch</h4>
+                    <p>Dedicated energy-sector vehicle formed in response to Sri Lanka's power generation shortfall — targeting renewables, grid infrastructure, and fuel distribution.</p>
+                  </div>
+                </div>
+                <div class="ft-item">
+                  <div class="ft-year">2016</div>
+                  <div class="ft-connector"><div class="ft-dot"></div><div class="ft-line"></div></div>
+                  <div class="ft-body">
+                    <h4>Portfolio Expansion</h4>
+                    <p>AUM crossed LKR 1Bn. Portfolio extended beyond energy into technology services, agri-processing, and healthcare logistics.</p>
+                  </div>
+                </div>
+                <div class="ft-item">
+                  <div class="ft-year">2023</div>
+                  <div class="ft-connector"><div class="ft-dot"></div><div class="ft-line"></div></div>
+                  <div class="ft-body">
+                    <h4>Strategic Realignment</h4>
+                    <p>Post-economic crisis, LVL recalibrated its mandate — focusing on export-revenue businesses and energy transition opportunities aligned with Sri Lanka's IMF program conditions.</p>
+                  </div>
+                </div>
+                <div class="ft-item">
+                  <div class="ft-year">2025</div>
+                  <div class="ft-connector"><div class="ft-dot"></div></div>
+                  <div class="ft-body">
+                    <h4>Today: LKR 2.9Bn AUM, 8 Active Positions</h4>
+                    <p>Fully integrated into HNB Investment Bank's M&A and capital markets origination pipeline, providing unique deal origination for corporate finance clients.</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="cse-card">
+                  <div class="cse-label">CSE Listed Security</div>
+                  <div class="cse-ticker">LVL.N0000</div>
+                  <div class="cse-price">LKR 17.40</div>
+                  <div class="cse-change">▲ LKR 0.30 (+1.75%) today</div>
+                  <hr class="cse-divider" />
+                  <div class="cse-meta-row"><span class="cse-meta-lbl">52W High</span><span class="cse-meta-val">LKR 19.20</span></div>
+                  <div class="cse-meta-row"><span class="cse-meta-lbl">52W Low</span><span class="cse-meta-val">LKR 12.80</span></div>
+                  <div class="cse-meta-row"><span class="cse-meta-lbl">P/NAV</span><span class="cse-meta-val">0.88×</span></div>
+                  <div class="cse-meta-row"><span class="cse-meta-lbl">Market Cap</span><span class="cse-meta-val">LKR 1.74Bn</span></div>
+                  <div class="cse-meta-row"><span class="cse-meta-lbl">Shares Outstanding</span><span class="cse-meta-val">100,000,000</span></div>
+                  <div class="cse-meta-row"><span class="cse-meta-lbl">Sector</span><span class="cse-meta-val">Investment Trusts</span></div>
+                  <div class="cse-note">Prices delayed 20 minutes. Not investment advice. Past performance is not a guarantee of future results.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Editorial on primary -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="fo-c-inner">
+              <span class="section-label">Fund Overview</span>
+              <h2>Sri Lanka's Only Listed Venture Capital Vehicle</h2>
+              <p>LVL is built on a simple conviction: Sri Lanka's best growth companies deserve patient capital from an owner that understands the local operating environment as deeply as any global fund. We don't time exits around fund cycles — we stay for the cycle that creates real enterprise value.</p>
+              <p>The LVL Energy Fund concentrates this mandate on Sri Lanka's energy transition: solar, wind, hydro, grid infrastructure, and the enabling services businesses that the energy transformation requires.</p>
+              <div class="fo-c-kpis">
+                <div class="fo-c-kpi"><div class="kpi-val" data-count="2.9" data-suffix="Bn+">—</div><div class="kpi-label">LKR AUM</div></div>
+                <div class="fo-c-kpi"><div class="kpi-val" data-count="8" data-suffix="">—</div><div class="kpi-label">Portfolio Companies</div></div>
+                <div class="fo-c-kpi"><div class="kpi-val" data-count="20" data-suffix="+ yrs">—</div><div class="kpi-label">Track Record</div></div>
+                <div class="fo-c-kpi"><div class="kpi-val" data-count="3" data-suffix="×">—</div><div class="kpi-label">IPO Oversubscription</div></div>
+              </div>
+              <div class="fo-c-ctas">
+                <a href="../investor-relations/index.html" class="btn-primary-inv">Investor Relations</a>
+                <a href="#portfolio" class="btn-ghost-inv">View Portfolio</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /fund-overview -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2: PORTFOLIO
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" id="portfolio" data-section-id="portfolio" data-section-label="Portfolio">
+
+      <!-- VARIANT A: 3-col grid cards -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade" style="background: var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Portfolio</span>
+              <h2>8 Active Portfolio Companies</h2>
+              <p>Concentrated positions in businesses with defensible market positions, experienced management, and clear paths to scale.</p>
+            </div>
+            <div class="port-grid-3">
+              <div class="port-card">
+                <div class="port-card-header">
+                  <div class="port-logo-placeholder">SL·E</div>
+                  <div><h4>SL Energies Ltd</h4><div class="port-sector">Solar Generation</div></div>
+                </div>
+                <div class="port-card-body">
+                  <p>Utility-scale solar developer with 45MW operational capacity across three sites. Power purchase agreements with CEB provide long-term revenue visibility.</p>
+                  <div class="port-meta">
+                    <span class="port-tag">Energy</span><span class="port-tag">Renewable</span><span class="port-tag">Since 2012</span>
+                  </div>
+                </div>
+              </div>
+              <div class="port-card">
+                <div class="port-card-header">
+                  <div class="port-logo-placeholder">AG·T</div>
+                  <div><h4>AgroTech Solutions</h4><div class="port-sector">AgriTech / Export</div></div>
+                </div>
+                <div class="port-card-body">
+                  <p>Precision agriculture platform serving 2,400+ smallholder farmers. Export revenue from certified organic produce to EU and Japan markets grew 38% in FY2024.</p>
+                  <div class="port-meta">
+                    <span class="port-tag">Technology</span><span class="port-tag">Export</span><span class="port-tag">Since 2018</span>
+                  </div>
+                </div>
+              </div>
+              <div class="port-card">
+                <div class="port-card-header">
+                  <div class="port-logo-placeholder">CL·H</div>
+                  <div><h4>Ceylon Logistics Hub</h4><div class="port-sector">Logistics / Cold Chain</div></div>
+                </div>
+                <div class="port-card-body">
+                  <p>Temperature-controlled warehousing and last-mile delivery operator. 140,000 sq ft of cold storage servicing pharmaceutical and perishables exporters.</p>
+                  <div class="port-meta">
+                    <span class="port-tag">Logistics</span><span class="port-tag">Infrastructure</span><span class="port-tag">Since 2015</span>
+                  </div>
+                </div>
+              </div>
+              <div class="port-card">
+                <div class="port-card-header">
+                  <div class="port-logo-placeholder">GR·P</div>
+                  <div><h4>Greener Power Pvt Ltd</h4><div class="port-sector">Wind + Mini-Hydro</div></div>
+                </div>
+                <div class="port-card-body">
+                  <p>Portfolio of four run-of-river mini-hydro plants (combined 12MW) plus a 9MW wind project at Puttalam, commissioned 2023.</p>
+                  <div class="port-meta">
+                    <span class="port-tag">Energy</span><span class="port-tag">Hydro</span><span class="port-tag">Since 2014</span>
+                  </div>
+                </div>
+              </div>
+              <div class="port-card">
+                <div class="port-card-header">
+                  <div class="port-logo-placeholder">SL·D</div>
+                  <div><h4>SL Diagnostics</h4><div class="port-sector">Healthcare</div></div>
+                </div>
+                <div class="port-card-body">
+                  <p>Chain of 28 diagnostic labs across six provinces. Referral partnerships with 180+ hospitals provide recurring revenue. Pursuing regional expansion into Maldives.</p>
+                  <div class="port-meta">
+                    <span class="port-tag">Healthcare</span><span class="port-tag">Consumer</span><span class="port-tag">Since 2019</span>
+                  </div>
+                </div>
+              </div>
+              <div class="port-card">
+                <div class="port-card-header">
+                  <div class="port-logo-placeholder">DG·F</div>
+                  <div><h4>DigiFin Technologies</h4><div class="port-sector">Fintech</div></div>
+                </div>
+                <div class="port-card-body">
+                  <p>SME digital lending platform processing LKR 3.2Bn in annual loan origination. AI-driven credit scoring achieves 1.8% NPL rate vs 6.5% industry average.</p>
+                  <div class="port-meta">
+                    <span class="port-tag">Fintech</span><span class="port-tag">Technology</span><span class="port-tag">Since 2021</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Featured + list -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade" style="background: var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Portfolio</span>
+              <h2>Active Positions by Scale</h2>
+              <p>Two anchor investments lead the portfolio by value, supported by six growth-stage positions across diversified sectors.</p>
+            </div>
+            <div class="port-b-grid">
+              <div>
+                <div class="port-feat-card">
+                  <span class="pf-badge">Anchor Investment</span>
+                  <h3>SL Energies Ltd</h3>
+                  <p>Sri Lanka's largest privately owned solar developer. With 45MW operational capacity and a 20-year PPA with the Ceylon Electricity Board, SL Energies represents LVL's highest-conviction position — combining recurring revenue, government-backed offtake, and a pipeline of a further 80MW under development.</p>
+                  <p>COP28 climate commitments and the national target of 70% renewable electricity by 2030 create structural tailwinds for continued valuation appreciation.</p>
+                  <div class="port-feat-stats">
+                    <div class="port-feat-stat"><div class="pfs-val" data-count="45" data-suffix="MW">—</div><div class="pfs-label">Operational Capacity</div></div>
+                    <div class="port-feat-stat"><div class="pfs-val" data-count="20" data-suffix="yr">—</div><div class="pfs-label">PPA Tenor</div></div>
+                    <div class="port-feat-stat"><div class="pfs-val" data-count="80" data-suffix="MW">—</div><div class="pfs-label">Development Pipeline</div></div>
+                    <div class="port-feat-stat"><div class="pfs-val">2012</div><div class="pfs-label">Investment Year</div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="port-list">
+                <div class="port-list-item">
+                  <div class="pli-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                  <div class="pli-info"><h4>Greener Power Pvt Ltd</h4><p>Wind + Mini-Hydro · 21MW combined</p></div>
+                  <span class="pli-val">Since 2014</span>
+                </div>
+                <div class="port-list-item">
+                  <div class="pli-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg></div>
+                  <div class="pli-info"><h4>AgroTech Solutions</h4><p>AgriTech / Export · LKR 420Mn invested</p></div>
+                  <span class="pli-val">Since 2018</span>
+                </div>
+                <div class="port-list-item">
+                  <div class="pli-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+                  <div class="pli-info"><h4>Ceylon Logistics Hub</h4><p>Cold Chain Infrastructure · 140k sq ft</p></div>
+                  <span class="pli-val">Since 2015</span>
+                </div>
+                <div class="port-list-item">
+                  <div class="pli-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                  <div class="pli-info"><h4>SL Diagnostics</h4><p>Healthcare / 28 Labs</p></div>
+                  <span class="pli-val">Since 2019</span>
+                </div>
+                <div class="port-list-item">
+                  <div class="pli-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                  <div class="pli-info"><h4>DigiFin Technologies</h4><p>Fintech / SME Lending</p></div>
+                  <span class="pli-val">Since 2021</span>
+                </div>
+                <div class="port-list-item">
+                  <div class="pli-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                  <div class="pli-info"><h4>Horizon EdTech</h4><p>Education Technology · Series B</p></div>
+                  <span class="pli-val">Since 2022</span>
+                </div>
+                <div class="port-list-item">
+                  <div class="pli-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                  <div class="pli-info"><h4>Lanka Micro Grid Co</h4><p>Rural Electrification</p></div>
+                  <span class="pli-val">Since 2023</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Sector allocation map -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade" style="background: var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Portfolio</span>
+              <h2>Portfolio Allocation by Sector</h2>
+              <p>Energy and technology positions represent the dominant allocation, aligned with Sri Lanka's recovery priorities and export-led growth mandate.</p>
+            </div>
+            <div class="port-c-wrap">
+              <div>
+                <div class="sector-map-title">AUM Allocation (% of LKR 2.9Bn)</div>
+                <div class="sector-bars-v">
+                  <div class="sbv-row"><span class="sbv-label">Renewable Energy</span><div class="sbv-track"><div class="sbv-fill" style="width: 48%"></div></div><span class="sbv-val">48%</span></div>
+                  <div class="sbv-row"><span class="sbv-label">Logistics &amp; Infrastructure</span><div class="sbv-track"><div class="sbv-fill" style="width: 22%"></div></div><span class="sbv-val">22%</span></div>
+                  <div class="sbv-row"><span class="sbv-label">Technology</span><div class="sbv-track"><div class="sbv-fill" style="width: 14%"></div></div><span class="sbv-val">14%</span></div>
+                  <div class="sbv-row"><span class="sbv-label">Healthcare</span><div class="sbv-track"><div class="sbv-fill" style="width: 9%"></div></div><span class="sbv-val">9%</span></div>
+                  <div class="sbv-row"><span class="sbv-label">AgriTech / Export</span><div class="sbv-track"><div class="sbv-fill" style="width: 7%"></div></div><span class="sbv-val">7%</span></div>
+                </div>
+                <div class="ip-criteria" style="margin-top: 2rem;">
+                  <div class="ip-criterion">
+                    <h5>Energy Transition Focus</h5>
+                    <p>Sri Lanka's commitment to 70% renewable electricity by 2030 creates multi-year investment thesis for the energy vertical.</p>
+                  </div>
+                  <div class="ip-criterion">
+                    <h5>Export-Revenue Weighting</h5>
+                    <p>Post-2022 crisis reallocation toward USD-earning businesses provides natural hedge against LKR volatility.</p>
+                  </div>
+                  <div class="ip-criterion">
+                    <h5>Sectoral Diversification</h5>
+                    <p>No single sector exceeds 50% of AUM. Healthcare and logistics positions provide counter-cyclical stabilisation.</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="nav-summary">
+                  <h4>NAV Summary — Q1 FY2026</h4>
+                  <div class="nav-row"><span class="nav-row-label">Total Portfolio Value</span><span class="nav-row-val">LKR 2,912M</span></div>
+                  <div class="nav-row"><span class="nav-row-label">Cash &amp; Near Cash</span><span class="nav-row-val">LKR 245M</span></div>
+                  <div class="nav-row"><span class="nav-row-label">Total Liabilities</span><span class="nav-row-val">LKR 183M</span></div>
+                  <div class="nav-row"><span class="nav-row-label">Net Asset Value</span><span class="nav-row-val">LKR 2,974M</span></div>
+                  <div class="nav-row"><span class="nav-row-label">NAV per Share</span><span class="nav-row-val">LKR 19.85</span></div>
+                  <div class="nav-row"><span class="nav-row-label">Market Price</span><span class="nav-row-val">LKR 17.40</span></div>
+                  <div class="nav-row"><span class="nav-row-label">P/NAV Discount</span><span class="nav-row-val">−12.4%</span></div>
+                  <div class="nav-row"><span class="nav-row-label">Unrealised Gains</span><span class="nav-row-val">LKR 612M</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /portfolio -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 3: INVESTMENT PROCESS
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="investment-process" data-section-label="Investment Process">
+
+      <!-- VARIANT A: 3-col approach cards -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Investment Process</span>
+              <h2>How We Evaluate and Partner</h2>
+              <p>Every investment begins with the same question: can this business become a category leader in its Sri Lankan or regional market? Our process is designed to answer that with rigour and speed.</p>
+            </div>
+            <div class="ip-a-grid">
+              <div class="ip-card">
+                <div class="ip-step-num">01</div>
+                <h4>Sourcing &amp; Screening</h4>
+                <p>Proprietary deal flow through HNB Group's 250+ corporate banking relationships and the HNB Investment Bank M&A and capital markets teams.</p>
+                <ul>
+                  <li>Minimum LKR 150Mn revenue</li>
+                  <li>Clear path to LKR 1Bn+ at exit</li>
+                  <li>Management with provable track record</li>
+                  <li>Structural competitive advantage</li>
+                </ul>
+              </div>
+              <div class="ip-card">
+                <div class="ip-step-num">02</div>
+                <h4>Diligence</h4>
+                <p>8–12 week diligence process. Financial, legal, commercial, and technical due diligence conducted with panel advisors. Management reference checks across 10+ touchpoints.</p>
+                <ul>
+                  <li>3-year audited financials minimum</li>
+                  <li>Market sizing (bottom-up and top-down)</li>
+                  <li>Regulatory and ESG screening</li>
+                  <li>Technology and IP assessment</li>
+                </ul>
+              </div>
+              <div class="ip-card">
+                <div class="ip-step-num">03</div>
+                <h4>Structuring</h4>
+                <p>Preference for minority equity with board seat and information rights. Convertible instruments and revenue-linked notes used where full equity is structurally complex.</p>
+                <ul>
+                  <li>Ticket size: LKR 200Mn–LKR 800Mn</li>
+                  <li>Holding period: 5–10 years</li>
+                  <li>Board representation standard</li>
+                  <li>No leverage at LVL fund level</li>
+                </ul>
+              </div>
+              <div class="ip-card">
+                <div class="ip-step-num">04</div>
+                <h4>Value Creation</h4>
+                <p>Active ownership through a 100-day onboarding plan, quarterly business reviews, and an in-house operating partner programme.</p>
+                <ul>
+                  <li>Strategic planning facilitation</li>
+                  <li>HNB Group network access</li>
+                  <li>Talent and governance advisory</li>
+                  <li>Export market introductions</li>
+                </ul>
+              </div>
+              <div class="ip-card">
+                <div class="ip-step-num">05</div>
+                <h4>Exit Planning</h4>
+                <p>Exit pathways prepared from Day 1. Options include CSE IPO (leveraging HNB Stockbrokers relationship), strategic trade sale, or management buyout with HNB financing support.</p>
+                <ul>
+                  <li>CSE IPO pipeline coordination</li>
+                  <li>Strategic buyer outreach (M&A)</li>
+                  <li>Secondary block trade capability</li>
+                  <li>MBO financing through HNB network</li>
+                </ul>
+              </div>
+              <div class="ip-card">
+                <div class="ip-step-num">06</div>
+                <h4>Investor Reporting</h4>
+                <p>As a listed company, LVL publishes quarterly NAV updates, annual reports, and ad-hoc disclosures per CSE Listing Rules. Institutional investors receive additional briefings.</p>
+                <ul>
+                  <li>Quarterly NAV announcements</li>
+                  <li>Annual report + AGM</li>
+                  <li>CSE regulatory disclosures</li>
+                  <li>Institutional investor briefings</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Horizontal flow + criteria -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Investment Process</span>
+              <h2>From Origination to Exit — Our Five-Stage Framework</h2>
+              <p>Discipline at each stage is what separates a good investment from a great one. We move at the pace of conviction, not calendar.</p>
+            </div>
+            <div class="ip-flow">
+              <div class="ip-step">
+                <div class="ip-step-circle">01</div>
+                <h4>Screen</h4>
+                <p>Initial 2-page screening against mandate criteria. Decision in 5 business days.</p>
+              </div>
+              <div class="ip-step">
+                <div class="ip-step-circle">02</div>
+                <h4>Diligence</h4>
+                <p>8–12 weeks. Financial, legal, commercial, technical and ESG review.</p>
+              </div>
+              <div class="ip-step">
+                <div class="ip-step-circle">03</div>
+                <h4>IC Approval</h4>
+                <p>Investment Committee review. Independent non-executive majority.</p>
+              </div>
+              <div class="ip-step">
+                <div class="ip-step-circle">04</div>
+                <h4>Active Ownership</h4>
+                <p>Board seat, 100-day plan, quarterly reviews. Operating partner programme.</p>
+              </div>
+              <div class="ip-step">
+                <div class="ip-step-circle">05</div>
+                <h4>Exit</h4>
+                <p>IPO, trade sale, or MBO. 5–10 year target hold; exit prepared from day one.</p>
+              </div>
+            </div>
+            <div class="ip-criteria">
+              <div class="ip-criterion">
+                <h5>Minimum Revenue Threshold</h5>
+                <p>LKR 150Mn annual revenue minimum ensures the business has demonstrated market fit before LVL capital is committed.</p>
+              </div>
+              <div class="ip-criterion">
+                <h5>Sector Mandate</h5>
+                <p>Energy, technology, export, healthcare, and logistics. We do not invest in real estate, consumer finance, or retail hospitality.</p>
+              </div>
+              <div class="ip-criterion">
+                <h5>Ticket Size</h5>
+                <p>LKR 200Mn to LKR 800Mn per initial investment. Follow-on reserves of up to 30% of initial ticket maintained for top performers.</p>
+              </div>
+              <div class="ip-criterion">
+                <h5>ESG Screen</h5>
+                <p>Mandatory environmental, social, and governance baseline assessment. Coal, tobacco, and arms excluded absolutely. Climate transition a positive factor.</p>
+              </div>
+              <div class="ip-criterion">
+                <h5>Management Test</h5>
+                <p>Founder or incumbent CEO must remain actively operational post-investment. LVL does not take controlling stakes to run businesses directly.</p>
+              </div>
+              <div class="ip-criterion">
+                <h5>Exit Readiness</h5>
+                <p>At least one credible exit pathway — IPO-ready financials, identifiable strategic buyers, or management with buyout capacity — must exist at entry.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Editorial on primary -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="ip-c-outer">
+              <span class="section-label">Investment Process</span>
+              <h2>Capital That Builds, Not Extracts</h2>
+              <p>LVL's investment framework is designed for one outcome: portfolio companies that are materially stronger, better-governed, and more valuable when we exit than when we entered. Our operating partner programme, HNB Group network access, and patient holding strategy create value that purely financial investors cannot replicate.</p>
+              <div class="ip-c-grid">
+                <div class="ip-c-tile">
+                  <div class="tile-icon">🔍</div>
+                  <h4>Proprietary Origination</h4>
+                  <p>250+ HNB corporate banking relationships plus HNB Investment Bank deal flow create a pipeline that external funds simply cannot access.</p>
+                </div>
+                <div class="ip-c-tile">
+                  <div class="tile-icon">⚖️</div>
+                  <h4>IC Independence</h4>
+                  <p>Investment Committee has non-executive majority. All investments above LKR 400Mn require SEC disclosure. Governance structure protects all LVL.N0000 shareholders.</p>
+                </div>
+                <div class="ip-c-tile">
+                  <div class="tile-icon">🤝</div>
+                  <h4>Active Ownership</h4>
+                  <p>100-day plan post-close. Board seat standard. Quarterly KPI reviews. HNB Group network — from trade finance to equity capital markets — available to every portfolio company.</p>
+                </div>
+                <div class="ip-c-tile">
+                  <div class="tile-icon">📈</div>
+                  <h4>Exit Optionality</h4>
+                  <p>Multiple exit pathways built into every investment thesis. HNB Stockbrokers' CSE franchise creates a natural IPO runway. Corporate Finance team runs strategic sale processes.</p>
+                </div>
+              </div>
+              <div class="ip-c-bottom">
+                <p>LVL is open to both direct co-investment (institutional only) and public market participation through LVL.N0000 on the Colombo Stock Exchange. Interested in co-investing? Reach our team.</p>
+                <div class="fo-c-ctas">
+                  <a href="../contact-us/index.html" class="btn-primary-inv">Contact Investment Team</a>
+                  <a href="../investor-relations/index.html" class="btn-ghost-inv">Investor Relations</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /investment-process -->
+
+
+    <!-- ── Section CTA Final ── -->
+    <section class="section-cta-final scroll-fade">
+      <div class="section-inner">
+        <div class="cta-final-inner">
+          <div class="cta-final-copy">
+            <span class="section-label">Partner With LVL</span>
+            <h2>Explore Co-Investment or Portfolio Opportunities</h2>
+            <p>Institutional investors, family offices, and high-net-worth individuals can access the LVL portfolio through direct co-investment arrangements or via the listed vehicle LVL.N0000. Speak with our team to understand which route suits your mandate.</p>
+            <div class="stat-proof">
+              <div><strong>LKR 2.9Bn</strong><span>Assets Under Management</span></div>
+              <div><strong>8</strong><span>Active Portfolio Companies</span></div>
+              <div><strong>20+ yrs</strong><span>Track Record</span></div>
+            </div>
+          </div>
+          <div class="cta-final-form">
+            <h3>Get in Touch</h3>
+            <form>
+              <div class="form-row">
+                <label for="cta-name-lvl">Full Name</label>
+                <input type="text" id="cta-name-lvl" placeholder="Your name" />
+              </div>
+              <div class="form-row">
+                <label for="cta-email-lvl">Email Address</label>
+                <input type="email" id="cta-email-lvl" placeholder="you@organisation.com" />
+              </div>
+              <div class="form-row">
+                <label for="cta-org-lvl">Organisation</label>
+                <input type="text" id="cta-org-lvl" placeholder="Fund / family office / company" />
+              </div>
+              <div class="form-row">
+                <label for="cta-interest-lvl">Area of Interest</label>
+                <input type="text" id="cta-interest-lvl" placeholder="Co-investment / LVL.N0000 / Portfolio query" />
+              </div>
+              <button type="submit" class="cta-submit">Contact Investment Team →</button>
+              <div class="form-reassurance">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Responses within one business day. All enquiries treated in strict confidence.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-body -->
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="32" />
+          <p>Sri Lanka's integrated investment bank — capital markets, M&amp;A advisory, securities dealing, and venture capital under one roof.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Our Businesses</h4>
+          <ul>
+            <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+            <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+            <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+            <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures / LVL</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../about-us/index.html">About Us</a></li>
+            <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+            <li><a href="../careers/index.html">Careers</a></li>
+            <li><a href="../news/index.html">News &amp; Insights</a></li>
+            <li><a href="../contact-us/index.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2025 HNB Investment Bank Limited. Regulated by the Securities and Exchange Commission of Sri Lanka. LVL.N0000 is a listed security on the Colombo Stock Exchange. This page does not constitute investment advice.</p>
+        <div class="footer-legal-links">
+          <a href="../privacy-policy/index.html">Privacy Policy</a>
+          <a href="../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <link rel="stylesheet" href="../section-toggle.css" />
+  <script src="../scripts.js"></script>
+  <script src="../section-toggle.js"></script>
+</body>
+</html>

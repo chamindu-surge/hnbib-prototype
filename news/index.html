@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News &amp; Insights — HNB Investment Bank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ── Featured / Latest ──────────────────────────── */
+    .news-a-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .news-feat { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .news-feat-img { background: var(--frame); min-height: 280px; display: flex; align-items: center; justify-content: center; }
+    .news-feat-img-placeholder { width: 80px; height: 80px; opacity: 0.3; }
+    .news-feat-body { padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .news-feat-body .news-meta { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; }
+    .news-cat { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); background: oklch(0.43 0.150 248 / 0.08); border: 1px solid oklch(0.43 0.150 248 / 0.15); border-radius: 4px; padding: 0.2rem 0.6rem; }
+    .news-date { font-size: 0.78rem; color: var(--muted); }
+    .news-feat-body h2 { font-size: 1.35rem; font-weight: 800; color: var(--ink); margin-bottom: 0.875rem; line-height: 1.3; }
+    .news-feat-body p { font-size: 0.875rem; color: var(--ink-2); line-height: 1.7; margin-bottom: 1.5rem; flex: 1; }
+    .news-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; }
+    .news-card .news-meta { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.875rem; }
+    .news-card h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.4; }
+    .news-card p { font-size: 0.83rem; color: var(--ink-2); line-height: 1.65; flex: 1; margin-bottom: 1rem; }
+    .news-read-more { font-size: 0.8rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+    .news-read-more:hover { text-decoration: underline; }
+
+    /* Latest B — editorial magazine */
+    .news-b-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; align-items: start; }
+    .news-b-main { display: flex; flex-direction: column; gap: 1.5rem; }
+    .news-b-article { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; display: grid; grid-template-columns: 120px 1fr; gap: 1.25rem; align-items: start; }
+    .news-b-img { background: var(--frame); border-radius: calc(var(--radius) - 2px); height: 90px; }
+    .news-b-article .news-meta { margin-bottom: 0.5rem; display: flex; gap: 0.625rem; align-items: center; }
+    .news-b-article h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.375rem; line-height: 1.35; }
+    .news-b-article p { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+    .news-b-sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+    .sidebar-section h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.75rem; border-bottom: 2px solid var(--primary); padding-bottom: 0.625rem; }
+    .sidebar-item { display: flex; gap: 0.625rem; align-items: flex-start; padding: 0.625rem 0; border-bottom: 1px solid var(--line); }
+    .sidebar-item:last-child { border-bottom: none; }
+    .sidebar-item-date { font-size: 0.72rem; color: var(--muted); white-space: nowrap; margin-top: 0.125rem; }
+    .sidebar-item h5 { font-size: 0.82rem; font-weight: 600; color: var(--ink); line-height: 1.4; }
+
+    /* Latest C — three-column magazine */
+    .news-c-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .news-c-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
+    .news-c-img { background: var(--frame); height: 160px; }
+    .news-c-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .news-c-body .news-meta { margin-bottom: 0.75rem; display: flex; gap: 0.625rem; align-items: center; }
+    .news-c-body h3 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.4; }
+    .news-c-body p { font-size: 0.8rem; color: var(--ink-2); line-height: 1.65; flex: 1; margin-bottom: 0.875rem; }
+
+    /* ── Research & Insights ─────────────────────────── */
+    .research-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .research-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+    .research-card .rc-type { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 0.625rem; }
+    .research-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.4; }
+    .research-card p { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1rem; }
+    .research-card .rc-meta { display: flex; gap: 0.75rem; font-size: 0.75rem; color: var(--muted); }
+    .res-b-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start; }
+    .res-featured { background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: var(--radius); padding: 2rem; }
+    .res-featured .rc-type { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 0.625rem; }
+    .res-featured h3 { font-size: 1.2rem; font-weight: 800; color: var(--ink); margin-bottom: 0.875rem; }
+    .res-featured p { font-size: 0.875rem; color: var(--ink-2); line-height: 1.7; margin-bottom: 1rem; }
+    .res-featured .rc-meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .res-list { display: flex; flex-direction: column; gap: 0; }
+    .res-list-item { padding: 0.875rem; border-bottom: 1px solid var(--line); }
+    .res-list-item:last-child { border-bottom: none; }
+    .res-list-item h5 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .res-list-item .rli-meta { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── Categories / Archive ────────────────────────── */
+    .archive-layout { display: grid; grid-template-columns: 240px 1fr; gap: 2.5rem; align-items: start; }
+    .cat-nav { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .cat-nav h4 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 1rem 1.25rem; border-bottom: 1px solid var(--line); }
+    .cat-nav a { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--line); font-size: 0.875rem; color: var(--ink-2); text-decoration: none; }
+    .cat-nav a:last-child { border-bottom: none; }
+    .cat-nav a:hover, .cat-nav a.active { color: var(--primary); background: oklch(0.43 0.150 248 / 0.04); }
+    .cat-nav a .cnt { font-size: 0.75rem; color: var(--muted); }
+    .archive-list { display: flex; flex-direction: column; gap: 1rem; }
+    .archive-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; display: flex; gap: 1rem; align-items: start; }
+    .archive-item-date { background: var(--primary); color: #fff; border-radius: var(--radius); padding: 0.5rem 0.75rem; text-align: center; flex-shrink: 0; min-width: 52px; }
+    .archive-item-date .day { font-size: 1.25rem; font-weight: 800; line-height: 1; }
+    .archive-item-date .month { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.85; }
+    .archive-item h4 { font-size: 0.925rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .archive-item p { font-size: 0.8rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+
+    /* Archive B — filter bar */
+    .filter-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+    .filter-btn { font-size: 0.8rem; font-weight: 600; padding: 0.45rem 1rem; border: 1.5px solid var(--line); border-radius: 20px; background: var(--card); color: var(--ink-2); cursor: pointer; }
+    .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .filtered-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .filtered-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; }
+    .filtered-card .news-meta { margin-bottom: 0.625rem; display: flex; gap: 0.625rem; }
+    .filtered-card h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); line-height: 1.4; }
+
+    @media (max-width: 900px) {
+      .news-feat { grid-template-columns: 1fr; }
+      .news-a-grid, .news-b-layout, .res-b-layout, .archive-layout { grid-template-columns: 1fr; }
+      .news-c-grid, .research-grid, .filtered-grid { grid-template-columns: 1fr 1fr; }
+      .news-b-article { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .news-c-grid, .research-grid, .filtered-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Ticker ── -->
+  <div class="ticker" aria-label="Market data">
+    <div class="ticker-track">
+      <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">▲ 48.16 (+0.21%)</span></span>
+      <span class="ticker-item">S&P SL20 <strong>6,225.28</strong> <span class="ticker-up">▲ 12.44 (+0.20%)</span></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+      <span class="ticker-item">LVL.N0000 <strong>LKR 17.40</strong> <span class="ticker-up">▲ 1.75%</span></span>
+      <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">▲ 48.16 (+0.21%)</span></span>
+      <span class="ticker-item">S&P SL20 <strong>6,225.28</strong> <span class="ticker-up">▲ 12.44 (+0.20%)</span></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+      <span class="ticker-item">LVL.N0000 <strong>LKR 17.40</strong> <span class="ticker-up">▲ 1.75%</span></span>
+    </div>
+  </div>
+
+  <!-- ── Navigation ── -->
+  <nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../about-us/index.html">About Us</a></li>
+    <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../news/index.html">News</a></li>
+    <li><a href="../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+  <!-- ── Page Header ── -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <span class="section-label">HNB Investment Bank</span>
+      <h1>News &amp; Insights</h1>
+      <p class="page-header-sub">Market analysis, transaction announcements, regulatory updates, and economic commentary from Sri Lanka's integrated investment bank.</p>
+      <div class="page-header-meta">
+        <span class="pill">Market Analysis</span>
+        <span class="pill">Transaction News</span>
+        <span class="pill-accent">Research Reports</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Page Body ── -->
+  <div class="page-body">
+    <div class="page-bg-map" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1: LATEST NEWS
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="latest-news" data-section-label="Latest News">
+
+      <!-- VARIANT A: Featured + grid -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Latest News</span>
+              <h2>Most Recent</h2>
+            </div>
+            <div class="news-a-grid">
+              <div class="news-feat scroll-fade">
+                <div class="news-feat-img">
+                  <svg class="news-feat-img-placeholder" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="10" y="10" width="60" height="60" rx="4"/><path d="M20 50 L35 35 L45 45 L60 30"/></svg>
+                </div>
+                <div class="news-feat-body">
+                  <div>
+                    <div class="news-meta">
+                      <span class="news-cat">Transaction</span>
+                      <span class="news-date">22 May 2025</span>
+                    </div>
+                    <h2>HNB Investment Bank Advises Hayleys on LKR 7Bn Debenture Programme</h2>
+                    <p>HNB Investment Bank Limited, acting as sole Arranger and Lead Manager, has successfully closed a LKR 7 billion rated debenture issuance for Hayleys PLC — the largest corporate bond in Sri Lanka's capital market in the 2024/25 financial year. The issue was oversubscribed by 1.4×, with strong participation from insurance funds and licensed finance companies.</p>
+                  </div>
+                  <a href="articles/hayleys-debenture-2025/index.html" class="btn-ghost">Read Full Announcement →</a>
+                </div>
+              </div>
+              <div class="news-card">
+                <div class="news-meta"><span class="news-cat">Market</span><span class="news-date">20 May 2025</span></div>
+                <h3>ASPI Breaks 22,500 — First Time Since January 2022</h3>
+                <p>The All Share Price Index (ASPI) closed at 22,622 on Monday, breaching the 22,500 level for the first time since Sri Lanka's economic crisis. HNB Stockbrokers attributed the rally to improved macro confidence following the successful IMF third review and CEB tariff rationalisation.</p>
+                <a href="articles/aspi-breakout/index.html" class="news-read-more">Read more →</a>
+              </div>
+              <div class="news-card">
+                <div class="news-meta"><span class="news-cat">Research</span><span class="news-date">18 May 2025</span></div>
+                <h3>Sri Lanka Fixed Income Outlook H2 2025: Rates to Ease Further</h3>
+                <p>HNB Investment Bank's Fixed Income Desk forecasts a further 50–75bps reduction in the CBSL policy corridor by end-2025, contingent on IMF programme compliance. T-Bill yields expected to converge toward 9.00% on the 364-day tenor.</p>
+                <a href="articles/fixed-income-outlook-h2-2025/index.html" class="news-read-more">Read more →</a>
+              </div>
+              <div class="news-card">
+                <div class="news-meta"><span class="news-cat">Company</span><span class="news-date">15 May 2025</span></div>
+                <h3>HNB Investment Bank Reports 24.7% Growth in Profit Before Tax for FY2025</h3>
+                <p>Full year results ending 31 March 2025 show profit before tax of LKR 2.1Bn, up 24.7% year-on-year. The Board has proposed a dividend of LKR 3.50 per share, subject to AGM approval at the September 2025 annual general meeting.</p>
+                <a href="articles/fy2025-results/index.html" class="news-read-more">Read more →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Editorial magazine layout -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Latest News</span>
+              <h2>What's Happening</h2>
+            </div>
+            <div class="news-b-layout">
+              <div class="news-b-main">
+                <div class="news-b-article">
+                  <div class="news-b-img"></div>
+                  <div>
+                    <div class="news-meta"><span class="news-cat">Transaction</span><span class="news-date">22 May 2025</span></div>
+                    <h3>HNB Investment Bank Advises Hayleys on LKR 7Bn Debenture</h3>
+                    <p>Largest corporate bond of FY2024/25. Issue oversubscribed 1.4×. Rating: AA(lka) by Fitch.</p>
+                    <a href="articles/hayleys-debenture-2025/index.html" class="news-read-more" style="margin-top:0.625rem; display:inline-block;">Read full announcement →</a>
+                  </div>
+                </div>
+                <div class="news-b-article">
+                  <div class="news-b-img"></div>
+                  <div>
+                    <div class="news-meta"><span class="news-cat">Market</span><span class="news-date">20 May 2025</span></div>
+                    <h3>ASPI Breaks 22,500 — Rally Broadens Across Sectors</h3>
+                    <p>HNB Stockbrokers' market commentary on the CSE's best run in three years. Key drivers and sector analysis.</p>
+                    <a href="articles/aspi-breakout/index.html" class="news-read-more" style="margin-top:0.625rem; display:inline-block;">Read more →</a>
+                  </div>
+                </div>
+                <div class="news-b-article">
+                  <div class="news-b-img"></div>
+                  <div>
+                    <div class="news-meta"><span class="news-cat">Company</span><span class="news-date">15 May 2025</span></div>
+                    <h3>FY2025 Results: Profit Before Tax LKR 2.1Bn, +24.7% YoY</h3>
+                    <p>Audited full-year results and proposed dividend announcement for the year ended 31 March 2025.</p>
+                    <a href="articles/fy2025-results/index.html" class="news-read-more" style="margin-top:0.625rem; display:inline-block;">Read more →</a>
+                  </div>
+                </div>
+              </div>
+              <div class="news-b-sidebar">
+                <div class="sidebar-section">
+                  <h4>Quick Reads</h4>
+                  <div class="sidebar-item">
+                    <div class="sidebar-item-date">18 May</div>
+                    <h5>Fixed Income Outlook H2 2025 — T-Bill rates to ease toward 9%</h5>
+                  </div>
+                  <div class="sidebar-item">
+                    <div class="sidebar-item-date">12 May</div>
+                    <h5>LVL Energy Fund Q4 NAV: LKR 19.85 per share</h5>
+                  </div>
+                  <div class="sidebar-item">
+                    <div class="sidebar-item-date">05 May</div>
+                    <h5>CSE Market Turnover Hits LKR 2.1Bn — 3-Year High</h5>
+                  </div>
+                  <div class="sidebar-item">
+                    <div class="sidebar-item-date">28 Apr</div>
+                    <h5>Union Bank IPO — 300× Oversubscribed; Listing Date Confirmed</h5>
+                  </div>
+                </div>
+                <div class="sidebar-section">
+                  <h4>Categories</h4>
+                  <div class="sidebar-item"><h5>Transactions &amp; Deals</h5></div>
+                  <div class="sidebar-item"><h5>Market Commentary</h5></div>
+                  <div class="sidebar-item"><h5>Research Reports</h5></div>
+                  <div class="sidebar-item"><h5>Company News</h5></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Three-column with images -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Latest News</span>
+              <h2>Top Stories This Week</h2>
+            </div>
+            <div class="news-c-grid">
+              <div class="news-c-card">
+                <div class="news-c-img"></div>
+                <div class="news-c-body">
+                  <div class="news-meta"><span class="news-cat">Transaction</span><span class="news-date">22 May 2025</span></div>
+                  <h3>Hayleys LKR 7Bn Debenture — HNB Investment Bank Sole Arranger</h3>
+                  <p>Sri Lanka's largest corporate bond of FY2024/25. AA(lka) rated. 1.4× oversubscribed.</p>
+                  <a href="articles/hayleys-debenture-2025/index.html" class="news-read-more">Read announcement →</a>
+                </div>
+              </div>
+              <div class="news-c-card">
+                <div class="news-c-img"></div>
+                <div class="news-c-body">
+                  <div class="news-meta"><span class="news-cat">Market</span><span class="news-date">20 May 2025</span></div>
+                  <h3>ASPI at 22,622 — Breaking Down the Three-Year High</h3>
+                  <p>What's driving the CSE rally, which sectors are leading, and where HNB Stockbrokers sees the index going.</p>
+                  <a href="articles/aspi-breakout/index.html" class="news-read-more">Read analysis →</a>
+                </div>
+              </div>
+              <div class="news-c-card">
+                <div class="news-c-img"></div>
+                <div class="news-c-body">
+                  <div class="news-meta"><span class="news-cat">Research</span><span class="news-date">18 May 2025</span></div>
+                  <h3>Fixed Income Outlook H2 2025: A Soft Landing for Sri Lankan Rates</h3>
+                  <p>Our fixed income team's full-year view on T-Bill and T-Bond yields, policy rate trajectory, and investment positioning.</p>
+                  <a href="articles/fixed-income-outlook-h2-2025/index.html" class="news-read-more">Download report →</a>
+                </div>
+              </div>
+              <div class="news-c-card">
+                <div class="news-c-img"></div>
+                <div class="news-c-body">
+                  <div class="news-meta"><span class="news-cat">Company</span><span class="news-date">15 May 2025</span></div>
+                  <h3>FY2025 Full-Year Results: Three Consecutive Years of Profit Growth</h3>
+                  <p>PBT LKR 2.1Bn (+24.7%). ROE 18.4%. Proposed dividend LKR 3.50 per share.</p>
+                  <a href="articles/fy2025-results/index.html" class="news-read-more">Read results →</a>
+                </div>
+              </div>
+              <div class="news-c-card">
+                <div class="news-c-img"></div>
+                <div class="news-c-body">
+                  <div class="news-meta"><span class="news-cat">Company</span><span class="news-date">12 May 2025</span></div>
+                  <h3>LVL Energy Fund Q4 NAV Update: LKR 19.85 per Share</h3>
+                  <p>Quarterly NAV disclosure per CSE Listing Rules. SL Energies' 45MW solar facility remains the anchor position.</p>
+                  <a href="articles/lvl-nav-q4-2025/index.html" class="news-read-more">Read update →</a>
+                </div>
+              </div>
+              <div class="news-c-card">
+                <div class="news-c-img"></div>
+                <div class="news-c-body">
+                  <div class="news-meta"><span class="news-cat">Market</span><span class="news-date">05 May 2025</span></div>
+                  <h3>CSE Daily Turnover Hits LKR 2.15Bn — Best Liquidity Since 2022</h3>
+                  <p>HNB Stockbrokers processed the highest single-day trade volume in three years. Retail and institutional participation both contributed.</p>
+                  <a href="articles/cse-turnover-record/index.html" class="news-read-more">Read commentary →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /latest-news -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2: RESEARCH & INSIGHTS
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="research-insights" data-section-label="Research &amp; Insights">
+
+      <!-- VARIANT A: 3-col cards -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Research &amp; Insights</span>
+              <h2>Analyst Publications</h2>
+              <p>Proprietary research from HNB Stockbrokers Equity Research and the HNB Investment Bank Fixed Income Desk.</p>
+            </div>
+            <div class="research-grid">
+              <div class="research-card">
+                <div class="rc-type">Equity Research</div>
+                <h4>CSE Sector Outlook Q3 2025: Financials Lead, Energy Re-Rates</h4>
+                <p>Our equity research team's sector-by-sector earnings forecast update for the July–September 2025 quarter. Coverage: 28 CSE-listed companies.</p>
+                <div class="rc-meta"><span>12 May 2025</span><span>·</span><span>PDF, 18 pages</span></div>
+              </div>
+              <div class="research-card">
+                <div class="rc-type">Fixed Income</div>
+                <h4>Sri Lanka Yield Curve Analysis — May 2025</h4>
+                <p>Monthly yield curve update including T-Bill auction results, secondary market activity, and CBSL policy analysis. Pricing implications for corporate issuers.</p>
+                <div class="rc-meta"><span>15 May 2025</span><span>·</span><span>PDF, 8 pages</span></div>
+              </div>
+              <div class="research-card">
+                <div class="rc-type">Macro</div>
+                <h4>Sri Lanka Economic Update: IMF Third Review — What It Means for Markets</h4>
+                <p>Full assessment of the IMF's third review findings, fiscal consolidation path, and implications for domestic capital markets through 2026.</p>
+                <div class="rc-meta"><span>02 May 2025</span><span>·</span><span>PDF, 22 pages</span></div>
+              </div>
+              <div class="research-card">
+                <div class="rc-type">Equity Research</div>
+                <h4>HNB PLC (HNB.N0000) — Initiation of Coverage: Buy, TP LKR 225</h4>
+                <p>Initiating coverage on HNB PLC with a Buy recommendation. Balance sheet recovery, NIM expansion, and dividend resumption are the core thesis.</p>
+                <div class="rc-meta"><span>28 Apr 2025</span><span>·</span><span>PDF, 30 pages</span></div>
+              </div>
+              <div class="research-card">
+                <div class="rc-type">Strategy</div>
+                <h4>CSE 2025 Mid-Year Strategy: 12 Stocks for the Recovery</h4>
+                <p>Our mid-year portfolio strategy note identifying twelve CSE-listed stocks with the strongest earnings recovery thesis through December 2025.</p>
+                <div class="rc-meta"><span>18 Apr 2025</span><span>·</span><span>PDF, 24 pages</span></div>
+              </div>
+              <div class="research-card">
+                <div class="rc-type">Fixed Income</div>
+                <h4>Corporate Bond Issuance Outlook FY2026: LKR 100Bn+ Pipeline</h4>
+                <p>Our DCM team's pipeline analysis for the FY2026 corporate bond market. Sectors driving issuance and investor demand dynamics.</p>
+                <div class="rc-meta"><span>10 Apr 2025</span><span>·</span><span>PDF, 12 pages</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Featured + sidebar list -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Research &amp; Insights</span>
+              <h2>Latest Publications</h2>
+            </div>
+            <div class="res-b-layout">
+              <div>
+                <div class="res-featured">
+                  <div class="rc-type">Featured — Fixed Income</div>
+                  <h3>Sri Lanka Fixed Income Outlook H2 2025: Rates to Ease Further</h3>
+                  <p>Following CBSL's decision to hold rates in May 2025, our fixed income team forecasts a further 50–75bps reduction before year-end, contingent on CPI sustainably below 5% and continued IMF programme compliance.</p>
+                  <p>Key implications: 364-day T-Bill yields approaching 9%, corporate bond spreads narrowing, and a reopening of the USD sovereign bond market by Q4 2025.</p>
+                  <div class="rc-meta">18 May 2025 · 14 pages · Fixed Income Desk</div>
+                  <a href="articles/fixed-income-outlook-h2-2025/index.html" class="btn-primary">Download Report</a>
+                </div>
+              </div>
+              <div>
+                <div class="sidebar-section">
+                  <h4>Recent Publications</h4>
+                  <div class="res-list">
+                    <div class="res-list-item"><h5>CSE Sector Outlook Q3 2025</h5><div class="rli-meta">12 May 2025 · Equity Research</div></div>
+                    <div class="res-list-item"><h5>Yield Curve Analysis May 2025</h5><div class="rli-meta">15 May 2025 · Fixed Income</div></div>
+                    <div class="res-list-item"><h5>IMF Third Review — Market Implications</h5><div class="rli-meta">02 May 2025 · Macro</div></div>
+                    <div class="res-list-item"><h5>HNB PLC Initiation: Buy, TP 225</h5><div class="rli-meta">28 Apr 2025 · Equity Research</div></div>
+                    <div class="res-list-item"><h5>12 Stocks for the Recovery</h5><div class="rli-meta">18 Apr 2025 · Strategy</div></div>
+                    <div class="res-list-item"><h5>Corporate Bond Pipeline FY2026</h5><div class="rli-meta">10 Apr 2025 · DCM</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Category tabs -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Research &amp; Insights</span>
+              <h2>Analyst Coverage &amp; Research Notes</h2>
+            </div>
+            <div class="filter-bar">
+              <button class="filter-btn active">All</button>
+              <button class="filter-btn">Equity Research</button>
+              <button class="filter-btn">Fixed Income</button>
+              <button class="filter-btn">Macro &amp; Strategy</button>
+              <button class="filter-btn">Transactions</button>
+            </div>
+            <div class="filtered-grid">
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Equity</span><span class="news-date">12 May</span></div><h4>CSE Sector Outlook Q3 2025: Financials Lead</h4></div>
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Fixed Income</span><span class="news-date">15 May</span></div><h4>Yield Curve Analysis — May 2025</h4></div>
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Macro</span><span class="news-date">02 May</span></div><h4>IMF Third Review — What It Means for Markets</h4></div>
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Equity</span><span class="news-date">28 Apr</span></div><h4>HNB PLC Initiation: Buy, Target LKR 225</h4></div>
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Strategy</span><span class="news-date">18 Apr</span></div><h4>12 Stocks for the Recovery — Mid-Year Note</h4></div>
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Fixed Income</span><span class="news-date">10 Apr</span></div><h4>Corporate Bond Pipeline FY2026: LKR 100Bn+</h4></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /research-insights -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 3: CATEGORIES / ARCHIVE
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="archive" data-section-label="Archive">
+
+      <!-- VARIANT A: Sidebar nav + archive list -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Archive</span>
+              <h2>All News by Category</h2>
+            </div>
+            <div class="archive-layout">
+              <div>
+                <nav class="cat-nav" aria-label="News categories">
+                  <h4>Categories</h4>
+                  <a href="#" class="active">All News <span class="cnt">48</span></a>
+                  <a href="#">Transactions &amp; Deals <span class="cnt">12</span></a>
+                  <a href="#">Market Commentary <span class="cnt">15</span></a>
+                  <a href="#">Research Reports <span class="cnt">11</span></a>
+                  <a href="#">Company News <span class="cnt">8</span></a>
+                  <a href="#">Regulatory Updates <span class="cnt">2</span></a>
+                </nav>
+              </div>
+              <div class="archive-list">
+                <div class="archive-item">
+                  <div class="archive-item-date"><div class="day">22</div><div class="month">May</div></div>
+                  <div><h4>HNB Investment Bank Advises Hayleys on LKR 7Bn Debenture Programme</h4><p>Sri Lanka's largest corporate bond of FY2024/25. Sole Arranger and Lead Manager.</p></div>
+                </div>
+                <div class="archive-item">
+                  <div class="archive-item-date"><div class="day">20</div><div class="month">May</div></div>
+                  <div><h4>ASPI Breaks 22,500 for First Time Since January 2022</h4><p>Market commentary from HNB Stockbrokers on the CSE rally and sector rotation.</p></div>
+                </div>
+                <div class="archive-item">
+                  <div class="archive-item-date"><div class="day">18</div><div class="month">May</div></div>
+                  <div><h4>Fixed Income Outlook H2 2025: Rates to Ease Further — HNB Research</h4><p>T-Bill forecast, policy trajectory, and corporate bond market positioning note.</p></div>
+                </div>
+                <div class="archive-item">
+                  <div class="archive-item-date"><div class="day">15</div><div class="month">May</div></div>
+                  <div><h4>FY2025 Results: HNB Investment Bank Reports Profit Before Tax of LKR 2.1Bn</h4><p>Full-year audited results and proposed dividend announcement.</p></div>
+                </div>
+                <div class="archive-item">
+                  <div class="archive-item-date"><div class="day">12</div><div class="month">May</div></div>
+                  <div><h4>LVL Energy Fund Q4 FY2025 NAV: LKR 19.85 per Share</h4><p>Quarterly NAV announcement per CSE Listing Rules. P/NAV at −12.4%.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Filter bar + grid -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Archive</span>
+              <h2>Browse All Stories</h2>
+            </div>
+            <div class="filter-bar">
+              <button class="filter-btn active">All</button>
+              <button class="filter-btn">Transactions</button>
+              <button class="filter-btn">Market</button>
+              <button class="filter-btn">Research</button>
+              <button class="filter-btn">Company</button>
+            </div>
+            <div class="filtered-grid">
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Transaction</span><span class="news-date">22 May</span></div><h4>Hayleys LKR 7Bn Debenture — HNB IB Sole Arranger</h4></div>
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Market</span><span class="news-date">20 May</span></div><h4>ASPI Breaks 22,500 — Market Commentary</h4></div>
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Research</span><span class="news-date">18 May</span></div><h4>Fixed Income Outlook H2 2025</h4></div>
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Company</span><span class="news-date">15 May</span></div><h4>FY2025 Full-Year Results Announcement</h4></div>
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Company</span><span class="news-date">12 May</span></div><h4>LVL Energy Fund Q4 NAV Disclosure</h4></div>
+              <div class="filtered-card"><div class="news-meta"><span class="news-cat">Market</span><span class="news-date">05 May</span></div><h4>CSE Turnover Hits LKR 2.1Bn — Three-Year High</h4></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Month timeline -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Archive</span>
+              <h2>2025 News Archive</h2>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:2rem;">
+              <div>
+                <div style="font-size:0.875rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:1rem;">May 2025</div>
+                <div class="archive-list">
+                  <div class="archive-item"><div class="archive-item-date"><div class="day">22</div><div class="month">May</div></div><div><h4>Hayleys LKR 7Bn Debenture — Sole Arranger</h4><p>Largest corporate bond of FY2024/25.</p></div></div>
+                  <div class="archive-item"><div class="archive-item-date"><div class="day">20</div><div class="month">May</div></div><div><h4>ASPI Breaks 22,500</h4><p>CSE market commentary and sector analysis.</p></div></div>
+                  <div class="archive-item"><div class="archive-item-date"><div class="day">18</div><div class="month">May</div></div><div><h4>Fixed Income Outlook H2 2025</h4><p>Rates forecast and positioning note.</p></div></div>
+                  <div class="archive-item"><div class="archive-item-date"><div class="day">15</div><div class="month">May</div></div><div><h4>FY2025 Full-Year Results</h4><p>PBT LKR 2.1Bn, +24.7% YoY.</p></div></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:0.875rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:1rem;">April 2025</div>
+                <div class="archive-list">
+                  <div class="archive-item"><div class="archive-item-date"><div class="day">28</div><div class="month">Apr</div></div><div><h4>HNB PLC Initiation — Buy, Target LKR 225</h4><p>Equity research initiation note.</p></div></div>
+                  <div class="archive-item"><div class="archive-item-date"><div class="day">18</div><div class="month">Apr</div></div><div><h4>12 Stocks for the Recovery — Mid-Year Strategy</h4><p>CSE portfolio positioning note.</p></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /archive -->
+
+
+    <!-- ── Section CTA Final ── -->
+    <section class="section-cta-final scroll-fade">
+      <div class="section-inner">
+        <div class="cta-final-inner">
+          <div class="cta-final-copy">
+            <span class="section-label">Stay Informed</span>
+            <h2>Receive Our Research &amp; Market Updates</h2>
+            <p>Subscribe to HNB Investment Bank's research distribution list. Weekly market commentary, monthly fixed income reports, and transaction announcements delivered to your inbox.</p>
+            <div class="stat-proof">
+              <div><strong>Weekly</strong><span>Market Commentary</span></div>
+              <div><strong>Monthly</strong><span>Fixed Income Report</span></div>
+              <div><strong>Instant</strong><span>Transaction Announcements</span></div>
+            </div>
+          </div>
+          <div class="cta-final-form">
+            <h3>Subscribe to Research</h3>
+            <form>
+              <div class="form-row">
+                <label for="cta-name-news">Full Name</label>
+                <input type="text" id="cta-name-news" placeholder="Your name" />
+              </div>
+              <div class="form-row">
+                <label for="cta-email-news">Email Address</label>
+                <input type="email" id="cta-email-news" placeholder="you@email.com" />
+              </div>
+              <div class="form-row">
+                <label for="cta-org-news">Organisation</label>
+                <input type="text" id="cta-org-news" placeholder="Company / institution" />
+              </div>
+              <div class="form-row">
+                <label for="cta-interest-news">Research Interest</label>
+                <input type="text" id="cta-interest-news" placeholder="Equity / Fixed Income / Macro / All" />
+              </div>
+              <button type="submit" class="cta-submit">Subscribe to Research →</button>
+              <div class="form-reassurance">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Unsubscribe at any time. Research shared for professional information only — not investment advice.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-body -->
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="32" />
+          <p>Sri Lanka's integrated investment bank — market intelligence, transaction advice, and growth capital under one roof.</p>
+        </div>
+        <div class="footer-col">
+          <h4>News &amp; Research</h4>
+          <ul>
+            <li><a href="./index.html">Latest News</a></li>
+            <li><a href="./#research-insights">Research Reports</a></li>
+            <li><a href="./#archive">Archive</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Our Businesses</h4>
+          <ul>
+            <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+            <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+            <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+            <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures / LVL</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2025 HNB Investment Bank Limited. Research published on this page is for informational purposes only and does not constitute investment advice. Past performance does not guarantee future results. Regulated by the SEC of Sri Lanka.</p>
+        <div class="footer-legal-links">
+          <a href="../privacy-policy/index.html">Privacy Policy</a>
+          <a href="../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <link rel="stylesheet" href="../section-toggle.css" />
+  <script src="../scripts.js"></script>
+  <script src="../section-toggle.js"></script>
+</body>
+</html>

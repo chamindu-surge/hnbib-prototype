@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — HNB Investment Bank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* Shared legal styles */
+    .legal-body { max-width: 820px; }
+    .legal-body h2 { font-size: 1.1rem; font-weight: 700; color: var(--ink); margin: 2rem 0 0.75rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+    .legal-body h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .legal-body p { font-size: 0.875rem; color: var(--ink-2); line-height: 1.75; margin-bottom: 0.875rem; }
+    .legal-body ul { padding-left: 1.5rem; margin-bottom: 0.875rem; }
+    .legal-body ul li { font-size: 0.875rem; color: var(--ink-2); line-height: 1.7; margin-bottom: 0.25rem; }
+    .legal-body strong { color: var(--ink); }
+
+    /* Layout A: single column */
+    .legal-a-inner { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 3rem; }
+    .legal-a-inner .legal-meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 2rem; }
+
+    /* Layout B: two-col with TOC */
+    .legal-b-layout { display: grid; grid-template-columns: 220px 1fr; gap: 3rem; align-items: start; }
+    .legal-toc { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; position: sticky; top: calc(56px + 1.5rem); }
+    .legal-toc h4 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 1rem 1.25rem; border-bottom: 1px solid var(--line); }
+    .legal-toc a { display: block; padding: 0.625rem 1.25rem; border-bottom: 1px solid var(--line); font-size: 0.82rem; color: var(--ink-2); text-decoration: none; }
+    .legal-toc a:last-child { border-bottom: none; }
+    .legal-toc a:hover { color: var(--primary); background: oklch(0.43 0.150 248 / 0.04); }
+    .legal-b-body { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 2.5rem; }
+    .legal-b-body .legal-meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 2rem; }
+
+    /* Layout C: structured with right column highlights */
+    .legal-c-layout { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; }
+    .legal-c-main { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 2.5rem; }
+    .legal-c-main .legal-meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 2rem; }
+    .legal-c-sidebar { display: flex; flex-direction: column; gap: 1.25rem; position: sticky; top: calc(56px + 1.5rem); }
+    .legal-highlight-card { background: oklch(0.43 0.150 248 / 0.05); border: 1px solid oklch(0.43 0.150 248 / 0.15); border-radius: var(--radius); padding: 1.25rem; }
+    .legal-highlight-card h5 { font-size: 0.82rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
+    .legal-highlight-card p { font-size: 0.78rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+    .legal-contact-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; }
+    .legal-contact-card h5 { font-size: 0.82rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+    .legal-contact-card p { font-size: 0.78rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+    .legal-contact-card a { color: var(--primary); text-decoration: none; }
+
+    @media (max-width: 900px) {
+      .legal-b-layout, .legal-c-layout { grid-template-columns: 1fr; }
+      .legal-toc, .legal-c-sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Ticker ── -->
+  <div class="ticker" aria-label="Market data">
+    <div class="ticker-track">
+      <span class="ticker-item">ASPI <strong>22,622.34</strong></span>
+      <span class="ticker-item">LVL.N0000 <strong>LKR 17.40</strong></span>
+      <span class="ticker-item">CBSL Repo <strong>8.50%</strong></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong></span>
+      <span class="ticker-item">ASPI <strong>22,622.34</strong></span>
+      <span class="ticker-item">LVL.N0000 <strong>LKR 17.40</strong></span>
+      <span class="ticker-item">CBSL Repo <strong>8.50%</strong></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong></span>
+    </div>
+  </div>
+
+  <!-- ── Navigation ── -->
+  <nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../about-us/index.html">About Us</a></li>
+    <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../news/index.html">News</a></li>
+    <li><a href="../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+  <!-- ── Page Header ── -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <span class="section-label">Legal</span>
+      <h1>Privacy Policy</h1>
+      <p class="page-header-sub">How HNB Investment Bank collects, uses, and protects your personal information.</p>
+      <div class="page-header-meta">
+        <span class="pill">Last Updated: 01 January 2025</span>
+        <span class="pill">Effective: 01 January 2025</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Page Body ── -->
+  <div class="page-body">
+    <div class="page-bg-map" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1: FULL POLICY TEXT
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="policy-text" data-section-label="Policy Text">
+
+      <!-- VARIANT A: Single column -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="legal-a-inner">
+              <div class="legal-meta">Last updated: 01 January 2025 · Effective: 01 January 2025</div>
+              <div class="legal-body">
+                <h2>1. Who We Are</h2>
+                <p>HNB Investment Bank Limited ("HNB IB", "we", "us", "our") is a licensed investment bank incorporated in Sri Lanka, regulated by the Securities and Exchange Commission of Sri Lanka (SEC) and the Central Bank of Sri Lanka (CBSL) in respect of its Primary Dealer activities. Our registered office is at 479, T B Jayah Mawatha, Colombo 10, Sri Lanka.</p>
+                <p>This Privacy Policy applies to personal information collected by HNB Investment Bank Limited and its subsidiaries, including HNB Stockbrokers Limited, HNB Securities Limited, and Lanka Ventures Limited (collectively, the "HNB IB Group").</p>
+                <h2>2. Information We Collect</h2>
+                <p>We collect personal information that you provide directly to us, including:</p>
+                <ul>
+                  <li><strong>Identity data:</strong> Full name, National Identity Card (NIC) number, passport number, date of birth</li>
+                  <li><strong>Contact data:</strong> Address, email address, telephone numbers</li>
+                  <li><strong>Financial data:</strong> Bank account details, investment amounts, transaction history, source of funds declarations</li>
+                  <li><strong>Tax data:</strong> Tax Identification Number (TIN), tax residency status</li>
+                  <li><strong>Professional data:</strong> Employer, occupation, professional credentials (e.g., CFA, SLCFMA licence numbers)</li>
+                  <li><strong>Usage data:</strong> How you use our website, client portal, and mobile applications</li>
+                </ul>
+                <p>We may also receive information about you from third parties, including the Central Depository System (CDS), the Central Bank of Sri Lanka's LankaSecure system, credit reference agencies, and HNB Bank PLC.</p>
+                <h2>3. How We Use Your Information</h2>
+                <p>We use your personal information for the following purposes:</p>
+                <ul>
+                  <li>To open and manage your investment account(s)</li>
+                  <li>To execute transactions on your behalf in accordance with your instructions</li>
+                  <li>To comply with legal and regulatory requirements including Anti-Money Laundering (AML) and Know Your Customer (KYC) obligations under the Financial Transactions Reporting Act (FTRA) and the Prevention of Money Laundering Act (PMLA)</li>
+                  <li>To communicate with you about your account, transactions, and relevant market information</li>
+                  <li>To send you research publications, market commentary, and product updates (where you have consented to receive these)</li>
+                  <li>To improve our products, services, and website</li>
+                  <li>To detect, prevent, and investigate fraud and other unlawful activity</li>
+                </ul>
+                <h2>4. Legal Basis for Processing</h2>
+                <p>We process your personal information on the following legal grounds:</p>
+                <ul>
+                  <li><strong>Contract performance:</strong> Processing necessary to perform our contractual obligations to you as a client</li>
+                  <li><strong>Legal obligation:</strong> Processing required to comply with applicable laws and regulations, including KYC/AML obligations mandated by CBSL, SEC, and the Financial Intelligence Unit (FIU) of Sri Lanka</li>
+                  <li><strong>Legitimate interests:</strong> Processing necessary for our legitimate business interests, including fraud prevention, network security, and business development, provided these interests are not overridden by your rights</li>
+                  <li><strong>Consent:</strong> Where you have given explicit consent, for example, to receive marketing communications</li>
+                </ul>
+                <h2>5. Sharing Your Information</h2>
+                <p>We may share your personal information with:</p>
+                <ul>
+                  <li>Regulatory authorities including the SEC of Sri Lanka, CBSL, and the Financial Intelligence Unit, where required by law</li>
+                  <li>The Colombo Stock Exchange (CSE) and the Central Depository System (CDS) for the purpose of completing securities transactions</li>
+                  <li>CBSL's LankaSecure depository system for government securities transactions</li>
+                  <li>HNB Bank PLC, our parent entity, where necessary for operational purposes and subject to group data sharing agreements</li>
+                  <li>Third-party service providers acting as data processors on our behalf (including IT providers, cloud storage providers, and professional advisors), subject to appropriate contractual data protection obligations</li>
+                  <li>Auditors (KPMG Sri Lanka) as required for statutory audit purposes</li>
+                </ul>
+                <p>We do not sell or rent your personal information to third parties for their own marketing purposes.</p>
+                <h2>6. Data Retention</h2>
+                <p>We retain your personal information for as long as your account is active and for a period of seven (7) years thereafter, or such longer period as is required by applicable law or regulation. KYC documentation is retained for a minimum of five years following the end of the business relationship, as required by the PMLA.</p>
+                <h2>7. Your Rights</h2>
+                <p>You have the right to access, correct, or request deletion of your personal information held by us, subject to applicable legal and regulatory retention requirements. To exercise these rights, please contact our Data Protection Officer at <a href="mailto:dpo@hnbib.lk">dpo@hnbib.lk</a>.</p>
+                <h2>8. Cookies and Website Tracking</h2>
+                <p>Our website uses cookies and similar tracking technologies to improve your browsing experience and analyse website usage. You may disable cookies in your browser settings; however, this may affect the functionality of our website and client portal.</p>
+                <h2>9. Security</h2>
+                <p>We implement appropriate technical and organisational security measures to protect your personal information against unauthorised access, disclosure, alteration, or destruction. These measures include encryption of data in transit and at rest, access controls, and regular security assessments.</p>
+                <h2>10. Changes to This Policy</h2>
+                <p>We may update this Privacy Policy from time to time. We will notify you of material changes by posting the updated policy on our website with an updated effective date. Your continued use of our services following notification constitutes acceptance of the updated policy.</p>
+                <h2>11. Contact Us</h2>
+                <p>For privacy-related enquiries, please contact:<br/>
+                <strong>Data Protection Officer</strong><br/>
+                HNB Investment Bank Limited<br/>
+                479, T B Jayah Mawatha, Colombo 10, Sri Lanka<br/>
+                Email: <a href="mailto:dpo@hnbib.lk">dpo@hnbib.lk</a><br/>
+                Phone: +94 11 250 0000</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Two-col with TOC -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="legal-b-layout">
+              <nav class="legal-toc" aria-label="Policy sections">
+                <h4>Contents</h4>
+                <a href="#pp-1">1. Who We Are</a>
+                <a href="#pp-2">2. Information Collected</a>
+                <a href="#pp-3">3. How We Use It</a>
+                <a href="#pp-4">4. Legal Basis</a>
+                <a href="#pp-5">5. Sharing</a>
+                <a href="#pp-6">6. Retention</a>
+                <a href="#pp-7">7. Your Rights</a>
+                <a href="#pp-8">8. Cookies</a>
+                <a href="#pp-9">9. Security</a>
+                <a href="#pp-10">10. Changes</a>
+                <a href="#pp-11">11. Contact</a>
+              </nav>
+              <div class="legal-b-body">
+                <div class="legal-meta">Last updated: 01 January 2025</div>
+                <div class="legal-body">
+                  <h2 id="pp-1">1. Who We Are</h2>
+                  <p>HNB Investment Bank Limited ("HNB IB") is a licensed investment bank regulated by the SEC of Sri Lanka and CBSL. Registered at 479, T B Jayah Mawatha, Colombo 10. This policy covers all HNB IB Group entities including HNB Stockbrokers, HNB Securities, and Lanka Ventures.</p>
+                  <h2 id="pp-2">2. Information We Collect</h2>
+                  <p>Identity data (NIC, passport), contact data (address, email, phone), financial data (accounts, transactions, source of funds), tax data (TIN), professional credentials, and website usage data.</p>
+                  <h2 id="pp-3">3. How We Use Your Information</h2>
+                  <p>Account management, transaction execution, AML/KYC compliance, communications, research distribution (with consent), fraud prevention, and service improvement.</p>
+                  <h2 id="pp-4">4. Legal Basis</h2>
+                  <p>Contract performance, legal obligation (AML/KYC), legitimate interests (fraud prevention, security), and consent (marketing). Statutory obligations under FTRA, PMLA, SEC regulations, and CBSL directives take precedence.</p>
+                  <h2 id="pp-5">5. Sharing Your Information</h2>
+                  <p>We share with: regulatory authorities (SEC, CBSL, FIU), CSE/CDS, LankaSecure, HNB Bank PLC (parent), contracted service providers, and KPMG (statutory audit). We do not sell personal data.</p>
+                  <h2 id="pp-6">6. Data Retention</h2>
+                  <p>Active account period plus 7 years, or longer if required by law. KYC documents: minimum 5 years post-relationship end under PMLA.</p>
+                  <h2 id="pp-7">7. Your Rights</h2>
+                  <p>Access, correction, and deletion of your personal information subject to regulatory retention obligations. Contact <a href="mailto:dpo@hnbib.lk">dpo@hnbib.lk</a> to exercise your rights.</p>
+                  <h2 id="pp-8">8. Cookies</h2>
+                  <p>We use cookies to improve browsing experience and analyse usage. Disable in browser settings; functionality may be affected.</p>
+                  <h2 id="pp-9">9. Security</h2>
+                  <p>Encryption in transit and at rest, access controls, and regular security assessments protect your data.</p>
+                  <h2 id="pp-10">10. Changes</h2>
+                  <p>Material updates notified via website. Continued use constitutes acceptance.</p>
+                  <h2 id="pp-11">11. Contact</h2>
+                  <p>Data Protection Officer · <a href="mailto:dpo@hnbib.lk">dpo@hnbib.lk</a> · +94 11 250 0000</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Structured with sidebar highlights -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="legal-c-layout">
+              <div class="legal-c-main">
+                <div class="legal-meta">Effective 01 January 2025 · HNB Investment Bank Limited</div>
+                <div class="legal-body">
+                  <h2>1. Who We Are</h2>
+                  <p>HNB Investment Bank Limited is regulated by the SEC of Sri Lanka. Our Primary Dealer activities (HNB Securities) are additionally supervised by CBSL. Registered: 479, T B Jayah Mawatha, Colombo 10. This policy applies to all HNB IB Group entities.</p>
+                  <h2>2. What We Collect &amp; Why</h2>
+                  <p>We collect identity, contact, financial, tax, and professional data necessary to open and maintain investment accounts, execute transactions, and comply with AML/KYC obligations under the FTRA and PMLA. Website usage data is collected to improve our services.</p>
+                  <h2>3. Legal Basis</h2>
+                  <p>Contract performance, statutory obligations (SEC, CBSL, FIU), legitimate interests (fraud prevention), and consent (marketing). Regulatory obligations override all other legal grounds where they conflict.</p>
+                  <h2>4. Data Sharing</h2>
+                  <p>Shared with: SEC of Sri Lanka, CBSL, FIU, CSE/CDS, CBSL LankaSecure, HNB Bank PLC (parent), contracted processors (IT, cloud, legal advisors), and KPMG (audit). Personal data is never sold.</p>
+                  <h2>5. Retention, Rights &amp; Contact</h2>
+                  <p>7-year post-relationship retention standard (longer if mandated). Exercise access/correction/deletion rights via <a href="mailto:dpo@hnbib.lk">dpo@hnbib.lk</a>. Data Protection Officer: +94 11 250 0000.</p>
+                </div>
+              </div>
+              <div class="legal-c-sidebar">
+                <div class="legal-highlight-card">
+                  <h5>Key Point: We Don't Sell Your Data</h5>
+                  <p>We do not sell, rent, or trade personal information to third parties for their own marketing or commercial purposes — ever.</p>
+                </div>
+                <div class="legal-highlight-card">
+                  <h5>Regulatory Obligations</h5>
+                  <p>AML/KYC sharing with SEC, CBSL, and FIU is a legal requirement, not optional. We cannot withhold this data upon regulatory request.</p>
+                </div>
+                <div class="legal-contact-card">
+                  <h5>Data Protection Officer</h5>
+                  <p><a href="mailto:dpo@hnbib.lk">dpo@hnbib.lk</a><br/>+94 11 250 0000<br/>Mon–Fri 8:30–5:30</p>
+                </div>
+                <div class="legal-contact-card">
+                  <h5>Related Policies</h5>
+                  <p><a href="../terms-and-conditions/index.html">Terms &amp; Conditions</a><br/>Updated 01 Jan 2025</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /policy-text -->
+
+  </div><!-- /page-body -->
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="32" />
+          <p>HNB Investment Bank Limited · 479, T B Jayah Mawatha, Colombo 10 · Regulated by SEC of Sri Lanka</p>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="./index.html">Privacy Policy</a></li>
+            <li><a href="../terms-and-conditions/index.html">Terms &amp; Conditions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../about-us/index.html">About Us</a></li>
+            <li><a href="../contact-us/index.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2025 HNB Investment Bank Limited. All rights reserved.</p>
+        <div class="footer-legal-links">
+          <a href="./index.html">Privacy Policy</a>
+          <a href="../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <link rel="stylesheet" href="../section-toggle.css" />
+  <script src="../scripts.js"></script>
+  <script src="../section-toggle.js"></script>
+</body>
+</html>

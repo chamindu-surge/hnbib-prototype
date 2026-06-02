@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Careers — HNB Investment Bank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ── Open Positions ────────────────────────────── */
+    .jobs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .job-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; }
+    .job-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; gap: 0.75rem; }
+    .job-dept { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); background: oklch(0.43 0.150 248 / 0.08); border: 1px solid oklch(0.43 0.150 248 / 0.15); border-radius: 4px; padding: 0.2rem 0.6rem; }
+    .job-type { font-size: 0.72rem; color: var(--muted); background: var(--bg-2); border: 1px solid var(--line); border-radius: 4px; padding: 0.2rem 0.6rem; white-space: nowrap; }
+    .job-card h4 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.375rem; }
+    .job-card .job-location { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .job-card p { font-size: 0.82rem; color: var(--ink-2); line-height: 1.65; flex: 1; margin-bottom: 1rem; }
+    .job-apply { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+    .jobs-b-layout { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; align-items: start; }
+    .dept-filter { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .dept-filter h4 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 1rem 1.25rem; border-bottom: 1px solid var(--line); }
+    .dept-filter a { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--line); font-size: 0.875rem; color: var(--ink-2); text-decoration: none; }
+    .dept-filter a:last-child { border-bottom: none; }
+    .dept-filter a:hover, .dept-filter a.active { color: var(--primary); background: oklch(0.43 0.150 248 / 0.04); }
+    .dept-filter .dcnt { font-size: 0.75rem; color: var(--muted); }
+    .job-list-full { display: flex; flex-direction: column; gap: 0.875rem; }
+    .job-list-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1.25rem; }
+    .jli-info { flex: 1; }
+    .jli-info h4 { font-size: 0.925rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .jli-meta { display: flex; gap: 0.75rem; font-size: 0.78rem; color: var(--muted); }
+    .jli-dept { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); background: oklch(0.43 0.150 248 / 0.08); border: 1px solid oklch(0.43 0.150 248 / 0.15); border-radius: 4px; padding: 0.2rem 0.5rem; flex-shrink: 0; }
+    .jobs-c-featured { background: var(--primary); border-radius: var(--radius); padding: 3rem; color: #fff; margin-bottom: 1.5rem; }
+    .jobs-c-featured .section-label { color: oklch(0.65 0.165 140); }
+    .jobs-c-featured h2 { color: #fff; margin: 0.75rem 0 1rem; }
+    .jobs-c-featured p { color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 1.5rem; }
+    .jobs-c-count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.2); }
+    .jcc-item .jcc-val { font-size: 1.75rem; font-weight: 800; color: #fff; }
+    .jcc-item .jcc-label { font-size: 0.75rem; color: rgba(255,255,255,0.65); }
+    .btn-primary-inv { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; color: var(--primary); border: none; border-radius: var(--radius); padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+
+    /* ── Culture & Values ───────────────────────────── */
+    .culture-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .culture-card { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 1.75rem; }
+    .culture-card .cc-icon { font-size: 1.75rem; margin-bottom: 0.875rem; }
+    .culture-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+    .culture-card p { font-size: 0.83rem; color: var(--ink-2); line-height: 1.65; margin: 0; }
+    .culture-b-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+    .culture-b-copy h3 { font-size: 1.25rem; font-weight: 800; color: var(--ink); margin-bottom: 1rem; }
+    .culture-b-copy p { font-size: 0.875rem; color: var(--ink-2); line-height: 1.7; margin-bottom: 1rem; }
+    .benefits-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .benefit-item { display: flex; gap: 0.875rem; align-items: flex-start; }
+    .bi-icon { width: 32px; height: 32px; border-radius: 8px; background: oklch(0.43 0.150 248 / 0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .bi-icon svg { width: 16px; height: 16px; stroke: var(--primary); fill: none; }
+    .bi-body h5 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.1rem; }
+    .bi-body p { font-size: 0.8rem; color: var(--ink-2); line-height: 1.5; margin: 0; }
+    .culture-c-inner { background: var(--primary); border-radius: var(--radius); padding: 3rem; color: #fff; }
+    .culture-c-inner .section-label { color: oklch(0.65 0.165 140); }
+    .culture-c-inner h2 { color: #fff; margin: 0.75rem 0 1rem; }
+    .culture-c-inner > p { color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 1.5rem; }
+    .culture-c-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+    .culture-c-tile { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); padding: 1.5rem; }
+    .culture-c-tile h4 { font-size: 0.925rem; font-weight: 700; color: #fff; margin-bottom: 0.375rem; }
+    .culture-c-tile p { font-size: 0.8rem; color: rgba(255,255,255,0.65); line-height: 1.55; margin: 0; }
+
+    /* ── How to Apply ───────────────────────────────── */
+    .apply-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+    .apply-steps::before { content: ''; position: absolute; top: 28px; left: 12.5%; right: 12.5%; height: 2px; background: var(--line); z-index: 0; }
+    .apply-step { text-align: center; position: relative; z-index: 1; padding: 0 1rem; }
+    .as-circle { width: 56px; height: 56px; border-radius: 50%; background: var(--bg); border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.1rem; font-weight: 800; color: var(--primary); }
+    .apply-step h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.375rem; }
+    .apply-step p { font-size: 0.78rem; color: var(--ink-2); line-height: 1.55; }
+    .apply-b-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .apply-b-copy h3 { font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.875rem; }
+    .apply-b-copy p { font-size: 0.875rem; color: var(--ink-2); line-height: 1.7; margin-bottom: 1rem; }
+    .apply-b-copy .tips-list { list-style: none; padding: 0; }
+    .apply-b-copy .tips-list li { font-size: 0.82rem; color: var(--ink-2); padding: 0.375rem 0; border-bottom: 1px solid var(--line); display: flex; gap: 0.5rem; }
+    .apply-b-copy .tips-list li::before { content: '→'; color: var(--primary); }
+    .apply-b-copy .tips-list li:last-child { border-bottom: none; }
+
+    @media (max-width: 960px) {
+      .jobs-b-layout { grid-template-columns: 1fr; }
+      .culture-b-grid, .apply-b-grid { grid-template-columns: 1fr; }
+      .apply-steps { grid-template-columns: 1fr 1fr; }
+      .apply-steps::before { display: none; }
+      .culture-c-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .jobs-grid, .culture-grid, .culture-c-grid, .jobs-c-count { grid-template-columns: 1fr; }
+      .apply-steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Ticker ── -->
+  <div class="ticker" aria-label="Market data">
+    <div class="ticker-track">
+      <span class="ticker-item">HNB Investment Bank — <strong>12 Open Positions</strong></span>
+      <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">▲ 0.21%</span></span>
+      <span class="ticker-item">CSE Market Cap <strong>LKR 7.82Tn</strong></span>
+      <span class="ticker-item">LVL.N0000 <strong>LKR 17.40</strong> <span class="ticker-up">▲ 1.75%</span></span>
+      <span class="ticker-item">HNB Investment Bank — <strong>12 Open Positions</strong></span>
+      <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">▲ 0.21%</span></span>
+      <span class="ticker-item">CSE Market Cap <strong>LKR 7.82Tn</strong></span>
+      <span class="ticker-item">LVL.N0000 <strong>LKR 17.40</strong> <span class="ticker-up">▲ 1.75%</span></span>
+    </div>
+  </div>
+
+  <!-- ── Navigation ── -->
+  <nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../about-us/index.html">About Us</a></li>
+    <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../news/index.html">News</a></li>
+    <li><a href="../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+  <!-- ── Page Header ── -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <span class="section-label">Company</span>
+      <h1>Build Your Career in Sri Lankan Capital Markets</h1>
+      <p class="page-header-sub">HNB Investment Bank offers careers across equity dealing, fixed income, M&amp;A advisory, venture investing, and operations — in Sri Lanka's most active integrated investment bank.</p>
+      <div class="page-header-meta">
+        <span class="pill-accent">12 Open Positions</span>
+        <span class="pill">Colombo, Sri Lanka</span>
+        <span class="pill">Immediate &amp; Planned Hiring</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Page Body ── -->
+  <div class="page-body">
+    <div class="page-bg-map" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1: OPEN POSITIONS
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="open-positions" data-section-label="Open Positions">
+
+      <!-- VARIANT A: 2-col job cards -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Open Positions</span>
+              <h2>12 Current Openings</h2>
+              <p>Roles spanning all four business lines. Most positions are based in our Colombo headquarters at No. 479, T B Jayah Mawatha, Colombo 10.</p>
+            </div>
+            <div class="jobs-grid">
+              <div class="job-card">
+                <div class="job-card-top"><span class="job-dept">Equity Dealing</span><span class="job-type">Full-time</span></div>
+                <h4>Equity Dealer — CSE</h4>
+                <div class="job-location">📍 Colombo 10 · Immediate</div>
+                <p>Execute CSE equity transactions for institutional and high-net-worth clients. Requires SLCFMA dealing licence and minimum 2 years CSE dealing experience.</p>
+                <a href="#apply" class="job-apply">Apply now →</a>
+              </div>
+              <div class="job-card">
+                <div class="job-card-top"><span class="job-dept">Corporate Finance</span><span class="job-type">Full-time</span></div>
+                <h4>Associate — M&amp;A Advisory</h4>
+                <div class="job-location">📍 Colombo 10 · Immediate</div>
+                <p>Execution of M&A advisory mandates including valuation, information memoranda, and investor outreach. 2–3 years IB or Big 4 transaction services background required.</p>
+                <a href="#apply" class="job-apply">Apply now →</a>
+              </div>
+              <div class="job-card">
+                <div class="job-card-top"><span class="job-dept">Fixed Income</span><span class="job-type">Full-time</span></div>
+                <h4>Fixed Income Analyst</h4>
+                <div class="job-location">📍 Colombo 10 · Immediate</div>
+                <p>Analysis of government securities market, yield curve modelling, client Repo portfolio management, and support for the Primary Dealer function. CFA Level I candidate preferred.</p>
+                <a href="#apply" class="job-apply">Apply now →</a>
+              </div>
+              <div class="job-card">
+                <div class="job-card-top"><span class="job-dept">Research</span><span class="job-type">Full-time</span></div>
+                <h4>Equity Research Analyst</h4>
+                <div class="job-location">📍 Colombo 10 · Q3 2025</div>
+                <p>Coverage of 6–8 CSE-listed companies across financials and industrials sectors. Initiating coverage notes, quarterly earnings updates, and client presentations.</p>
+                <a href="#apply" class="job-apply">Apply now →</a>
+              </div>
+              <div class="job-card">
+                <div class="job-card-top"><span class="job-dept">Venture Capital</span><span class="job-type">Full-time</span></div>
+                <h4>Investment Associate — LVL</h4>
+                <div class="job-location">📍 Colombo 10 · Q3 2025</div>
+                <p>Deal sourcing, due diligence, and portfolio company monitoring for LVL Energy Fund and co-investment vehicles. Experience in PE/VC or corporate development preferred.</p>
+                <a href="#apply" class="job-apply">Apply now →</a>
+              </div>
+              <div class="job-card">
+                <div class="job-card-top"><span class="job-dept">Technology</span><span class="job-type">Full-time</span></div>
+                <h4>Software Engineer — Trading Systems</h4>
+                <div class="job-location">📍 Colombo 10 · Immediate</div>
+                <p>Build and maintain the HNB Stockbrokers trading platform. React front-end, Node.js backend, real-time CSE data feeds. 3+ years full-stack experience required.</p>
+                <a href="#apply" class="job-apply">Apply now →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Filter sidebar + list -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Open Positions</span>
+              <h2>Browse All 12 Openings</h2>
+            </div>
+            <div class="jobs-b-layout">
+              <div>
+                <nav class="dept-filter" aria-label="Department filter">
+                  <h4>Department</h4>
+                  <a href="#" class="active">All Departments <span class="dcnt">12</span></a>
+                  <a href="#">Equity Dealing <span class="dcnt">3</span></a>
+                  <a href="#">Corporate Finance <span class="dcnt">2</span></a>
+                  <a href="#">Fixed Income <span class="dcnt">2</span></a>
+                  <a href="#">Research <span class="dcnt">2</span></a>
+                  <a href="#">Venture Capital <span class="dcnt">1</span></a>
+                  <a href="#">Technology <span class="dcnt">2</span></a>
+                </nav>
+              </div>
+              <div class="job-list-full">
+                <div class="job-list-item"><div class="jli-info"><h4>Equity Dealer — CSE</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Equity</span></div>
+                <div class="job-list-item"><div class="jli-info"><h4>Associate — M&amp;A Advisory</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Corp. Finance</span></div>
+                <div class="job-list-item"><div class="jli-info"><h4>Fixed Income Analyst</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Fixed Income</span></div>
+                <div class="job-list-item"><div class="jli-info"><h4>Equity Research Analyst</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Q3 2025</span></div></div><span class="jli-dept">Research</span></div>
+                <div class="job-list-item"><div class="jli-info"><h4>Investment Associate — LVL</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Q3 2025</span></div></div><span class="jli-dept">Venture Capital</span></div>
+                <div class="job-list-item"><div class="jli-info"><h4>Software Engineer — Trading Systems</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Technology</span></div>
+                <div class="job-list-item"><div class="jli-info"><h4>Compliance Officer</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Compliance</span></div>
+                <div class="job-list-item"><div class="jli-info"><h4>Institutional Sales — Equities</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Q4 2025</span></div></div><span class="jli-dept">Equity</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Editorial header + job grid -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="jobs-c-featured">
+              <span class="section-label">Open Positions</span>
+              <h2>Where Capital Markets Careers Are Built</h2>
+              <p>We hire people who are serious about Sri Lanka's financial markets — not people marking time on their way somewhere else. Every open role is a real position on a team that moves material capital.</p>
+              <div class="jobs-c-count">
+                <div class="jcc-item"><div class="jcc-val">12</div><div class="jcc-label">Open Positions</div></div>
+                <div class="jcc-item"><div class="jcc-val">4</div><div class="jcc-label">Business Lines</div></div>
+                <div class="jcc-item"><div class="jcc-val">7</div><div class="jcc-label">Immediate Starts</div></div>
+                <div class="jcc-item"><div class="jcc-val">LKR</div><div class="jcc-label">Market-Rate Compensation</div></div>
+              </div>
+            </div>
+            <div class="jobs-grid">
+              <div class="job-card"><div class="job-card-top"><span class="job-dept">Equity Dealing</span><span class="job-type">Immediate</span></div><h4>Equity Dealer — CSE</h4><div class="job-location">📍 Colombo 10</div><p>Execute institutional and HNW equity transactions. SLCFMA licence required.</p><a href="#apply" class="job-apply">Apply →</a></div>
+              <div class="job-card"><div class="job-card-top"><span class="job-dept">Corporate Finance</span><span class="job-type">Immediate</span></div><h4>Associate — M&amp;A Advisory</h4><div class="job-location">📍 Colombo 10</div><p>M&A execution: valuation, IMs, investor outreach. 2–3 years IB background.</p><a href="#apply" class="job-apply">Apply →</a></div>
+              <div class="job-card"><div class="job-card-top"><span class="job-dept">Fixed Income</span><span class="job-type">Immediate</span></div><h4>Fixed Income Analyst</h4><div class="job-location">📍 Colombo 10</div><p>Yield curve modelling, Repo portfolio management, Primary Dealer support.</p><a href="#apply" class="job-apply">Apply →</a></div>
+              <div class="job-card"><div class="job-card-top"><span class="job-dept">Technology</span><span class="job-type">Immediate</span></div><h4>Software Engineer — Trading Systems</h4><div class="job-location">📍 Colombo 10</div><p>React / Node.js trading platform. Real-time CSE data integration.</p><a href="#apply" class="job-apply">Apply →</a></div>
+            </div>
+            <div style="text-align:center; margin-top:1.5rem;">
+              <a href="#apply" class="btn-primary">View All 12 Positions</a>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /open-positions -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2: CULTURE & VALUES
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="culture-values" data-section-label="Culture &amp; Values">
+
+      <!-- VARIANT A: 3-col culture cards -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Culture &amp; Values</span>
+              <h2>What Working Here Is Actually Like</h2>
+              <p>We're not going to tell you we have a ping-pong table. Here's what actually matters in this building.</p>
+            </div>
+            <div class="culture-grid">
+              <div class="culture-card"><div class="cc-icon">📊</div><h4>Real Work from Day One</h4><p>Analysts run models and attend client calls from their first month. We don't warehouse junior staff in back-office tasks until someone retires.</p></div>
+              <div class="culture-card"><div class="cc-icon">🏆</div><h4>Meritocratic Advancement</h4><p>Promotions are based on deal contribution and client outcomes — not tenure. We've had analysts promoted to Associate in under 18 months.</p></div>
+              <div class="culture-card"><div class="cc-icon">🌏</div><h4>Sri Lanka Focused</h4><p>Our edge is deep knowledge of Sri Lankan corporates, regulators, and capital markets. We hire people who want to be the best in this market — not the ones passing through.</p></div>
+              <div class="culture-card"><div class="cc-icon">📚</div><h4>CFA &amp; Professional Support</h4><p>HNB Investment Bank covers 100% of CFA exam fees, provides study leave, and maintains a CFA study programme for enrolled employees. We treat professional development as an investment.</p></div>
+              <div class="culture-card"><div class="cc-icon">⚖️</div><h4>Ethical Practice</h4><p>In a market where corners get cut, we don't. Our compliance culture is strict, our track record is clean, and our clients notice the difference. We protect our people from ethical shortcuts, not pressure them into them.</p></div>
+              <div class="culture-card"><div class="cc-icon">💰</div><h4>Competitive Compensation</h4><p>Base salaries benchmarked to market median. Variable pay tied to team and individual performance. Annual review cycle with transparent criteria.</p></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Two-col with benefits -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Culture &amp; Values</span>
+              <h2>An Environment Where Expertise Is Valued</h2>
+            </div>
+            <div class="culture-b-grid">
+              <div class="culture-b-copy">
+                <h3>We hire for depth, not credentials</h3>
+                <p>We care more about whether you understand Sri Lanka's T-Bill yield curve than whether you went to a particular school. Our best analysts have come from everywhere from IIT to the University of Kelaniya — what they share is intellectual rigour and genuine curiosity about markets.</p>
+                <p>The team is small enough that everyone's contribution is visible. You will not spend years being invisible in a hierarchy of 10,000 people.</p>
+                <div style="margin-top:1.25rem; display:flex; gap:1rem; flex-wrap:wrap;">
+                  <a href="#apply" class="btn-primary">View Open Positions</a>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:0.875rem; font-weight:700; color:var(--ink); margin-bottom:1rem;">Benefits &amp; Support</div>
+                <div class="benefits-list">
+                  <div class="benefit-item"><div class="bi-icon"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div class="bi-body"><h5>CFA Programme Support</h5><p>100% exam fee coverage, study leave, in-house study cohort.</p></div></div>
+                  <div class="benefit-item"><div class="bi-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="bi-body"><h5>Comprehensive Medical Cover</h5><p>Individual and family cover. Dental included.</p></div></div>
+                  <div class="benefit-item"><div class="bi-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="bi-body"><h5>Flexible Hours</h5><p>Core hours 9–4. Early start and early finish available for dealing roles.</p></div></div>
+                  <div class="benefit-item"><div class="bi-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="bi-body"><h5>Competitive Salary + Variable</h5><p>Market-rate base + performance bonus. Annual review.</p></div></div>
+                  <div class="benefit-item"><div class="bi-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="bi-body"><h5>HNB Group Network</h5><p>Access to Sri Lanka's second-largest bank's corporate relationships and ecosystem.</p></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Editorial on primary -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="culture-c-inner">
+              <span class="section-label">Culture &amp; Values</span>
+              <h2>The Work That Matters Gets Done Here</h2>
+              <p>Sri Lanka's largest IPOs, most complex M&A transactions, and the government's primary debt market all intersect with this team. If you want to work on the transactions that reshape the Sri Lankan economy — this is where that happens.</p>
+              <div class="culture-c-grid">
+                <div class="culture-c-tile"><h4>Real Responsibility Early</h4><p>Junior team members run analysis, attend client meetings, and author publications from their first quarter.</p></div>
+                <div class="culture-c-tile"><h4>Rigorous but Not Brutal</h4><p>We work hard when the deal requires it. We don't manufacture urgency to prove commitment.</p></div>
+                <div class="culture-c-tile"><h4>Full CFA Support</h4><p>100% exam fee coverage. Study leave. Internal study group. We invest in your professional credentials.</p></div>
+                <div class="culture-c-tile"><h4>Meritocratic Track</h4><p>Promotion decisions are based on contribution, not tenure or politics. The best work is rewarded.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /culture-values -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 3: HOW TO APPLY
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" id="apply" data-section-id="how-to-apply" data-section-label="How to Apply">
+
+      <!-- VARIANT A: Horizontal steps -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">How to Apply</span>
+              <h2>Our Hiring Process</h2>
+              <p>We aim to move quickly. Most roles complete the full hiring cycle in 3–4 weeks from application.</p>
+            </div>
+            <div class="apply-steps">
+              <div class="apply-step"><div class="as-circle">1</div><h4>Apply Online</h4><p>Submit CV and cover letter through the form below. No third-party recruiters needed.</p></div>
+              <div class="apply-step"><div class="as-circle">2</div><h4>Technical Screen</h4><p>A 45-minute take-home case study — relevant to the role (valuation, yield analysis, etc.).</p></div>
+              <div class="apply-step"><div class="as-circle">3</div><h4>Panel Interview</h4><p>2-hour interview with the hiring manager and one senior team member. No trick questions.</p></div>
+              <div class="apply-step"><div class="as-circle">4</div><h4>Offer &amp; Onboarding</h4><p>Reference check, then written offer within 5 business days. Start date by agreement.</p></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Steps + tips -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">How to Apply</span>
+              <h2>What We Look For</h2>
+            </div>
+            <div class="apply-b-grid">
+              <div class="apply-b-copy">
+                <h3>The Hiring Process</h3>
+                <p>We keep it simple and fast. Apply, demonstrate technical competence, have a genuine conversation about the role — and if it's a mutual fit, we make an offer.</p>
+                <p>We don't use external recruiters for most roles. If you're approached by a recruiter claiming to represent us, verify directly with hr@hnbib.lk before engaging.</p>
+                <h3 style="margin-top:1.5rem;">Application Tips</h3>
+                <ul class="tips-list">
+                  <li>Tailor your cover letter to the specific business line — generic applications are easy to spot</li>
+                  <li>Include quantified results: deal sizes, portfolio returns, revenue generated</li>
+                  <li>Mention your CFA status, SLCFMA licence, or other relevant credentials upfront</li>
+                  <li>For research roles, include 2 pages on a CSE-listed stock you know well</li>
+                  <li>Apply directly — third-party recruiters add no value and slow the process</li>
+                </ul>
+              </div>
+              <div>
+                <div class="apply-steps" style="grid-template-columns:1fr; position:relative; gap:0;">
+                  <div class="apply-step" style="text-align:left; display:flex; gap:1rem; padding:0 0 1.5rem 0; align-items:flex-start;"><div class="as-circle" style="flex-shrink:0; margin:0;">1</div><div><h4>Submit Application</h4><p>CV (max 2 pages) + cover letter to hr@hnbib.lk. Subject line: [Role Title] Application.</p></div></div>
+                  <div class="apply-step" style="text-align:left; display:flex; gap:1rem; padding:0 0 1.5rem 0; align-items:flex-start;"><div class="as-circle" style="flex-shrink:0; margin:0;">2</div><div><h4>Technical Assessment</h4><p>Take-home case study sent within 2 business days. 48 hours to complete.</p></div></div>
+                  <div class="apply-step" style="text-align:left; display:flex; gap:1rem; padding:0 0 1.5rem 0; align-items:flex-start;"><div class="as-circle" style="flex-shrink:0; margin:0;">3</div><div><h4>Panel Interview</h4><p>2-hour interview. Technical competence + cultural alignment. Video or in-person at our office.</p></div></div>
+                  <div class="apply-step" style="text-align:left; display:flex; gap:1rem; padding:0 0 0 0; align-items:flex-start;"><div class="as-circle" style="flex-shrink:0; margin:0;">4</div><div><h4>Offer &amp; Start</h4><p>Written offer within 5 business days of final interview. Notice period by negotiation.</p></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Editorial -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div style="background:var(--primary); border-radius:var(--radius); padding:3rem; color:#fff;">
+              <span style="font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase; color:oklch(0.65 0.165 140);">How to Apply</span>
+              <h2 style="color:#fff; margin:0.75rem 0 1rem;">Apply Directly. We Respond to Everyone.</h2>
+              <p style="color:rgba(255,255,255,0.8); line-height:1.7; margin-bottom:1rem;">Send your CV and a specific cover letter to <strong style="color:#fff;">hr@hnbib.lk</strong> with the subject line: [Role Title] Application. We acknowledge every application within two business days and respond to every candidate, accepted or not.</p>
+              <p style="color:rgba(255,255,255,0.8); line-height:1.7; margin-bottom:2rem;">The process: application → 48-hour take-home case → 2-hour panel interview → offer within 5 business days. Total cycle time: typically 3 weeks.</p>
+              <a href="mailto:hr@hnbib.lk" style="display:inline-flex; align-items:center; gap:0.5rem; background:#fff; color:var(--primary); border:none; border-radius:var(--radius); padding:0.75rem 1.5rem; font-size:0.875rem; font-weight:700; cursor:pointer; text-decoration:none;">Apply: hr@hnbib.lk →</a>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /how-to-apply -->
+
+
+    <!-- ── Section CTA Final ── -->
+    <section class="section-cta-final scroll-fade">
+      <div class="section-inner">
+        <div class="cta-final-inner">
+          <div class="cta-final-copy">
+            <span class="section-label">Apply Now</span>
+            <h2>Ready to Join the Team?</h2>
+            <p>Submit your application through the form or email directly to hr@hnbib.lk. We respond to every applicant — accepted or not — within five business days.</p>
+            <div class="stat-proof">
+              <div><strong>12</strong><span>Open Positions</span></div>
+              <div><strong>3–4 Weeks</strong><span>Typical Hiring Cycle</span></div>
+              <div><strong>100%</strong><span>CFA Exam Fee Covered</span></div>
+            </div>
+          </div>
+          <div class="cta-final-form">
+            <h3>Submit Application</h3>
+            <form>
+              <div class="form-row">
+                <label for="cta-name-car">Full Name</label>
+                <input type="text" id="cta-name-car" placeholder="Your name" />
+              </div>
+              <div class="form-row">
+                <label for="cta-email-car">Email Address</label>
+                <input type="email" id="cta-email-car" placeholder="you@email.com" />
+              </div>
+              <div class="form-row">
+                <label for="cta-role-car">Role Applying For</label>
+                <input type="text" id="cta-role-car" placeholder="e.g. Equity Dealer, M&A Associate" />
+              </div>
+              <div class="form-row">
+                <label for="cta-exp-car">Years of Experience</label>
+                <input type="text" id="cta-exp-car" placeholder="e.g. 3 years, fresh graduate" />
+              </div>
+              <button type="submit" class="cta-submit">Submit Application →</button>
+              <div class="form-reassurance">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                We respond to every applicant within 5 business days.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-body -->
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="32" />
+          <p>HNB Investment Bank — Sri Lanka's integrated investment bank. Equal opportunity employer.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Careers</h4>
+          <ul>
+            <li><a href="./index.html">Open Positions</a></li>
+            <li><a href="./#culture-values">Culture &amp; Values</a></li>
+            <li><a href="./#apply">How to Apply</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../about-us/index.html">About Us</a></li>
+            <li><a href="../news/index.html">News</a></li>
+            <li><a href="../contact-us/index.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2025 HNB Investment Bank Limited. HNB Investment Bank is an equal opportunity employer. All qualified applicants will receive consideration without regard to race, gender, religion, or disability.</p>
+        <div class="footer-legal-links">
+          <a href="../privacy-policy/index.html">Privacy Policy</a>
+          <a href="../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <link rel="stylesheet" href="../section-toggle.css" />
+  <script src="../scripts.js"></script>
+  <script src="../section-toggle.js"></script>
+</body>
+</html>

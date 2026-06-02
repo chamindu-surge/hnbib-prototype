@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investor Relations — HNB Investment Bank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ── Financial Highlights ──────────────────────── */
+    .fh-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .fh-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; text-align: center; }
+    .fh-val { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 0.25rem; }
+    .fh-label { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.375rem; }
+    .fh-change { font-size: 0.8rem; font-weight: 600; }
+    .fh-change.up { color: oklch(0.45 0.14 145); }
+    .fh-change.dn { color: oklch(0.45 0.18 25); }
+    .fh-b-wrap { display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; align-items: start; }
+    .fin-table { width: 100%; border-collapse: collapse; }
+    .fin-table th { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; text-align: left; padding: 0.625rem 0.875rem; background: var(--bg-2); border-bottom: 2px solid var(--line); }
+    .fin-table th:not(:first-child) { text-align: right; }
+    .fin-table td { padding: 0.75rem 0.875rem; border-bottom: 1px solid var(--line); font-size: 0.875rem; color: var(--ink-2); }
+    .fin-table td:not(:first-child) { text-align: right; }
+    .fin-table td.val-pos { font-weight: 700; color: oklch(0.45 0.14 145); }
+    .fin-table td.val-main { font-weight: 700; color: var(--ink); }
+    .fin-table tr:last-child td { border-bottom: none; font-weight: 700; }
+    .ir-sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+    .ir-s-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; }
+    .ir-s-card h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.75rem; border-bottom: 1px solid var(--line); padding-bottom: 0.625rem; }
+    .ir-s-row { display: flex; justify-content: space-between; padding: 0.375rem 0; border-bottom: 1px solid var(--line); }
+    .ir-s-row:last-child { border-bottom: none; }
+    .ir-s-label { font-size: 0.8rem; color: var(--ink-2); }
+    .ir-s-val { font-size: 0.875rem; font-weight: 700; color: var(--ink); }
+    .fh-c-inner { background: var(--primary); border-radius: var(--radius); padding: 3rem; color: #fff; }
+    .fh-c-inner .section-label { color: oklch(0.65 0.165 140); }
+    .fh-c-inner h2 { color: #fff; margin: 0.75rem 0 1rem; }
+    .fh-c-inner p { color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 1rem; }
+    .fh-c-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2); }
+    .fh-c-kpi .kval { font-size: 1.75rem; font-weight: 800; color: #fff; }
+    .fh-c-kpi .klbl { font-size: 0.75rem; color: rgba(255,255,255,0.65); margin-top: 0.25rem; }
+    .btn-primary-inv { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; color: var(--primary); border: none; border-radius: var(--radius); padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+    .btn-ghost-inv { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.45); border-radius: var(--radius); padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+
+    /* ── Documents & Disclosures ────────────────────── */
+    .doc-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .doc-category h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.875rem; padding-bottom: 0.625rem; border-bottom: 2px solid var(--primary); }
+    .doc-list { display: flex; flex-direction: column; gap: 0.625rem; }
+    .doc-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; transition: border-color 0.15s; }
+    .doc-item:hover { border-color: var(--primary); }
+    .doc-icon { width: 32px; height: 32px; border-radius: 6px; background: oklch(0.43 0.150 248 / 0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .doc-icon svg { width: 16px; height: 16px; stroke: var(--primary); fill: none; }
+    .doc-info h5 { font-size: 0.82rem; font-weight: 700; color: var(--ink); margin-bottom: 0.1rem; }
+    .doc-info span { font-size: 0.72rem; color: var(--muted); }
+    .doc-b-wrap { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start; }
+    .doc-table { width: 100%; border-collapse: collapse; }
+    .doc-table th { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; text-align: left; padding: 0.625rem 0.875rem; background: var(--bg-2); border-bottom: 2px solid var(--line); }
+    .doc-table td { padding: 0.75rem 0.875rem; border-bottom: 1px solid var(--line); font-size: 0.875rem; color: var(--ink-2); }
+    .doc-table tr:last-child td { border-bottom: none; }
+    .doc-table td a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    .doc-table td a:hover { text-decoration: underline; }
+    .doc-c-inner { background: var(--bg-2); border-radius: var(--radius); padding: 2.5rem; }
+    .doc-c-inner h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 1.25rem; }
+    .doc-c-year { margin-bottom: 2rem; }
+    .doc-c-year h4 { font-size: 0.875rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.875rem; }
+    .doc-c-row { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 0.5rem; }
+    .doc-c-row-info { display: flex; align-items: center; gap: 0.75rem; }
+    .doc-c-row-info h5 { font-size: 0.875rem; font-weight: 600; color: var(--ink); margin-bottom: 0.1rem; }
+    .doc-c-row-info span { font-size: 0.72rem; color: var(--muted); }
+    .doc-c-badge { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.2rem 0.6rem; border-radius: 4px; background: var(--bg-2); color: var(--muted); border: 1px solid var(--line); }
+    .doc-c-badge.annual { background: oklch(0.43 0.150 248 / 0.1); color: var(--primary); border-color: oklch(0.43 0.150 248 / 0.2); }
+
+    /* ── Governance ─────────────────────────────────── */
+    .gov-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .board-list { display: flex; flex-direction: column; gap: 0.875rem; }
+    .board-member { display: flex; gap: 1rem; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem; }
+    .bm-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--frame); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 800; color: var(--primary); flex-shrink: 0; }
+    .bm-info h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.125rem; }
+    .bm-info p { font-size: 0.78rem; color: var(--muted); margin: 0; }
+    .bm-badge { margin-left: auto; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap; }
+    .bm-badge.exec { background: oklch(0.43 0.150 248 / 0.1); color: var(--primary); border: 1px solid oklch(0.43 0.150 248 / 0.2); }
+    .bm-badge.nex { background: oklch(0.65 0.165 140 / 0.1); color: var(--accent-2); border: 1px solid oklch(0.65 0.165 140 / 0.2); }
+    .gov-policies { display: flex; flex-direction: column; gap: 0.875rem; }
+    .gov-policy { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 1.125rem; }
+    .gov-policy h5 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .gov-policy p { font-size: 0.8rem; color: var(--ink-2); line-height: 1.55; margin: 0; }
+    .gov-c-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .gov-c-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+    .gov-c-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.875rem; }
+    .gov-c-card ul { list-style: none; padding: 0; }
+    .gov-c-card ul li { font-size: 0.82rem; color: var(--ink-2); padding: 0.3rem 0; border-bottom: 1px solid var(--line); display: flex; gap: 0.5rem; }
+    .gov-c-card ul li::before { content: '→'; color: var(--primary); flex-shrink: 0; }
+    .gov-c-card ul li:last-child { border-bottom: none; }
+
+    @media (max-width: 900px) {
+      .fh-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .fh-b-wrap, .doc-b-wrap, .gov-grid { grid-template-columns: 1fr; }
+      .fh-c-kpis { grid-template-columns: repeat(2, 1fr); }
+      .doc-grid-3, .gov-c-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .fh-grid-4, .doc-grid-3, .gov-c-grid, .fh-c-kpis { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Ticker ── -->
+  <div class="ticker" aria-label="Market data">
+    <div class="ticker-track">
+      <span class="ticker-item">HNBI — Parent: HNB.N0000 <strong>LKR 192.50</strong> <span class="ticker-up">▲ 1.50 (+0.79%)</span></span>
+      <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">▲ 48.16 (+0.21%)</span></span>
+      <span class="ticker-item">LVL.N0000 <strong>LKR 17.40</strong> <span class="ticker-up">▲ 0.30 (+1.75%)</span></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+      <span class="ticker-item">HNBI — Parent: HNB.N0000 <strong>LKR 192.50</strong> <span class="ticker-up">▲ 1.50 (+0.79%)</span></span>
+      <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">▲ 48.16 (+0.21%)</span></span>
+      <span class="ticker-item">LVL.N0000 <strong>LKR 17.40</strong> <span class="ticker-up">▲ 0.30 (+1.75%)</span></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+    </div>
+  </div>
+
+  <!-- ── Navigation ── -->
+  <nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../about-us/index.html">About Us</a></li>
+    <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../news/index.html">News</a></li>
+    <li><a href="../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+  <!-- ── Page Header ── -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <span class="section-label">Company</span>
+      <h1>Investor Relations</h1>
+      <p class="page-header-sub">Financial results, regulatory disclosures, board governance, and shareholder communications for HNB Investment Bank Limited and its listed subsidiaries.</p>
+      <div class="page-header-meta">
+        <span class="pill">LVL.N0000 — CSE Listed</span>
+        <span class="pill">Regulated by SEC of Sri Lanka</span>
+        <span class="pill-accent">FY2025 Results Available</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Page Body ── -->
+  <div class="page-body">
+    <div class="page-bg-map" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1: FINANCIAL HIGHLIGHTS
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="financial-highlights" data-section-label="Financial Highlights">
+
+      <!-- VARIANT A: 4-col KPI cards -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Financial Highlights</span>
+              <h2>FY2025 Performance Summary</h2>
+              <p>Results for the financial year ending 31 March 2025. Audited by KPMG Sri Lanka.</p>
+            </div>
+            <div class="fh-grid-4">
+              <div class="fh-card">
+                <div class="fh-val" data-count="8.4" data-suffix="Bn">—</div>
+                <div class="fh-label">Total Revenue (LKR)</div>
+                <div class="fh-change up">▲ 18.3% YoY</div>
+              </div>
+              <div class="fh-card">
+                <div class="fh-val" data-count="2.1" data-suffix="Bn">—</div>
+                <div class="fh-label">Profit Before Tax (LKR)</div>
+                <div class="fh-change up">▲ 24.7% YoY</div>
+              </div>
+              <div class="fh-card">
+                <div class="fh-val" data-count="1.56" data-suffix="Bn">—</div>
+                <div class="fh-label">Profit After Tax (LKR)</div>
+                <div class="fh-change up">▲ 22.1% YoY</div>
+              </div>
+              <div class="fh-card">
+                <div class="fh-val" data-count="18.4" data-suffix="%">—</div>
+                <div class="fh-label">Return on Equity</div>
+                <div class="fh-change up">▲ 310bps YoY</div>
+              </div>
+            </div>
+            <div class="fh-grid-4" style="margin-top:1.5rem;">
+              <div class="fh-card">
+                <div class="fh-val" data-count="11.2" data-suffix="Bn">—</div>
+                <div class="fh-label">Total Assets (LKR)</div>
+                <div class="fh-change up">▲ 12.6% YoY</div>
+              </div>
+              <div class="fh-card">
+                <div class="fh-val" data-count="7.8" data-suffix="Bn">—</div>
+                <div class="fh-label">AUM (Total, LKR)</div>
+                <div class="fh-change up">▲ 15.2% YoY</div>
+              </div>
+              <div class="fh-card">
+                <div class="fh-val" data-count="47" data-suffix="+">—</div>
+                <div class="fh-label">Capital Markets Transactions</div>
+                <div class="fh-change up">▲ 8 vs FY2024</div>
+              </div>
+              <div class="fh-card">
+                <div class="fh-val">LKR 3.50</div>
+                <div class="fh-label">Dividend per Share (Proposed)</div>
+                <div class="fh-change up">▲ LKR 0.50 vs FY2024</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Table + sidebar -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Financial Highlights</span>
+              <h2>5-Year Financial Summary</h2>
+              <p>Audited financials. All figures in LKR Millions unless stated.</p>
+            </div>
+            <div class="fh-b-wrap">
+              <div>
+                <table class="fin-table">
+                  <thead>
+                    <tr><th>Metric</th><th>FY2025</th><th>FY2024</th><th>FY2023</th><th>FY2022</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Total Revenue</td><td class="val-main">8,412</td><td>7,112</td><td>5,820</td><td>3,940</td></tr>
+                    <tr><td>Operating Expenses</td><td>3,680</td><td>3,210</td><td>2,890</td><td>2,320</td></tr>
+                    <tr><td>Profit Before Tax</td><td class="val-main">2,148</td><td>1,722</td><td>1,104</td><td>422</td></tr>
+                    <tr><td>Profit After Tax</td><td class="val-main">1,564</td><td>1,281</td><td>792</td><td>284</td></tr>
+                    <tr><td>Total Assets</td><td class="val-main">11,240</td><td>9,980</td><td>8,650</td><td>7,120</td></tr>
+                    <tr><td>Total Equity</td><td class="val-main">5,860</td><td>4,920</td><td>3,940</td><td>3,280</td></tr>
+                    <tr><td>Return on Equity (%)</td><td class="val-pos">18.4%</td><td>15.3%</td><td>11.8%</td><td>6.2%</td></tr>
+                    <tr><td>Cost-to-Income Ratio (%)</td><td class="val-pos">43.7%</td><td>45.1%</td><td>49.7%</td><td>58.9%</td></tr>
+                    <tr><td>Dividend per Share (LKR)</td><td class="val-main">3.50*</td><td>3.00</td><td>1.50</td><td>—</td></tr>
+                  </tbody>
+                </table>
+                <div style="font-size:0.72rem; color:var(--muted); margin-top:0.625rem; font-style:italic;">*Proposed. Subject to AGM approval. FY = year ending 31 March.</div>
+              </div>
+              <div class="ir-sidebar">
+                <div class="ir-s-card">
+                  <h4>Share Information</h4>
+                  <div class="ir-s-row"><span class="ir-s-label">Listed Entity</span><span class="ir-s-val">LVL.N0000 (CSE)</span></div>
+                  <div class="ir-s-row"><span class="ir-s-label">Shares Outstanding</span><span class="ir-s-val">100,000,000</span></div>
+                  <div class="ir-s-row"><span class="ir-s-label">Last Price</span><span class="ir-s-val">LKR 17.40</span></div>
+                  <div class="ir-s-row"><span class="ir-s-label">Market Cap</span><span class="ir-s-val">LKR 1.74Bn</span></div>
+                  <div class="ir-s-row"><span class="ir-s-label">52W High / Low</span><span class="ir-s-val">19.20 / 12.80</span></div>
+                </div>
+                <div class="ir-s-card">
+                  <h4>Key Dates FY2026</h4>
+                  <div class="ir-s-row"><span class="ir-s-label">Q1 Results</span><span class="ir-s-val">Aug 2025</span></div>
+                  <div class="ir-s-row"><span class="ir-s-label">AGM</span><span class="ir-s-val">Sep 2025</span></div>
+                  <div class="ir-s-row"><span class="ir-s-label">H1 Results</span><span class="ir-s-val">Nov 2025</span></div>
+                  <div class="ir-s-row"><span class="ir-s-label">Q3 Results</span><span class="ir-s-val">Feb 2026</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Editorial on primary -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="fh-c-inner">
+              <span class="section-label">Financial Highlights</span>
+              <h2>FY2025: Three Years of Consecutive Profit Growth</h2>
+              <p>HNB Investment Bank's FY2025 results reflect a business that has recovered from Sri Lanka's 2022 economic crisis faster than the broader capital market — and is now capitalising on structural tailwinds in fixed income, equity capital markets, and venture investing.</p>
+              <div class="fh-c-kpis">
+                <div class="fh-c-kpi"><div class="kval">LKR 8.4Bn</div><div class="klbl">Total Revenue</div></div>
+                <div class="fh-c-kpi"><div class="kval">18.4%</div><div class="klbl">Return on Equity</div></div>
+                <div class="fh-c-kpi"><div class="kval">LKR 7.8Bn</div><div class="klbl">Total AUM</div></div>
+                <div class="fh-c-kpi"><div class="kval">43.7%</div><div class="klbl">Cost-to-Income</div></div>
+              </div>
+              <div style="display:flex; gap:1rem; margin-top:2rem; flex-wrap:wrap;">
+                <a href="#documents" class="btn-primary-inv">Download Annual Report</a>
+                <a href="../contact-us/index.html" class="btn-ghost-inv">IR Contact</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /financial-highlights -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2: DOCUMENTS & DISCLOSURES
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" id="documents" data-section-id="documents" data-section-label="Documents &amp; Disclosures">
+
+      <!-- VARIANT A: 3-col category cards -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Documents &amp; Disclosures</span>
+              <h2>Financial Reports &amp; CSE Filings</h2>
+            </div>
+            <div class="doc-grid-3">
+              <div class="doc-category">
+                <h4>Annual Reports</h4>
+                <div class="doc-list">
+                  <a class="doc-item" href="#">
+                    <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+                    <div class="doc-info"><h5>Annual Report FY2025</h5><span>PDF · 8.4 MB · May 2025</span></div>
+                  </a>
+                  <a class="doc-item" href="#">
+                    <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                    <div class="doc-info"><h5>Annual Report FY2024</h5><span>PDF · 7.1 MB · May 2024</span></div>
+                  </a>
+                  <a class="doc-item" href="#">
+                    <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                    <div class="doc-info"><h5>Annual Report FY2023</h5><span>PDF · 6.5 MB · May 2023</span></div>
+                  </a>
+                </div>
+              </div>
+              <div class="doc-category">
+                <h4>Interim Financial Statements</h4>
+                <div class="doc-list">
+                  <a class="doc-item" href="#">
+                    <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                    <div class="doc-info"><h5>Q3 FY2026 (Dec 2024)</h5><span>PDF · 1.2 MB · Feb 2025</span></div>
+                  </a>
+                  <a class="doc-item" href="#">
+                    <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                    <div class="doc-info"><h5>H1 FY2026 (Sep 2024)</h5><span>PDF · 1.4 MB · Nov 2024</span></div>
+                  </a>
+                  <a class="doc-item" href="#">
+                    <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                    <div class="doc-info"><h5>Q1 FY2026 (Jun 2024)</h5><span>PDF · 1.1 MB · Aug 2024</span></div>
+                  </a>
+                </div>
+              </div>
+              <div class="doc-category">
+                <h4>CSE Announcements</h4>
+                <div class="doc-list">
+                  <a class="doc-item" href="#">
+                    <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
+                    <div class="doc-info"><h5>Dividend Announcement</h5><span>27 May 2025</span></div>
+                  </a>
+                  <a class="doc-item" href="#">
+                    <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/></svg></div>
+                    <div class="doc-info"><h5>Board Appointment</h5><span>15 Apr 2025</span></div>
+                  </a>
+                  <a class="doc-item" href="#">
+                    <div class="doc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg></div>
+                    <div class="doc-info"><h5>AGM Notice FY2025</h5><span>01 Apr 2025</span></div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Table + info -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Documents &amp; Disclosures</span>
+              <h2>All Filings &amp; Publications</h2>
+            </div>
+            <div class="doc-b-wrap">
+              <div>
+                <table class="doc-table">
+                  <thead><tr><th>Document</th><th>Type</th><th>Date</th><th>Download</th></tr></thead>
+                  <tbody>
+                    <tr><td>Annual Report FY2025</td><td>Annual</td><td>May 2025</td><td><a href="#">PDF ↓</a></td></tr>
+                    <tr><td>Q3 FY2026 Interim Results</td><td>Quarterly</td><td>Feb 2025</td><td><a href="#">PDF ↓</a></td></tr>
+                    <tr><td>H1 FY2026 Interim Results</td><td>Half-Year</td><td>Nov 2024</td><td><a href="#">PDF ↓</a></td></tr>
+                    <tr><td>Q1 FY2026 Interim Results</td><td>Quarterly</td><td>Aug 2024</td><td><a href="#">PDF ↓</a></td></tr>
+                    <tr><td>Annual Report FY2024</td><td>Annual</td><td>May 2024</td><td><a href="#">PDF ↓</a></td></tr>
+                    <tr><td>Annual Report FY2023</td><td>Annual</td><td>May 2023</td><td><a href="#">PDF ↓</a></td></tr>
+                    <tr><td>CSE Dividend Notice</td><td>Announcement</td><td>27 May 2025</td><td><a href="#">PDF ↓</a></td></tr>
+                    <tr><td>Board Composition Change</td><td>Announcement</td><td>15 Apr 2025</td><td><a href="#">PDF ↓</a></td></tr>
+                    <tr><td>AGM Notice &amp; Proxy Form</td><td>AGM</td><td>01 Apr 2025</td><td><a href="#">PDF ↓</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="ir-sidebar">
+                <div class="ir-s-card">
+                  <h4>IR Contact</h4>
+                  <p style="font-size:0.82rem; color:var(--ink-2); margin-bottom:0.625rem;">For analyst briefings, shareholder queries, or media enquiries contact our Investor Relations team.</p>
+                  <div style="font-size:0.875rem; color:var(--ink); font-weight:600;">ir@hnbib.lk</div>
+                  <div style="font-size:0.82rem; color:var(--ink-2); margin-top:0.25rem;">+94 11 250 0000 ext. 4200</div>
+                </div>
+                <div class="ir-s-card">
+                  <h4>Auditor</h4>
+                  <p style="font-size:0.82rem; color:var(--ink-2); margin:0;">KPMG Sri Lanka (Chartered Accountants). KPMG has audited HNB Investment Bank financial statements since 2016.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Accordion-style year groups -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Documents &amp; Disclosures</span>
+              <h2>Full Document Library</h2>
+            </div>
+            <div class="doc-c-inner">
+              <div class="doc-c-year">
+                <h4>FY2026 (Current Year)</h4>
+                <div class="doc-c-row">
+                  <div class="doc-c-row-info">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <div><h5>Q3 FY2026 Interim Financial Statements</h5><span>31 Dec 2024 · Published Feb 2025</span></div>
+                  </div>
+                  <span class="doc-c-badge">Quarterly</span>
+                </div>
+                <div class="doc-c-row">
+                  <div class="doc-c-row-info">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <div><h5>H1 FY2026 Interim Financial Statements</h5><span>30 Sep 2024 · Published Nov 2024</span></div>
+                  </div>
+                  <span class="doc-c-badge">Half-Year</span>
+                </div>
+              </div>
+              <div class="doc-c-year">
+                <h4>FY2025</h4>
+                <div class="doc-c-row">
+                  <div class="doc-c-row-info">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <div><h5>Annual Report FY2025</h5><span>31 Mar 2025 · Published May 2025</span></div>
+                  </div>
+                  <span class="doc-c-badge annual">Annual</span>
+                </div>
+                <div class="doc-c-row">
+                  <div class="doc-c-row-info">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <div><h5>Q3 FY2025 Interim Financial Statements</h5><span>31 Dec 2023 · Published Feb 2024</span></div>
+                  </div>
+                  <span class="doc-c-badge">Quarterly</span>
+                </div>
+              </div>
+              <div class="doc-c-year">
+                <h4>FY2024 &amp; Earlier</h4>
+                <div class="doc-c-row">
+                  <div class="doc-c-row-info">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <div><h5>Annual Report FY2024</h5><span>31 Mar 2024 · Published May 2024</span></div>
+                  </div>
+                  <span class="doc-c-badge annual">Annual</span>
+                </div>
+                <div class="doc-c-row">
+                  <div class="doc-c-row-info">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <div><h5>Annual Report FY2023</h5><span>31 Mar 2023 · Published May 2023</span></div>
+                  </div>
+                  <span class="doc-c-badge annual">Annual</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /documents -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 3: GOVERNANCE
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="governance" data-section-label="Governance">
+
+      <!-- VARIANT A: Board + policies -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Governance</span>
+              <h2>Board of Directors &amp; Governance Framework</h2>
+            </div>
+            <div class="gov-grid">
+              <div>
+                <div style="font-size:0.875rem; font-weight:700; color:var(--ink); margin-bottom:1rem;">Board of Directors</div>
+                <div class="board-list">
+                  <div class="board-member"><div class="bm-avatar">RA</div><div class="bm-info"><h4>Ray Abeywardena</h4><p>Chairman &amp; Chief Executive Officer</p></div><span class="bm-badge exec">Executive</span></div>
+                  <div class="board-member"><div class="bm-avatar">DP</div><div class="bm-info"><h4>Damith Pallewatte</h4><p>Managing Director &amp; COO</p></div><span class="bm-badge exec">Executive</span></div>
+                  <div class="board-member"><div class="bm-avatar">SM</div><div class="bm-info"><h4>Suresh Mendis</h4><p>Independent Non-Executive Director</p></div><span class="bm-badge nex">Independent</span></div>
+                  <div class="board-member"><div class="bm-avatar">PJ</div><div class="bm-info"><h4>Priya Jayasekera</h4><p>Non-Executive Director (HNB nominee)</p></div><span class="bm-badge nex">Non-Exec</span></div>
+                  <div class="board-member"><div class="bm-avatar">KW</div><div class="bm-info"><h4>Kumari Wijeratne</h4><p>Independent Non-Executive Director</p></div><span class="bm-badge nex">Independent</span></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:0.875rem; font-weight:700; color:var(--ink); margin-bottom:1rem;">Key Governance Policies</div>
+                <div class="gov-policies">
+                  <div class="gov-policy"><h5>Board Charter</h5><p>Defines the composition, responsibilities, and operating procedures of the Board. Reviewed annually and available on request.</p></div>
+                  <div class="gov-policy"><h5>Related Party Transactions Policy</h5><p>All RPTs above LKR 50Mn require Audit Committee approval and CSE disclosure. Independent director recusal is mandatory.</p></div>
+                  <div class="gov-policy"><h5>Insider Trading Policy</h5><p>Board and senior management are subject to blackout periods and mandatory pre-clearance for transactions in LVL.N0000 and HNB.N0000.</p></div>
+                  <div class="gov-policy"><h5>Whistleblower Policy</h5><p>Independent external channel managed by KPMG. Zero retaliation guarantee. All reports investigated by the Audit Committee.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Two-col with committee structure -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Governance</span>
+              <h2>Board Committees &amp; Oversight Structure</h2>
+            </div>
+            <div class="gov-c-grid">
+              <div class="gov-c-card">
+                <h4>Audit Committee</h4>
+                <ul>
+                  <li>Chair: Suresh Mendis (Independent)</li>
+                  <li>Quarterly financial statement review</li>
+                  <li>External auditor appointment (KPMG)</li>
+                  <li>Internal controls &amp; risk framework</li>
+                  <li>Whistleblower report investigation</li>
+                  <li>Related Party Transaction oversight</li>
+                </ul>
+              </div>
+              <div class="gov-c-card">
+                <h4>Investment Committee</h4>
+                <ul>
+                  <li>Chair: Ray Abeywardena (CEO)</li>
+                  <li>All investments above LKR 200Mn</li>
+                  <li>Independent majority for LVL investments</li>
+                  <li>SEC disclosure for &gt; LKR 400Mn deals</li>
+                  <li>Quarterly portfolio review</li>
+                  <li>Exit approval for portfolio disposals</li>
+                </ul>
+              </div>
+              <div class="gov-c-card">
+                <h4>Remuneration Committee</h4>
+                <ul>
+                  <li>Chair: Kumari Wijeratne (Independent)</li>
+                  <li>Executive compensation benchmarking</li>
+                  <li>Variable pay and bonus approval</li>
+                  <li>Non-executive director fee review</li>
+                  <li>ESOP scheme oversight</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Integrated governance statement -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Governance</span>
+              <h2>Governance as Competitive Advantage</h2>
+              <p>For a business that advises clients on capital structure and governance, our own governance must be unimpeachable. The principles below are not compliance exercises — they are how we operate.</p>
+            </div>
+            <div class="gov-c-grid">
+              <div class="gov-c-card">
+                <h4>Board Independence</h4>
+                <p style="font-size:0.83rem; color:var(--ink-2); line-height:1.65;">Three of five directors are non-executive. Two are fully independent with no material relationship to HNB Group. Independent directors chair all three board committees — Audit, Investment, and Remuneration.</p>
+              </div>
+              <div class="gov-c-card">
+                <h4>Disclosed RPTs</h4>
+                <p style="font-size:0.83rem; color:var(--ink-2); line-height:1.65;">All related party transactions above LKR 50Mn are disclosed in the Annual Report and announced to the CSE. There are no undisclosed material transactions with HNB Group entities — including the parent bank.</p>
+              </div>
+              <div class="gov-c-card">
+                <h4>ESG Commitments</h4>
+                <p style="font-size:0.83rem; color:var(--ink-2); line-height:1.65;">HNB Investment Bank was a founding signatory of the Colombo ESG Principles (2023). LVL Energy Fund maintains an explicit exclusion list covering coal, tobacco, and arms manufacturing across all portfolio holdings.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /governance -->
+
+
+    <!-- ── Section CTA Final ── -->
+    <section class="section-cta-final scroll-fade">
+      <div class="section-inner">
+        <div class="cta-final-inner">
+          <div class="cta-final-copy">
+            <span class="section-label">IR Contact</span>
+            <h2>Speak With Our Investor Relations Team</h2>
+            <p>Analysts, institutional investors, and shareholders are welcome to reach out for briefings, financial data requests, or governance queries. All enquiries are handled by the IR team directly — not routed through a call centre.</p>
+            <div class="stat-proof">
+              <div><strong>ir@hnbib.lk</strong><span>Direct IR Email</span></div>
+              <div><strong>1 Business Day</strong><span>Response Time</span></div>
+              <div><strong>Quarterly</strong><span>Analyst Briefings</span></div>
+            </div>
+          </div>
+          <div class="cta-final-form">
+            <h3>IR Enquiry</h3>
+            <form>
+              <div class="form-row">
+                <label for="cta-name-ir">Full Name</label>
+                <input type="text" id="cta-name-ir" placeholder="Your name" />
+              </div>
+              <div class="form-row">
+                <label for="cta-email-ir">Email Address</label>
+                <input type="email" id="cta-email-ir" placeholder="you@institution.com" />
+              </div>
+              <div class="form-row">
+                <label for="cta-org-ir">Organisation</label>
+                <input type="text" id="cta-org-ir" placeholder="Fund / bank / research firm" />
+              </div>
+              <div class="form-row">
+                <label for="cta-query-ir">Query Type</label>
+                <input type="text" id="cta-query-ir" placeholder="Financial data / Briefing / Governance / Other" />
+              </div>
+              <button type="submit" class="cta-submit">Submit IR Enquiry →</button>
+              <div class="form-reassurance">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Handled by the IR team directly. Response within one business day.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-body -->
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="32" />
+          <p>HNB Investment Bank Limited — regulated by the Securities and Exchange Commission of Sri Lanka.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Investor Relations</h4>
+          <ul>
+            <li><a href="./index.html">Financial Highlights</a></li>
+            <li><a href="./#documents">Documents &amp; Disclosures</a></li>
+            <li><a href="./#governance">Board &amp; Governance</a></li>
+            <li><a href="../contact-us/index.html">IR Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../about-us/index.html">About Us</a></li>
+            <li><a href="../news/index.html">News &amp; Insights</a></li>
+            <li><a href="../careers/index.html">Careers</a></li>
+            <li><a href="../contact-us/index.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2025 HNB Investment Bank Limited. Regulated by the Securities and Exchange Commission of Sri Lanka. The financial data on this page is derived from audited accounts. Not investment advice.</p>
+        <div class="footer-legal-links">
+          <a href="../privacy-policy/index.html">Privacy Policy</a>
+          <a href="../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <link rel="stylesheet" href="../section-toggle.css" />
+  <script src="../scripts.js"></script>
+  <script src="../section-toggle.js"></script>
+</body>
+</html>

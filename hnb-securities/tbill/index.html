@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Treasury Bills — HNB Securities</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <style>
+    /* ── What Is a T-Bill ───────────────────────────── */
+    .tbill-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .tbill-intro-copy h2 { margin-bottom: 1rem; }
+    .tbill-intro-copy p { color: var(--ink-2); line-height: 1.7; margin-bottom: 1rem; }
+    .tbill-discount-box { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; margin-top: 1.25rem; }
+    .tbill-discount-box h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.875rem; }
+    .discount-visual { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.875rem; }
+    .dv-label { font-size: 0.75rem; color: var(--muted); text-align: center; }
+    .dv-amount { font-size: 1rem; font-weight: 800; color: var(--primary); text-align: center; }
+    .dv-arrow { font-size: 1.5rem; color: var(--line); }
+    .dv-bar { flex: 1; height: 8px; border-radius: 4px; overflow: hidden; background: var(--bg-2); }
+    .dv-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; }
+    .tbill-features { display: flex; flex-direction: column; gap: 0.875rem; }
+    .tbf-item { display: flex; gap: 0.875rem; align-items: flex-start; }
+    .tbf-icon { width: 32px; height: 32px; border-radius: 8px; background: oklch(0.43 0.150 248 / 0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tbf-icon svg { width: 16px; height: 16px; stroke: var(--primary); fill: none; }
+    .tbf-body h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.15rem; }
+    .tbf-body p { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+
+    /* T-Bill panel */
+    .tbill-panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+    .tbill-panel h3 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--line); }
+    .tbp-row { display: flex; justify-content: space-between; align-items: center; padding: 0.625rem 0; border-bottom: 1px solid var(--line); }
+    .tbp-row:last-child { border-bottom: none; }
+    .tbp-label { font-size: 0.82rem; color: var(--ink-2); }
+    .tbp-val { font-size: 1rem; font-weight: 700; color: var(--primary); }
+
+    /* Intro B — tenor comparison */
+    .tbill-tenor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2.5rem; }
+    .tenor-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; text-align: center; }
+    .tenor-card.featured { border-top: 3px solid var(--primary); }
+    .tenor-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 0.625rem; }
+    .tenor-rate { font-size: 2.25rem; font-weight: 800; color: var(--primary); margin-bottom: 0.25rem; }
+    .tenor-face { font-size: 0.875rem; color: var(--ink-2); margin-bottom: 1rem; }
+    .tenor-price { background: var(--bg-2); border-radius: var(--radius); padding: 0.75rem; }
+    .tenor-price .tp-label { font-size: 0.72rem; color: var(--muted); }
+    .tenor-price .tp-val { font-size: 1.1rem; font-weight: 700; color: var(--ink); }
+
+    /* Intro C — editorial */
+    .tbill-c-banner { background: var(--primary); border-radius: var(--radius); padding: 3rem; color: #fff; }
+    .tbill-c-banner .section-label { color: oklch(0.65 0.165 140); }
+    .tbill-c-banner h2 { color: #fff; margin: 0.75rem 0 1rem; }
+    .tbill-c-banner p { color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 1rem; }
+    .tbill-c-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 2rem; }
+    .tbc-kpi { text-align: center; }
+    .tbc-kpi .kpi-val { font-size: 1.75rem; font-weight: 800; color: #fff; }
+    .tbc-kpi .kpi-label { font-size: 0.75rem; color: rgba(255,255,255,0.65); margin-top: 0.25rem; }
+    .btn-primary-inv { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; color: var(--primary); border: none; border-radius: var(--radius); padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+    .btn-ghost-inv { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.45); border-radius: var(--radius); padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+
+    /* ── Auction Results ────────────────────────────── */
+    .auction-table { width: 100%; border-collapse: collapse; }
+    .auction-table th { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; text-align: left; padding: 0.625rem 0.875rem; background: var(--bg-2); border-bottom: 2px solid var(--line); }
+    .auction-table td { padding: 0.75rem 0.875rem; border-bottom: 1px solid var(--line); font-size: 0.875rem; color: var(--ink-2); vertical-align: middle; }
+    .auction-table tr:last-child td { border-bottom: none; }
+    .auction-table .td-rate { font-weight: 700; color: var(--primary); }
+    .auction-table .td-sub { color: var(--accent-2); font-weight: 600; }
+    .auction-note { font-size: 0.72rem; color: var(--muted); font-style: italic; margin-top: 0.75rem; }
+    .auction-wrap { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items: start; }
+    .auction-sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+    .auction-info-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; }
+    .auction-info-card h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.75rem; }
+    .auction-info-card p { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+
+    /* Auction B — bar visualisation */
+    .auction-b-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .yield-bar-chart { display: flex; flex-direction: column; gap: 1rem; }
+    .ybc-row { display: grid; grid-template-columns: 100px 1fr 80px; gap: 0.75rem; align-items: center; }
+    .ybc-label { font-size: 0.82rem; color: var(--ink-2); }
+    .ybc-track { height: 14px; background: var(--bg-2); border-radius: 7px; overflow: hidden; }
+    .ybc-fill { height: 100%; border-radius: 7px; background: var(--primary); transition: width 0.8s var(--ease-out-quart); }
+    .ybc-rate { font-size: 0.875rem; font-weight: 700; color: var(--primary); text-align: right; }
+    .price-calc-mini { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+    .price-calc-mini h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; }
+    .pcm-formula { font-size: 0.82rem; color: var(--ink-2); line-height: 1.7; }
+    .pcm-formula code { background: var(--bg-2); border: 1px solid var(--line); border-radius: 4px; padding: 0.125rem 0.4rem; font-size: 0.78rem; color: var(--primary); font-family: monospace; }
+    .pcm-example { background: var(--bg-2); border-radius: var(--radius); padding: 1rem; margin-top: 0.875rem; }
+    .pcm-example .pcm-ex-row { display: flex; justify-content: space-between; font-size: 0.82rem; padding: 0.25rem 0; }
+    .pcm-example .pcm-ex-row span:last-child { font-weight: 700; color: var(--primary); }
+
+    /* Auction C — sparklines */
+    .auction-spark-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .asm-tile { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+    .asm-tile h4 { font-size: 0.82rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.375rem; }
+    .asm-tile .at-rate { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 0.25rem; }
+    .asm-tile .at-change { font-size: 0.8rem; margin-bottom: 1rem; }
+    .asm-tile .at-change.dn { color: oklch(0.45 0.14 145); }
+    .sparkline-mini { height: 56px; }
+    .sparkline-mini svg { width: 100%; height: 100%; }
+    .sparkline-path { fill: none; stroke: var(--primary); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .asm-tile .at-meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.625rem; }
+
+    /* ── How to Buy ─────────────────────────────────── */
+    .buy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .buy-methods { display: flex; flex-direction: column; gap: 1.25rem; }
+    .buy-method-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+    .buy-method-card h4 { font-size: 0.925rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; display: flex; gap: 0.5rem; align-items: center; }
+    .buy-method-card h4 .method-badge { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: var(--primary); color: #fff; padding: 0.15rem 0.5rem; border-radius: 4px; }
+    .buy-method-card p { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+    .buy-steps { display: flex; flex-direction: column; gap: 0; }
+    .buy-step { display: grid; grid-template-columns: 36px 1fr; gap: 1rem; padding-bottom: 1.5rem; }
+    .bs-num { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 0.875rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .bs-body h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .bs-body p { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+
+    /* Buy B — methods comparison table */
+    .buy-compare-table { width: 100%; border-collapse: collapse; }
+    .buy-compare-table th { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; text-align: left; padding: 0.625rem 0.875rem; background: var(--bg-2); border-bottom: 2px solid var(--line); }
+    .buy-compare-table td { padding: 0.875rem; border-bottom: 1px solid var(--line); font-size: 0.875rem; color: var(--ink-2); vertical-align: top; }
+    .buy-compare-table tr:last-child td { border-bottom: none; }
+    .buy-compare-table td:first-child { font-weight: 700; color: var(--ink); white-space: nowrap; }
+    .check-yes { color: oklch(0.45 0.14 145); font-weight: 700; }
+    .check-no { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      .tbill-intro, .auction-wrap, .auction-b-grid, .buy-grid { grid-template-columns: 1fr; }
+      .tbill-c-grid { grid-template-columns: repeat(2, 1fr); }
+      .tbill-tenor-grid, .auction-spark-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .tbill-c-grid, .tbill-tenor-grid, .auction-spark-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Ticker ── -->
+  <div class="ticker" aria-label="Market data">
+    <div class="ticker-track">
+      <span class="ticker-item">91-Day T-Bill <strong>9.48%</strong> <span class="ticker-dn">▼ 4bps</span></span>
+      <span class="ticker-item">182-Day T-Bill <strong>9.85%</strong> <span class="ticker-dn">▼ 6bps</span></span>
+      <span class="ticker-item">364-Day T-Bill <strong>10.10%</strong> <span class="ticker-dn">▼ 5bps</span></span>
+      <span class="ticker-item">5Y T-Bond <strong>10.80%</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+      <span class="ticker-item">CBSL Repo Rate <strong>8.50%</strong></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong></span>
+      <span class="ticker-item">91-Day T-Bill <strong>9.48%</strong> <span class="ticker-dn">▼ 4bps</span></span>
+      <span class="ticker-item">182-Day T-Bill <strong>9.85%</strong> <span class="ticker-dn">▼ 6bps</span></span>
+      <span class="ticker-item">364-Day T-Bill <strong>10.10%</strong> <span class="ticker-dn">▼ 5bps</span></span>
+      <span class="ticker-item">5Y T-Bond <strong>10.80%</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+    </div>
+  </div>
+
+  <!-- ── Navigation ── -->
+  <nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../../index.html">
+    <img src="../../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../../about-us/index.html">About Us</a></li>
+    <li><a href="../../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../../news/index.html">News</a></li>
+    <li><a href="../../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+  <!-- ── Page Header ── -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <span class="section-label">HNB Securities · Products</span>
+      <h1>Treasury Bills</h1>
+      <p class="page-header-sub">Short-term Government of Sri Lanka instruments with 91, 182, and 364-day tenors. Zero coupon, purchased at discount — the benchmark for domestic risk-free rates.</p>
+      <div class="page-header-meta">
+        <span class="pill">91-Day: 9.48%</span>
+        <span class="pill">182-Day: 9.85%</span>
+        <span class="pill-accent">364-Day: 10.10%</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Page Body ── -->
+  <div class="page-body">
+    <div class="page-bg-map" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1: WHAT IS A T-BILL
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="what-is-tbill" data-section-label="What Is a T-Bill">
+
+      <!-- VARIANT A: Two-col explainer -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="tbill-intro">
+              <div class="tbill-intro-copy">
+                <span class="section-label">What Is a T-Bill</span>
+                <h2>Short-Term, Government-Guaranteed Returns</h2>
+                <p>Treasury Bills (T-Bills) are short-term debt instruments issued by the Government of Sri Lanka through the Central Bank (CBSL). They are sold at a discount to face value and redeemed at face value on maturity — the difference being your return.</p>
+                <p>T-Bills are issued in three tenors: 91 days (3 months), 182 days (6 months), and 364 days (12 months). Because the GoSL guarantees full repayment, T-Bills carry the highest domestic credit rating and set the benchmark risk-free rate for all LKR financial instruments.</p>
+                <p>HNB Securities, as a CBSL Primary Dealer, participates directly in weekly CBSL T-Bill auctions — giving clients access to primary market pricing and same-day execution on secondary market T-Bills.</p>
+                <div class="tbill-discount-box">
+                  <h4>How T-Bill Pricing Works</h4>
+                  <p style="font-size:0.82rem; color:var(--ink-2); margin-bottom:0.875rem;">You buy below face value. At maturity, GoSL pays full face value. The discount is your return.</p>
+                  <div class="discount-visual">
+                    <div>
+                      <div class="dv-label">You pay</div>
+                      <div class="dv-amount">LKR 91,388</div>
+                    </div>
+                    <span class="dv-arrow">→</span>
+                    <div style="flex:1">
+                      <div class="dv-bar"><div class="dv-bar-fill" style="width:91.4%"></div></div>
+                      <div style="display:flex; justify-content:space-between; margin-top:0.25rem; font-size:0.72rem; color:var(--muted);"><span>Purchase</span><span>Maturity (91 days)</span></div>
+                    </div>
+                    <span class="dv-arrow">→</span>
+                    <div>
+                      <div class="dv-label">GoSL pays</div>
+                      <div class="dv-amount">LKR 100,000</div>
+                    </div>
+                  </div>
+                  <div style="font-size:0.78rem; color:var(--muted);">Example at 9.48% p.a. for 91-day T-Bill. Return: LKR 8,612 on LKR 1Mn face value.</div>
+                </div>
+              </div>
+              <div>
+                <div class="tbill-panel">
+                  <h3>Latest Auction Results (23 May 2025)</h3>
+                  <div class="tbp-row"><span class="tbp-label">91-Day Yield</span><span class="tbp-val">9.48%</span></div>
+                  <div class="tbp-row"><span class="tbp-label">182-Day Yield</span><span class="tbp-val">9.85%</span></div>
+                  <div class="tbp-row"><span class="tbp-label">364-Day Yield</span><span class="tbp-val">10.10%</span></div>
+                  <div class="tbp-row"><span class="tbp-label">Total Offered</span><span class="tbp-val">LKR 30Bn</span></div>
+                  <div class="tbp-row"><span class="tbp-label">Total Accepted</span><span class="tbp-val">LKR 28.4Bn</span></div>
+                  <div class="tbp-row"><span class="tbp-label">Subscription Ratio</span><span class="tbp-val">2.1×</span></div>
+                </div>
+                <div class="tbill-features" style="margin-top:1.25rem;">
+                  <div class="tbf-item">
+                    <div class="tbf-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                    <div class="tbf-body"><h4>Sovereign Credit Risk Only</h4><p>Obligations of the Government of Sri Lanka. No counterparty risk beyond the sovereign.</p></div>
+                  </div>
+                  <div class="tbf-item">
+                    <div class="tbf-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                    <div class="tbf-body"><h4>Fixed Maturity Dates</h4><p>91, 182, and 364-day tenors — known from the date of purchase with no uncertainty about maturity.</p></div>
+                  </div>
+                  <div class="tbf-item">
+                    <div class="tbf-icon"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+                    <div class="tbf-body"><h4>Liquid Secondary Market</h4><p>HNB Securities quotes two-way prices on T-Bills. Sell before maturity if liquidity is needed.</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Tenor cards + features -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">What Is a T-Bill</span>
+              <h2>Three Tenors — One GoSL Guarantee</h2>
+              <p>Pick the tenor that matches your investment horizon. All three are backed by the Government of Sri Lanka and traded in the LankaSecure depository system.</p>
+            </div>
+            <div class="tbill-tenor-grid">
+              <div class="tenor-card">
+                <div class="tenor-label">91-Day</div>
+                <div class="tenor-rate">9.48%</div>
+                <div class="tenor-face">per annum</div>
+                <div class="tenor-price">
+                  <div class="tp-label">Price per LKR 100 face</div>
+                  <div class="tp-val">LKR 97.65</div>
+                </div>
+                <div style="font-size:0.75rem; color:var(--muted); margin-top:0.875rem;">Most liquid. Suitable for short-term cash parking with higher yield than overnight repo.</div>
+              </div>
+              <div class="tenor-card featured">
+                <div class="tenor-label">182-Day ★ Popular</div>
+                <div class="tenor-rate">9.85%</div>
+                <div class="tenor-face">per annum</div>
+                <div class="tenor-price">
+                  <div class="tp-label">Price per LKR 100 face</div>
+                  <div class="tp-val">LKR 95.23</div>
+                </div>
+                <div style="font-size:0.75rem; color:var(--muted); margin-top:0.875rem;">Sweet spot for individual investors — 6 months aligns with salary cycles and short-term savings goals.</div>
+              </div>
+              <div class="tenor-card">
+                <div class="tenor-label">364-Day</div>
+                <div class="tenor-rate">10.10%</div>
+                <div class="tenor-face">per annum</div>
+                <div class="tenor-price">
+                  <div class="tp-label">Price per LKR 100 face</div>
+                  <div class="tp-val">LKR 90.82</div>
+                </div>
+                <div style="font-size:0.75rem; color:var(--muted); margin-top:0.875rem;">Full-year view locks in the highest T-Bill rate. Yield often equals or exceeds 1-year fixed deposits.</div>
+              </div>
+            </div>
+            <div class="repo-benefits-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem;">
+              <div class="repo-benefit">
+                <h4>No Coupon — Pure Discount</h4>
+                <p>T-Bills pay no periodic interest. The entire return is the difference between purchase price and face value — simple, transparent, and tax-efficient.</p>
+              </div>
+              <div class="repo-benefit">
+                <h4>Weekly Auctions</h4>
+                <p>CBSL auctions T-Bills every Wednesday. HNB Securities participates as a Primary Dealer, passing competitive allocation to clients the same day.</p>
+              </div>
+              <div class="repo-benefit">
+                <h4>WHT at 5%</h4>
+                <p>The discount (return) is subject to 5% Withholding Tax. No additional income tax declaration needed for individuals — WHT is the final tax.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Editorial on primary -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="tbill-c-banner">
+              <span class="section-label">What Is a T-Bill</span>
+              <h2>The Benchmark for Every Sri Lankan Rate — Now Direct</h2>
+              <p>Every fixed deposit rate, every corporate bond yield, every Repo rate in Sri Lanka is priced off the T-Bill. When you invest in T-Bills directly, you skip the bank's margin and access the underlying sovereign instrument at auction pricing.</p>
+              <p>At current rates of 9.48–10.10%, T-Bills outperform the majority of commercial bank 1-year fixed deposits — with sovereign credit quality instead of bank credit risk.</p>
+              <div class="tbill-c-grid">
+                <div class="tbc-kpi"><div class="kpi-val">9.48%</div><div class="kpi-label">91-Day Rate</div></div>
+                <div class="tbc-kpi"><div class="kpi-val">9.85%</div><div class="kpi-label">182-Day Rate</div></div>
+                <div class="tbc-kpi"><div class="kpi-val">10.10%</div><div class="kpi-label">364-Day Rate</div></div>
+                <div class="tbc-kpi"><div class="kpi-val">2.1×</div><div class="kpi-label">Latest Auction Oversubscription</div></div>
+              </div>
+              <div style="display:flex; gap:1rem; margin-top:2rem; flex-wrap:wrap;">
+                <a href="../../contact-us/index.html" class="btn-primary-inv">Buy T-Bills Now</a>
+                <a href="../index.html" class="btn-ghost-inv">← All Products</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /what-is-tbill -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2: AUCTION RESULTS
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="auction-results" data-section-label="Auction Results">
+
+      <!-- VARIANT A: Table + sidebar -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade" style="background: var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Auction Results</span>
+              <h2>Recent Weekly Auction Summary</h2>
+              <p>CBSL conducts T-Bill auctions every Wednesday. HNB Securities participates as a Primary Dealer with direct allocation access.</p>
+            </div>
+            <div class="auction-wrap">
+              <div>
+                <table class="auction-table">
+                  <thead>
+                    <tr><th>Date</th><th>Tenor</th><th>Offered (LKR Mn)</th><th>Accepted (LKR Mn)</th><th>Weighted Avg. Yield</th><th>Cover Ratio</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>23 May 2025</td><td>91-Day</td><td>10,000</td><td>9,450</td><td class="td-rate">9.48%</td><td class="td-sub">2.3×</td></tr>
+                    <tr><td>23 May 2025</td><td>182-Day</td><td>12,000</td><td>10,800</td><td class="td-rate">9.85%</td><td class="td-sub">1.9×</td></tr>
+                    <tr><td>23 May 2025</td><td>364-Day</td><td>8,000</td><td>8,150</td><td class="td-rate">10.10%</td><td class="td-sub">2.1×</td></tr>
+                    <tr><td>16 May 2025</td><td>91-Day</td><td>10,000</td><td>9,200</td><td class="td-rate">9.52%</td><td class="td-sub">2.0×</td></tr>
+                    <tr><td>16 May 2025</td><td>182-Day</td><td>12,000</td><td>11,500</td><td class="td-rate">9.91%</td><td class="td-sub">1.8×</td></tr>
+                    <tr><td>16 May 2025</td><td>364-Day</td><td>8,000</td><td>7,900</td><td class="td-rate">10.15%</td><td class="td-sub">2.0×</td></tr>
+                    <tr><td>09 May 2025</td><td>91-Day</td><td>10,000</td><td>9,600</td><td class="td-rate">9.55%</td><td class="td-sub">2.2×</td></tr>
+                    <tr><td>09 May 2025</td><td>182-Day</td><td>12,000</td><td>10,900</td><td class="td-rate">9.93%</td><td class="td-sub">1.9×</td></tr>
+                    <tr><td>09 May 2025</td><td>364-Day</td><td>8,000</td><td>7,800</td><td class="td-rate">10.18%</td><td class="td-sub">2.0×</td></tr>
+                  </tbody>
+                </table>
+                <div class="auction-note">Source: CBSL Department of Public Debt. Next auction: 30 May 2025.</div>
+              </div>
+              <div class="auction-sidebar">
+                <div class="auction-info-card">
+                  <h4>Auction Schedule</h4>
+                  <p>CBSL conducts T-Bill auctions every Wednesday at 9:30 AM. Primary Dealer bids close at 10:00 AM. Results announced by 12:00 PM.</p>
+                </div>
+                <div class="auction-info-card">
+                  <h4>Primary Market Access</h4>
+                  <p>HNB Securities clients can submit bids through us at each Wednesday auction. Minimum denomination: LKR 1,000,000 face value at primary auction.</p>
+                </div>
+                <div class="auction-info-card">
+                  <h4>Secondary Market</h4>
+                  <p>T-Bills can be bought and sold between auctions through HNB Securities at live market prices. Minimum LKR 100,000 face value for secondary transactions.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Bar chart + pricing -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade" style="background: var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Auction Results</span>
+              <h2>T-Bill Yield Curve &amp; Discount Pricing</h2>
+              <p>Weekly CBSL auction results set the benchmark for all domestic LKR fixed income pricing.</p>
+            </div>
+            <div class="auction-b-grid">
+              <div>
+                <div style="font-size:0.875rem; font-weight:700; color:var(--ink); margin-bottom:1.25rem;">Weighted Average Yield by Tenor (23 May 2025)</div>
+                <div class="yield-bar-chart">
+                  <div class="ybc-row"><span class="ybc-label">91-Day</span><div class="ybc-track"><div class="ybc-fill" style="width:80%"></div></div><span class="ybc-rate">9.48%</span></div>
+                  <div class="ybc-row"><span class="ybc-label">182-Day</span><div class="ybc-track"><div class="ybc-fill" style="width:83%"></div></div><span class="ybc-rate">9.85%</span></div>
+                  <div class="ybc-row"><span class="ybc-label">364-Day</span><div class="ybc-track"><div class="ybc-fill" style="width:85%"></div></div><span class="ybc-rate">10.10%</span></div>
+                  <div class="ybc-row"><span class="ybc-label">5Y Bond</span><div class="ybc-track"><div class="ybc-fill ybc-fill-2" style="width:91%; background:var(--accent);"></div></div><span class="ybc-rate" style="color:var(--accent-2);">10.80%</span></div>
+                  <div class="ybc-row"><span class="ybc-label">10Y Bond</span><div class="ybc-track"><div class="ybc-fill ybc-fill-2" style="width:95%; background:var(--accent);"></div></div><span class="ybc-rate" style="color:var(--accent-2);">11.25%</span></div>
+                </div>
+              </div>
+              <div>
+                <div class="price-calc-mini">
+                  <h4>T-Bill Discount Price Formula</h4>
+                  <div class="pcm-formula">
+                    Purchase Price = Face Value ÷ (1 + (<code>Yield</code> × <code>Days</code> ÷ 365))
+                  </div>
+                  <div class="pcm-example">
+                    <div style="font-size:0.75rem; font-weight:700; color:var(--muted); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.08em;">Example: LKR 1Mn face, 91-day, 9.48%</div>
+                    <div class="pcm-ex-row"><span>Face Value</span><span>LKR 1,000,000</span></div>
+                    <div class="pcm-ex-row"><span>Divisor</span><span>1 + (9.48% × 91/365)</span></div>
+                    <div class="pcm-ex-row"><span>Purchase Price</span><span>LKR 976,543</span></div>
+                    <div class="pcm-ex-row" style="border-top:1px solid var(--line); margin-top:0.375rem; padding-top:0.375rem;"><span>Your Return</span><span>LKR 23,457</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Sparkline tiles -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade" style="background: var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Auction Results</span>
+              <h2>T-Bill Yield Trends — 12 Months</h2>
+              <p>Yields have declined 150–220 basis points over the past year as CBSL's monetary easing cycle took effect following Sri Lanka's IMF stabilisation programme.</p>
+            </div>
+            <div class="auction-spark-grid">
+              <div class="asm-tile">
+                <h4>91-Day T-Bill</h4>
+                <div class="at-rate">9.48%</div>
+                <div class="at-change dn">▼ 162 bps vs 12M ago (11.10%)</div>
+                <div class="sparkline-mini">
+                  <svg viewBox="0 0 200 56" preserveAspectRatio="none">
+                    <polyline class="sparkline-path" points="0,52 25,49 50,45 75,41 100,38 125,34 150,31 175,29 200,25" />
+                  </svg>
+                </div>
+                <div class="at-meta">CBSL weekly auction. Next: 30 May 2025.</div>
+              </div>
+              <div class="asm-tile">
+                <h4>182-Day T-Bill</h4>
+                <div class="at-rate">9.85%</div>
+                <div class="at-change dn">▼ 181 bps vs 12M ago (11.66%)</div>
+                <div class="sparkline-mini">
+                  <svg viewBox="0 0 200 56" preserveAspectRatio="none">
+                    <polyline class="sparkline-path" points="0,54 25,51 50,47 75,43 100,39 125,35 150,32 175,29 200,26" />
+                  </svg>
+                </div>
+                <div class="at-meta">Most popular auction tenor by volume.</div>
+              </div>
+              <div class="asm-tile">
+                <h4>364-Day T-Bill</h4>
+                <div class="at-rate">10.10%</div>
+                <div class="at-change dn">▼ 195 bps vs 12M ago (12.05%)</div>
+                <div class="sparkline-mini">
+                  <svg viewBox="0 0 200 56" preserveAspectRatio="none">
+                    <polyline class="sparkline-path" points="0,54 25,51 50,47 75,43 100,39 125,35 150,32 175,29 200,27" />
+                  </svg>
+                </div>
+                <div class="at-meta">Cover ratio 2.1× — strong institutional demand.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /auction-results -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 3: HOW TO BUY
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="how-to-buy" data-section-label="How to Buy">
+
+      <!-- VARIANT A: Two-col steps + methods -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">How to Buy</span>
+              <h2>Primary &amp; Secondary Market Access</h2>
+            </div>
+            <div class="buy-grid">
+              <div>
+                <div style="font-size:0.875rem; font-weight:700; color:var(--ink); margin-bottom:1.25rem;">Steps to Buy T-Bills Through HNB Securities</div>
+                <div class="buy-steps">
+                  <div class="buy-step">
+                    <div class="bs-num">1</div>
+                    <div class="bs-body"><h4>Open a HNB Securities Account</h4><p>Complete KYC — NIC, address proof, TIN. Existing HNB Bank clients require only a supplementary form. Account opened within one business day.</p></div>
+                  </div>
+                  <div class="buy-step">
+                    <div class="bs-num">2</div>
+                    <div class="bs-body"><h4>Fund Your Settlement Account</h4><p>Transfer via CEFTS or RTGS. Primary market purchases require a minimum of LKR 1,000,000 face value. Secondary market minimum: LKR 100,000.</p></div>
+                  </div>
+                  <div class="buy-step">
+                    <div class="bs-num">3</div>
+                    <div class="bs-body"><h4>Submit Bid or Purchase Order</h4><p>For primary auction: submit competitive or non-competitive bid by 10:00 AM Wednesday. For secondary: call or portal order anytime during market hours.</p></div>
+                  </div>
+                  <div class="buy-step">
+                    <div class="bs-num">4</div>
+                    <div class="bs-body"><h4>T-Bills Registered in LankaSecure</h4><p>All T-Bills are held in your name in the CBSL's LankaSecure depository. You receive a confirmation with security details and maturity date.</p></div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="buy-methods">
+                  <div class="buy-method-card">
+                    <h4><span class="method-badge">Primary</span>Weekly CBSL Auction</h4>
+                    <p>HNB Securities submits bids on your behalf at each Wednesday CBSL auction. Competitive bids specify your desired yield; non-competitive bids accept the weighted average. Allocation confirmed by 12:00 PM.</p>
+                  </div>
+                  <div class="buy-method-card">
+                    <h4><span class="method-badge">Secondary</span>Over-the-Counter</h4>
+                    <p>Buy or sell existing T-Bills between auctions. HNB Securities quotes live two-way prices on all three tenors. Settlement T+0 or T+1 depending on transaction size.</p>
+                  </div>
+                  <div class="buy-method-card">
+                    <h4><span class="method-badge">Client Portal</span>Online Orders</h4>
+                    <p>Existing HNB Securities clients can view holdings, place secondary market orders, and track maturities through the HNB Securities client portal. Mobile app access available.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Comparison table -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">How to Buy</span>
+              <h2>Primary vs Secondary Market — What's Right for You?</h2>
+            </div>
+            <table class="buy-compare-table">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Primary Auction</th>
+                  <th>Secondary Market (OTC)</th>
+                  <th>Repo (Alternative)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Minimum Investment</td>
+                  <td>LKR 1,000,000 (face)</td>
+                  <td>LKR 100,000 (face)</td>
+                  <td>LKR 100,000</td>
+                </tr>
+                <tr>
+                  <td>Available Tenors</td>
+                  <td>91, 182, 364 days only</td>
+                  <td>Any remaining tenor</td>
+                  <td>Overnight to 364 days</td>
+                </tr>
+                <tr>
+                  <td>Rate Certainty</td>
+                  <td>Auction result (known day-of)</td>
+                  <td>Live market rate (fixed on trade)</td>
+                  <td>Fixed at placement</td>
+                </tr>
+                <tr>
+                  <td>Settlement</td>
+                  <td>T+0 (auction day)</td>
+                  <td>T+0 or T+1</td>
+                  <td>T+0</td>
+                </tr>
+                <tr>
+                  <td>Early Exit</td>
+                  <td>Secondary market sale (market risk)</td>
+                  <td>Yes (quote on demand)</td>
+                  <td>Yes (breakage fee applies)</td>
+                </tr>
+                <tr>
+                  <td>Ideal For</td>
+                  <td>Investors wanting primary market yield</td>
+                  <td>Investors needing specific maturity date</td>
+                  <td>Investors prioritising flexibility</td>
+                </tr>
+                <tr>
+                  <td>Credit Risk</td>
+                  <td class="check-yes">GoSL sovereign only</td>
+                  <td class="check-yes">GoSL sovereign only</td>
+                  <td class="check-yes">GoSL collateral</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="margin-top:1.75rem; display:flex; gap:1rem; flex-wrap:wrap;">
+              <a href="../../contact-us/index.html" class="btn-primary">Open Account &amp; Start Investing</a>
+              <a href="../repo/index.html" class="btn-ghost">Compare with Repo Products</a>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Editorial summary -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="invest-c-wrap" style="background:var(--primary); border-radius:var(--radius); padding:3rem; color:#fff;">
+              <span class="section-label" style="color:oklch(0.65 0.165 140);">How to Buy</span>
+              <h2 style="color:#fff; margin:0.75rem 0 1rem;">T-Bills Available at Every Wednesday Auction — and Daily on Secondary</h2>
+              <p style="color:rgba(255,255,255,0.8); line-height:1.7; margin-bottom:1.5rem;">Whether you're investing LKR 100,000 on the secondary market or LKR 50Mn at the primary auction, the HNB Securities platform handles same-day execution and LankaSecure registration. Your holding is in your name from the moment settlement clears.</p>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:2rem;">
+                <div>
+                  <h4 style="color:#fff; margin-bottom:0.875rem;">Primary Auction</h4>
+                  <ul style="list-style:none; padding:0;">
+                    <li style="color:rgba(255,255,255,0.75); font-size:0.83rem; padding:0.375rem 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; gap:0.5rem;"><span style="color:oklch(0.65 0.165 140);">→</span>Every Wednesday 9:30–10:00 AM</li>
+                    <li style="color:rgba(255,255,255,0.75); font-size:0.83rem; padding:0.375rem 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; gap:0.5rem;"><span style="color:oklch(0.65 0.165 140);">→</span>Min. LKR 1Mn face value</li>
+                    <li style="color:rgba(255,255,255,0.75); font-size:0.83rem; padding:0.375rem 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; gap:0.5rem;"><span style="color:oklch(0.65 0.165 140);">→</span>Competitive or non-competitive bid</li>
+                    <li style="color:rgba(255,255,255,0.75); font-size:0.83rem; padding:0.375rem 0; display:flex; gap:0.5rem;"><span style="color:oklch(0.65 0.165 140);">→</span>Results by 12:00 PM</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 style="color:#fff; margin-bottom:0.875rem;">Secondary Market</h4>
+                  <ul style="list-style:none; padding:0;">
+                    <li style="color:rgba(255,255,255,0.75); font-size:0.83rem; padding:0.375rem 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; gap:0.5rem;"><span style="color:oklch(0.65 0.165 140);">→</span>Any business day 9:00 AM–3:00 PM</li>
+                    <li style="color:rgba(255,255,255,0.75); font-size:0.83rem; padding:0.375rem 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; gap:0.5rem;"><span style="color:oklch(0.65 0.165 140);">→</span>Min. LKR 100,000 face value</li>
+                    <li style="color:rgba(255,255,255,0.75); font-size:0.83rem; padding:0.375rem 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; gap:0.5rem;"><span style="color:oklch(0.65 0.165 140);">→</span>Live two-way pricing</li>
+                    <li style="color:rgba(255,255,255,0.75); font-size:0.83rem; padding:0.375rem 0; display:flex; gap:0.5rem;"><span style="color:oklch(0.65 0.165 140);">→</span>T+0 or T+1 settlement</li>
+                  </ul>
+                </div>
+              </div>
+              <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                <a href="../../contact-us/index.html" class="btn-primary-inv">Open Account</a>
+                <a href="../repo/index.html" class="btn-ghost-inv">Also See: Repo Products</a>
+                <a href="../index.html" class="btn-ghost-inv">← HNB Securities</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /how-to-buy -->
+
+
+    <!-- ── Section CTA Final ── -->
+    <section class="section-cta-final scroll-fade">
+      <div class="section-inner">
+        <div class="cta-final-inner">
+          <div class="cta-final-copy">
+            <span class="section-label">Invest in T-Bills</span>
+            <h2>Buy Your First T-Bill at the Next Wednesday Auction</h2>
+            <p>Reach our fixed income desk before Wednesday 9:30 AM to participate in the primary auction. Secondary market purchases available daily — minimum LKR 100,000.</p>
+            <div class="stat-proof">
+              <div><strong>10.10%</strong><span>364-Day Rate</span></div>
+              <div><strong>GoSL</strong><span>Sovereign Guarantee</span></div>
+              <div><strong>T+0</strong><span>Same-Day Settlement</span></div>
+            </div>
+          </div>
+          <div class="cta-final-form">
+            <h3>T-Bill Enquiry</h3>
+            <form>
+              <div class="form-row">
+                <label for="cta-name-tb">Full Name</label>
+                <input type="text" id="cta-name-tb" placeholder="Your name" />
+              </div>
+              <div class="form-row">
+                <label for="cta-email-tb">Email Address</label>
+                <input type="email" id="cta-email-tb" placeholder="you@email.com" />
+              </div>
+              <div class="form-row">
+                <label for="cta-amount-tb">Investment Amount (LKR)</label>
+                <input type="text" id="cta-amount-tb" placeholder="e.g. 2,000,000" />
+              </div>
+              <div class="form-row">
+                <label for="cta-tenor-tb">Preferred Tenor</label>
+                <input type="text" id="cta-tenor-tb" placeholder="91-day / 182-day / 364-day" />
+              </div>
+              <button type="submit" class="cta-submit">Contact Fixed Income Desk →</button>
+              <div class="form-reassurance">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Response before close of business. No obligation to proceed.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-body -->
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="32" />
+          <p>HNB Securities Limited is a CBSL-licensed Primary Dealer in Government Securities. Regulated by the Central Bank of Sri Lanka.</p>
+        </div>
+        <div class="footer-col">
+          <h4>HNB Securities Products</h4>
+          <ul>
+            <li><a href="../index.html">All Products Overview</a></li>
+            <li><a href="../repo/index.html">Repurchase Agreements</a></li>
+            <li><a href="./index.html">Treasury Bills</a></li>
+            <li><a href="../repo/calculator/index.html">Repo Calculator</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>HNB Investment Bank</h4>
+          <ul>
+            <li><a href="../../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+            <li><a href="../../corporate-finance/index.html">Corporate Finance</a></li>
+            <li><a href="../../about-us/index.html">About Us</a></li>
+            <li><a href="../../contact-us/index.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2025 HNB Securities Limited. Primary Dealer licensed by the Central Bank of Sri Lanka. Treasury Bills are Government of Sri Lanka obligations. Investments are subject to interest rate risk and liquidity risk. Past yields do not guarantee future returns. This page is for informational purposes and does not constitute investment advice.</p>
+        <div class="footer-legal-links">
+          <a href="../../privacy-policy/index.html">Privacy Policy</a>
+          <a href="../../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <link rel="stylesheet" href="../../section-toggle.css" />
+  <script src="../../scripts.js"></script>
+  <script src="../../section-toggle.js"></script>
+</body>
+</html>

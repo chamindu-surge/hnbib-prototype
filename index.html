@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HNB Investment Bank — Home (Chalk Meridian)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="index-styles.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="section-toggle.css">
+</head>
+<body>
+
+<div class="page-frame">
+
+<!-- ─── TICKER ─────────────────────────────────────────────────────────── -->
+<div class="ticker" aria-label="Live market data">
+  <div class="ticker-track motion-continuous">
+    <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">+0.8%</span></span>
+    <span class="ticker-item sep">|</span>
+    <span class="ticker-item">S&amp;P SL20 <strong>6,225.28</strong> <span class="ticker-up">+0.5%</span></span>
+    <span class="ticker-item sep">|</span>
+    <span class="ticker-item">91-Day T-Bill <strong>14.10%</strong></span>
+    <span class="ticker-item sep">|</span>
+    <span class="ticker-item">Turnover <strong>Rs. 2.15Bn</strong></span>
+    <span class="ticker-item sep">|</span>
+    <span class="ticker-item">HNB Securities &mdash; CBSL Primary Dealer</span>
+    <span class="ticker-item sep">|</span>
+    <span class="ticker-item">LKR 200Bn+ raised for Sri Lanka</span>
+    <span class="ticker-item sep">|</span>
+    <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">+0.8%</span></span>
+    <span class="ticker-item sep">|</span>
+    <span class="ticker-item">S&amp;P SL20 <strong>6,225.28</strong> <span class="ticker-up">+0.5%</span></span>
+    <span class="ticker-item sep">|</span>
+    <span class="ticker-item">91-Day T-Bill <strong>14.10%</strong></span>
+    <span class="ticker-item sep">|</span>
+    <span class="ticker-item">Turnover <strong>Rs. 2.15Bn</strong></span>
+    <span class="ticker-item sep">|</span>
+    <span class="ticker-item">HNB Securities &mdash; CBSL Primary Dealer</span>
+    <span class="ticker-item sep">|</span>
+    <span class="ticker-item">LKR 200Bn+ raised for Sri Lanka</span>
+    <span class="ticker-item sep">|</span>
+  </div>
+</div>
+
+<!-- ─── NAV ────────────────────────────────────────────────────────────── -->
+<nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="./index.html">
+    <img src="assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="about-us/index.html">About Us</a></li>
+    <li><a href="investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="news/index.html">News</a></li>
+    <li><a href="careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ S1 HERO ═══════════════════════ -->
+<!-- Locked: B — Split layout with sparkline market panel                   -->
+<!-- Refinements: heading trimmed · panel top accent · sparkline opacity    -->
+<section class="section-host" data-section-id="hero" data-section-label="Hero">
+  <div class="variant" data-variant="B" data-variant-label="Middle">
+    <div class="inner hero-b">
+      <div class="hero-left scroll-fade">
+        <span class="eyebrow">Sri Lanka's Investment Bank</span>
+        <!-- R1: "at every step" → "Beside you." (voice rule) -->
+        <h1 class="hero-h1">Capital markets. <em>Beside you.</em></h1>
+        <p class="hero-sub">From stockbroking on the CSE to structuring landmark deals, HNB Investment Bank combines thirty years of Sri Lankan market experience with precision execution.</p>
+        <div class="hero-btns">
+          <a href="contact-us/index.html" class="btn btn-primary">Get Started
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="about-us/index.html" class="btn btn-ghost">Explore Services</a>
+        </div>
+      </div>
+      <!-- R2: border-top: 3px solid var(--primary) added -->
+      <div class="market-panel scroll-fade" style="transition-delay:0.15s;border-top:3px solid var(--primary);">
+        <div class="market-panel-title">
+          <span>Live Markets</span>
+          <span class="live-dot">Live</span>
+        </div>
+
+        <div class="sparkline-wrap">
+          <div class="sparkline-header">
+            <span class="sparkline-name">ASPI</span>
+            <div>
+              <div class="sparkline-value">22,622</div>
+              <div class="sparkline-delta m-up">+180.4 (+0.8%)</div>
+            </div>
+          </div>
+          <!-- R3: sparkline-area fill-opacity updated to 0.20 in CSS -->
+          <svg class="sparkline-svg" viewBox="0 0 280 48" preserveAspectRatio="none">
+            <path class="sparkline-area" d="M0 38 L28 35 L56 36 L84 30 L112 28 L140 24 L168 26 L196 20 L224 16 L252 18 L280 12 L280 48 L0 48 Z" fill="var(--primary)"/>
+            <path class="sparkline-path" d="M0 38 L28 35 L56 36 L84 30 L112 28 L140 24 L168 26 L196 20 L224 16 L252 18 L280 12" stroke="var(--primary)"/>
+          </svg>
+        </div>
+
+        <div class="sparkline-wrap">
+          <div class="sparkline-header">
+            <span class="sparkline-name">S&amp;P SL20</span>
+            <div>
+              <div class="sparkline-value">6,225</div>
+              <div class="sparkline-delta m-up">+31.1 (+0.5%)</div>
+            </div>
+          </div>
+          <svg class="sparkline-svg" viewBox="0 0 280 48" preserveAspectRatio="none">
+            <path class="sparkline-area" d="M0 36 L28 32 L56 34 L84 29 L112 31 L140 26 L168 22 L196 24 L224 18 L252 14 L280 10 L280 48 L0 48 Z" fill="var(--accent)"/>
+            <path class="sparkline-path" d="M0 36 L28 32 L56 34 L84 29 L112 31 L140 26 L168 22 L196 24 L224 18 L252 14 L280 10" stroke="var(--accent)"/>
+          </svg>
+        </div>
+
+        <div class="market-stat-row">
+          <span class="market-stat-label">91-Day T-Bill</span>
+          <span class="market-stat-value">14.10% p.a.</span>
+        </div>
+        <div class="market-stat-row">
+          <span class="market-stat-label">Turnover</span>
+          <span class="market-stat-value">Rs. 2.15Bn</span>
+        </div>
+        <div class="market-stat-row">
+          <span class="market-stat-label">Volume</span>
+          <span class="market-stat-value">97.8M shares</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ S2 OUR BUSINESSES ════════════════════ -->
+<!-- Locked: A — 4-col pillar cards                                         -->
+<!-- Refinements: specific CTA verbs · LKR 200B on Corp Finance · heading  -->
+<section class="section-host" data-section-id="pillars" data-section-label="Our Businesses">
+  <div class="variant" data-variant="A" data-variant-label="Simple">
+    <div class="inner">
+      <div class="section-label scroll-fade">Our Businesses</div>
+      <!-- R3: "Four businesses. One investment bank." -->
+      <h2 style="font-size:36px;font-weight:800;color:var(--ink);letter-spacing:-0.025em;margin-bottom:36px;max-width:500px;" class="scroll-fade">Four businesses. One investment bank.</h2>
+      <div class="pillar-grid">
+
+        <div class="pillar-card scroll-fade" style="transition-delay:0.05s">
+          <div class="pillar-top" style="background:var(--primary);"></div>
+          <div class="pillar-body">
+            <div class="pillar-icon" style="background:oklch(0.92 0.020 248);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="pillar-name">HNB Stockbrokers</div>
+            <div class="pillar-desc">Decisive equity trading on the CSE, backed by research-led advisory and a seamless online platform.</div>
+            <!-- R1: specific verb -->
+            <a href="hnb-stockbrokers/index.html" class="pillar-link">Trade the CSE
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="pillar-card scroll-fade" style="transition-delay:0.1s">
+          <div class="pillar-top" style="background:var(--accent-2);"></div>
+          <div class="pillar-body">
+            <div class="pillar-icon" style="background:oklch(0.93 0.018 152);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            </div>
+            <div class="pillar-name">HNB Securities</div>
+            <div class="pillar-desc">A CBSL-appointed Primary Dealer specialising in Government Securities, T-Bills, T-Bonds, and Repo.</div>
+            <!-- R1: specific verb -->
+            <a href="hnb-securities/index.html" class="pillar-link">Invest in Gov Securities
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="pillar-card scroll-fade" style="transition-delay:0.15s">
+          <div class="pillar-top" style="background:oklch(0.50 0.110 248);"></div>
+          <div class="pillar-body">
+            <div class="pillar-icon" style="background:oklch(0.92 0.018 248);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(0.50 0.110 248)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>
+            </div>
+            <div class="pillar-name">Corporate Finance</div>
+            <div class="pillar-desc">End-to-end M&amp;A advisory, capital raising, and debenture issuance for Sri Lanka's top corporates.</div>
+            <!-- R2: LKR 200B+ sub-line -->
+            <div style="font-size:12px;font-weight:800;color:var(--primary);letter-spacing:-0.01em;margin-bottom:14px;">LKR 200B+ raised</div>
+            <!-- R1: specific verb -->
+            <a href="corporate-finance/index.html" class="pillar-link">Advisory mandates
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="pillar-card scroll-fade" style="transition-delay:0.2s">
+          <div class="pillar-top" style="background:var(--warn);"></div>
+          <div class="pillar-body">
+            <div class="pillar-icon" style="background:oklch(0.94 0.018 75);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="pillar-name">Lanka Ventures</div>
+            <div class="pillar-desc">Backing bold ideas since 1992. Venture capital and the LVL Energy Fund, invested in Sri Lanka's growth story.</div>
+            <!-- R1: specific verb -->
+            <a href="lanka-ventures-lvl/index.html" class="pillar-link">View portfolio
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ S3 CREDENTIALS ═══════════════════════ -->
+<!-- Locked: A — 4-KPI count-up strip                                       -->
+<!-- Refinements: HNB as 4th tile · ASPI static+live dot · CBSL badge      -->
+<section class="section-host" data-section-id="credentials" data-section-label="Credentials">
+  <div class="variant creds-a" data-variant="A" data-variant-label="Simple">
+    <div class="inner">
+      <div class="kpi-strip">
+
+        <div class="kpi-tile scroll-fade">
+          <div class="k-label">Capital Raised</div>
+          <div class="k-value" data-target="200" data-prefix="LKR " data-suffix="B+" data-decimals="0">LKR 200B+</div>
+          <div class="k-desc">Across bonds, IPOs, and M&amp;A transactions for Sri Lanka's corporates and state entities.</div>
+        </div>
+
+        <!-- R3: CBSL as badge, not oversized text -->
+        <div class="kpi-tile scroll-fade" style="transition-delay:0.08s">
+          <div class="k-label">Primary Dealer</div>
+          <div style="margin-bottom:8px;">
+            <span class="kpi-badge">CBSL Licensed</span>
+          </div>
+          <div class="k-desc">Appointed by the Central Bank of Sri Lanka to trade Government Securities including T-Bills and T-Bonds.</div>
+        </div>
+
+        <!-- R2: static value + live dot, no count-up -->
+        <div class="kpi-tile scroll-fade" style="transition-delay:0.16s">
+          <div class="k-label" style="display:flex;align-items:center;gap:8px;">
+            CSE Index
+            <span class="live-label">Live</span>
+          </div>
+          <div class="k-value">22,622</div>
+          <div class="k-desc">ASPI as of today's close. Trade with HNB Stockbrokers for real-time access to Sri Lanka's equity market.</div>
+        </div>
+
+        <!-- R1: "Parent Bank / HNB" instead of "Established / 1992" -->
+        <div class="kpi-tile scroll-fade" style="transition-delay:0.24s">
+          <div class="k-label">Parent Bank</div>
+          <div class="k-value" style="font-size:28px;">HNB</div>
+          <div class="k-desc">Backed by Hatton National Bank, Sri Lanka's most awarded private commercial bank.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ S4 SERVICES ══════════════════════════ -->
+<!-- Locked: B — Side-nav + content panel                                   -->
+<!-- Refinements: Lanka Ventures in menu · 24hr CTA · sp-title 34px (CSS)  -->
+<section class="section-host" data-section-id="services" data-section-label="Services">
+  <div class="variant" data-variant="B" data-variant-label="Middle">
+    <div class="inner">
+      <div class="section-label scroll-fade">What We Do</div>
+      <div class="services-b scroll-fade" style="transition-delay:0.05s">
+        <nav class="services-menu" aria-label="Service navigation">
+          <a href="#" class="sm-item active">Equity Trading</a>
+          <a href="#" class="sm-item">Government Securities</a>
+          <a href="#" class="sm-item">Corporate Finance</a>
+          <!-- R1: "Lanka Ventures" replaces "Wealth Management" -->
+          <a href="#" class="sm-item">Lanka Ventures</a>
+          <a href="#" class="sm-item">Research &amp; Analytics</a>
+        </nav>
+        <!-- R3: sp-title at 34px via CSS -->
+        <div class="services-panel">
+          <div class="sp-title">Equity Trading &amp; Research</div>
+          <div class="sp-body">At HNB Stockbrokers, we are your strategic partner in navigating the CSE. With decades of market experience, our advisors offer deep, research-backed insights that enable clients to trade with clarity and make decisions grounded in evidence. Our online platform delivers real-time market updates, portfolio tracking, and instant trade execution.</div>
+          <div class="sp-bullets">
+            <div class="sp-bullet">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Real-time ASPI and S&amp;P SL20 data with portfolio-level analytics
+            </div>
+            <div class="sp-bullet">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Weekly research notes from a dedicated equity research desk
+            </div>
+            <div class="sp-bullet">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              CDS account opening in 24 hours with dedicated relationship management
+            </div>
+          </div>
+          <div style="margin-top:28px;">
+            <!-- R2: "Open a CDS account in 24 hours" -->
+            <a href="hnb-stockbrokers/index.html" class="btn btn-primary" style="font-size:13px;padding:10px 20px;">Open a CDS account in 24 hours</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ S5 DEAL HIGHLIGHTS ═══════════════════════ -->
+<!-- Locked: B — Horizontal bar chart table                                  -->
+<!-- Refinements: aggregate sub-label · milestone pills · hover padding     -->
+<section class="section-host" data-section-id="deals" data-section-label="Deal Highlights">
+  <div class="variant deals-b" data-variant="B" data-variant-label="Middle">
+    <div class="inner">
+      <div class="section-label scroll-fade">Landmark Transactions</div>
+      <div class="scroll-fade" style="transition-delay:0.05s">
+        <h2 style="font-size:36px;font-weight:800;color:var(--ink);letter-spacing:-0.025em;margin-bottom:8px;">Deals that shaped Sri Lanka's capital markets.</h2>
+        <!-- R1: aggregate sub-label -->
+        <p style="font-size:14px;color:var(--muted);font-weight:600;margin-bottom:32px;">LKR 200Bn+ across 47+ transactions since 1992</p>
+      </div>
+      <div class="deal-chart scroll-fade" style="transition-delay:0.1s">
+        <div class="deal-chart-head">
+          <div class="dch-col">Transaction</div>
+          <div class="dch-col">Amount</div>
+          <div class="dch-col">Deal Size (relative)</div>
+        </div>
+        <div class="deal-chart-row">
+          <div><div class="dcr-name">NTT Sale Advisory</div><div class="dcr-type">M&amp;A Divestiture &mdash; Financial Advisor</div></div>
+          <div class="dcr-amount">LKR 32Bn</div>
+          <div class="deal-bar-track"><div class="deal-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="deal-chart-row">
+          <div><div class="dcr-name">Hayleys Debenture</div><div class="dcr-type">Debenture Issuance &mdash; Joint Placement Agent</div></div>
+          <div class="dcr-amount">Rs. 7Bn</div>
+          <div class="deal-bar-track"><div class="deal-bar-fill accent" style="width:22%"></div></div>
+        </div>
+        <div class="deal-chart-row">
+          <div><div class="dcr-name">Singer Finance Trust Certificate</div><div class="dcr-type">Subordinated Debt &mdash; Lead Manager</div></div>
+          <div class="dcr-amount">LKR 2Bn</div>
+          <div class="deal-bar-track"><div class="deal-bar-fill" style="width:6%"></div></div>
+        </div>
+        <div class="deal-chart-row">
+          <div><div class="dcr-name">USD 36.5M Interest Rate Swap</div><div class="dcr-type">Derivatives &mdash; Arranger</div></div>
+          <div class="dcr-amount">USD 36.5M</div>
+          <div class="deal-bar-track"><div class="deal-bar-fill accent" style="width:15%"></div></div>
+        </div>
+        <!-- R2: milestone amounts as accent pill badges -->
+        <div class="deal-chart-row">
+          <div><div class="dcr-name">Union Bank IPO</div><div class="dcr-type">Equity Capital Markets &mdash; Lead Manager</div></div>
+          <div><span class="pill pill-accent" style="font-size:10px;">300x oversubscribed</span></div>
+          <div class="deal-bar-track"><div class="deal-bar-fill" style="width:40%"></div></div>
+        </div>
+        <div class="deal-chart-row">
+          <div><div class="dcr-name">Fintrex Finance High-Yield Bond</div><div class="dcr-type">Debt Capital Markets &mdash; Sole Manager</div></div>
+          <div><span class="pill pill-accent" style="font-size:10px;">Sri Lanka's first</span></div>
+          <div class="deal-bar-track"><div class="deal-bar-fill accent" style="width:8%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ S6 LATEST INSIGHTS ═══════════════════════ -->
+<!-- Locked: A — 3-col article cards                                         -->
+<!-- Refinements: article 2 icon · text-link "View all" · read-time meta    -->
+<section class="section-host" data-section-id="insights" data-section-label="Latest Insights">
+  <div class="variant insights-a" data-variant="A" data-variant-label="Simple">
+    <div class="inner">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;" class="scroll-fade">
+        <div>
+          <div class="section-label" style="margin-bottom:6px;">Latest Insights</div>
+          <h2 style="font-size:32px;font-weight:800;color:var(--ink);letter-spacing:-0.025em;">News &amp; analysis from HNBIB.</h2>
+        </div>
+        <!-- R2: text link, not ghost button -->
+        <a href="news/index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--primary);text-decoration:none;flex-shrink:0;transition:color 150ms var(--ease-out-quart);">
+          View all
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+      <div class="article-grid">
+
+        <a href="news/empowering-your-progress-how-hnb-investment-bank-is-driving-the-evolution-of-bespoke-investment-solutions/index.html" class="article-card scroll-fade" style="transition-delay:0.05s;display:block;text-decoration:none;color:inherit;">
+          <div class="ac-img">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="ac-body">
+            <div class="ac-cat">Capital Markets</div>
+            <div class="ac-title">Empowering your progress with bespoke investment solutions</div>
+            <div class="ac-excerpt">How HNB Investment Bank is driving the evolution of Sri Lanka's capital markets through personalised mandates.</div>
+            <div class="ac-meta">3 min &middot; May 2025</div>
+          </div>
+        </a>
+
+        <a href="news/hnb-investment-bank-and-serendib-frontier-capital-spearhead-the-full-subscription-of-singer-finances-lkr-2-bn-subordinated-debt-trust-certificate-offering/index.html" class="article-card scroll-fade" style="transition-delay:0.1s;display:block;text-decoration:none;color:inherit;">
+          <div class="ac-img">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div class="ac-body">
+            <div class="ac-cat">Debt Capital Markets</div>
+            <div class="ac-title">Singer Finance LKR 2Bn subordinated debt trust certificate &mdash; full subscription</div>
+            <div class="ac-excerpt">HNBIB and Serendib Frontier Capital spearhead the full subscription of Singer Finance's debt offering.</div>
+            <div class="ac-meta">4 min &middot; Apr 2025</div>
+          </div>
+        </a>
+
+        <a href="news/hnb-investment-bank-extends-collaboration-with-cfa-society-sri-lanka-as-silver-partner/index.html" class="article-card scroll-fade" style="transition-delay:0.15s;display:block;text-decoration:none;color:inherit;">
+          <div class="ac-img">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="ac-body">
+            <div class="ac-cat">Industry</div>
+            <div class="ac-title">HNB Investment Bank extends CFA Society Sri Lanka partnership as Silver Partner</div>
+            <div class="ac-excerpt">Continuing our commitment to raising the standard of investment analysis and portfolio management in Sri Lanka.</div>
+            <div class="ac-meta">2 min &middot; Mar 2025</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ S7 FINAL CTA ═════════════════════════ -->
+<!-- Locked: B — Split copy + contact form                                   -->
+<!-- Refinements: phone number in copy · Company field · reassurance strip  -->
+<section class="section-host" data-section-id="final-cta" data-section-label="Final CTA">
+  <div class="variant cta-b" data-variant="B" data-variant-label="Middle">
+    <div class="inner cta-b">
+      <div class="cb-left scroll-fade">
+        <h2 class="cb-heading">Start the conversation.</h2>
+        <!-- R1: phone number added inline -->
+        <p class="cb-sub">Tell us what you need. Whether it is a trading account, a government securities mandate, or a corporate finance transaction, our team responds within one business day &mdash; or call <strong>+94 112 206 206</strong>.</p>
+        <div class="cb-trust">
+          <div class="ct-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            CBSL licensed
+          </div>
+          <div class="ct-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            SEC regulated
+          </div>
+          <div class="ct-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            30+ years in Sri Lankan markets
+          </div>
+        </div>
+      </div>
+      <div class="cb-right scroll-fade" style="transition-delay:0.12s">
+        <h3>Send us an enquiry</h3>
+        <div class="form-row">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div class="form-field">
+              <label>Name</label>
+              <input type="text" placeholder="Full name">
+            </div>
+            <div class="form-field">
+              <label>Email</label>
+              <input type="email" placeholder="your@email.com">
+            </div>
+          </div>
+          <!-- R2: Company / Organisation field added -->
+          <div class="form-field">
+            <label>Company / Organisation</label>
+            <input type="text" placeholder="Company name">
+          </div>
+          <div class="form-field">
+            <label>Service Interest</label>
+            <select>
+              <option>Stockbroking / Equity Trading</option>
+              <option>Government Securities</option>
+              <option>Corporate Finance &amp; M&amp;A</option>
+              <option>Lanka Ventures</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <button class="form-submit">Send Enquiry</button>
+          <!-- R3: reassurance strip below submit -->
+          <div class="form-reassurance">
+            <span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              CBSL Licensed
+            </span>
+            <span style="color:var(--line);">|</span>
+            <span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              SEC Regulated
+            </span>
+            <span style="color:var(--line);">|</span>
+            <span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              30+ Years
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ──────────────────────────────────────────────────────────── -->
+<footer class="global-footer">
+  <div class="inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" style="height:28px;width:auto;margin-bottom:14px;filter:brightness(0) invert(1);opacity:0.7;" onerror="this.style.display='none'">
+        <div class="fb-name">HNB Investment Bank</div>
+        <div class="fb-desc" style="margin-top:8px;">Evolved from Acuity Partners, HNB Investment Bank delivers end-to-end capital market solutions that empower individuals, corporates, and institutions to grow with confidence.</div>
+        <div style="margin-top:20px;font-size:11px;color:oklch(0.40 0.016 248);">
+          No 53, Dharmapala Mawatha, Colombo 3<br>
+          +94 112 206 206 &middot; PV 62973
+        </div>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <div class="fc-heading">Our Businesses</div>
+          <ul>
+            <li><a href="hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+            <li><a href="hnb-securities/index.html">HNB Securities</a></li>
+            <li><a href="corporate-finance/index.html">Corporate Finance</a></li>
+            <li><a href="lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="fc-heading">Company</div>
+          <ul>
+            <li><a href="about-us/index.html">About Us</a></li>
+            <li><a href="investor-relations/index.html">Investor Relations</a></li>
+            <li><a href="careers/index.html">Careers</a></li>
+            <li><a href="contact-us/index.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="fc-heading">Insights</div>
+          <ul>
+            <li><a href="news/index.html">Latest News</a></li>
+            <li><a href="news/index.html">Market Data</a></li>
+            <li><a href="news/index.html">Research Notes</a></li>
+            <li><a href="investor-relations/index.html">Annual Reports</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="fb-legal">
+        &copy; 2025 HNB Investment Bank. All rights reserved.<br>
+        Regulated by the Securities and Exchange Commission of Sri Lanka. HNB Securities Limited is a CBSL-appointed Primary Dealer. Investments carry risk; past performance does not guarantee future results.
+      </div>
+      <div class="fb-reg">
+        <span>SEC Licensed</span>
+        <span style="color:oklch(0.28 0.015 248);">|</span>
+        <span>CBSL Primary Dealer</span>
+        <span style="color:oklch(0.28 0.015 248);">|</span>
+        <span>CSE Member</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- .page-frame -->
+
+<script src="scripts.js"></script>
+<script src="section-toggle.js"></script>
+</body>
+</html>

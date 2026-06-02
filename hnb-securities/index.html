@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HNB Securities — CBSL Licensed Primary Dealer in Sri Lanka. Invest in Treasury Bills, Treasury Bonds, and Repo facilities at competitive Primary Dealer rates.">
+  <meta name="theme-color" content="#3d6db5">
+  <title>HNB Securities — HNB Investment Bank</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HNB Securities — Government Securities Primary Dealer">
+  <meta property="og:description" content="CBSL Licensed Primary Dealer. Treasury Bills, Treasury Bonds, Repo facilities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* ── HNB Securities page-specific ── */
+
+    /* Products A: 3-col product cards with links */
+    .sec-prod-a { background: var(--bg); }
+    .prod-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .prod-card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 32px;
+      display: flex; flex-direction: column;
+    }
+    .prod-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: oklch(0.43 0.150 248 / 0.10);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .prod-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .prod-body  { font-size: 14px; color: var(--ink-2); line-height: 1.65; flex: 1; }
+    .prod-rate  { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .prod-rate-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+    .prod-rate-val   { font-size: 28px; font-weight: 800; color: var(--primary); line-height: 1.1; }
+    .prod-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-size: 14px; font-weight: 600; color: var(--primary); transition: gap 180ms; }
+    .prod-cta:hover { gap: 10px; }
+
+    /* Products B: side-nav + panel (like S4 home) */
+    .sec-prod-b { background: var(--bg-2); }
+    .prod-nav-panel { display: grid; grid-template-columns: 220px 1fr; gap: 0; min-height: 480px; }
+    .prod-nav {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius) 0 0 var(--radius);
+      padding: 8px 0;
+    }
+    .pn-item {
+      display: block; padding: 14px 20px;
+      font-size: 14px; font-weight: 600; color: var(--ink-2);
+      cursor: pointer; transition: background 180ms, color 180ms;
+      border-left: 3px solid transparent;
+    }
+    .pn-item:hover { background: var(--bg-2); color: var(--ink); }
+    .pn-item.active {
+      background: oklch(0.43 0.150 248 / 0.08);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 700;
+    }
+    .prod-detail {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: none;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 40px;
+    }
+    .pd-title  { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+    .pd-body   { font-size: 15px; color: var(--ink-2); line-height: 1.7; max-width: 560px; margin-bottom: 20px; }
+    .pd-rate   { display: flex; align-items: baseline; gap: 8px; margin-bottom: 24px; }
+    .pdr-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+    .pdr-val   { font-size: 36px; font-weight: 800; color: var(--primary); }
+    .pd-cta    { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; background: var(--primary); color: oklch(1 0 0); font-weight: 700; font-size: 14px; border-radius: var(--radius); }
+
+    /* Products C: instrument spectrum / tier ladder */
+    .sec-prod-c { background: var(--bg); }
+    .spectrum { display: flex; flex-direction: column; gap: 0; }
+    .spectrum-row {
+      display: grid; grid-template-columns: 200px 1fr 160px;
+      gap: 24px; align-items: center;
+      padding: 20px 0; border-bottom: 1px solid var(--line);
+    }
+    .spectrum-row:first-child { padding-top: 0; }
+    .spectrum-row:last-child  { border-bottom: none; }
+    .spec-name  { font-size: 16px; font-weight: 700; }
+    .spec-tenor { font-size: 12px; color: var(--ink-2); margin-top: 3px; }
+    .spec-bar-wrap { height: 10px; background: var(--bg-2); border-radius: 5px; }
+    .spec-bar-fill { height: 100%; border-radius: 5px; background: var(--primary); }
+    .spec-rate  { font-size: 24px; font-weight: 800; color: var(--primary); text-align: right; }
+    .spec-rate-sub { font-size: 11px; color: var(--muted); margin-top: 2px; text-align: right; }
+
+    /* Rates A: clean rates table */
+    .sec-rates-a { background: var(--bg-2); }
+    .rates-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .rates-card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 28px;
+    }
+    .rates-card-title {
+      font-size: 13px; font-weight: 700; color: var(--ink);
+      padding-bottom: 14px; border-bottom: 1px solid var(--line); margin-bottom: 4px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .rates-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px;
+    }
+    .rates-row:last-child { border-bottom: none; }
+    .rr-label { color: var(--ink-2); }
+    .rr-val   { font-weight: 800; color: var(--ink); font-size: 16px; }
+    .rates-note { font-size: 11px; color: var(--muted); margin-top: 12px; }
+
+    /* Rates B: yield curve bar chart */
+    .sec-rates-b { background: var(--bg); }
+    .yield-grid { display: grid; grid-template-columns: 1fr 320px; gap: 40px; align-items: start; }
+    .yield-chart { }
+    .yc-heading { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-2); margin-bottom: 24px; }
+    .yc-bars { display: flex; align-items: flex-end; gap: 12px; height: 180px; padding-top: 20px; position: relative; }
+    .yc-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .yc-bar {
+      width: 100%; border-radius: var(--radius) var(--radius) 0 0;
+      background: var(--primary); min-height: 20px;
+      transition: opacity 200ms;
+    }
+    .yc-bar:hover { opacity: 0.75; }
+    .yc-rate  { font-size: 12px; font-weight: 800; color: var(--primary); }
+    .yc-label { font-size: 11px; color: var(--muted); text-align: center; }
+    .yield-key { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+    .yk-title  { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); margin-bottom: 16px; }
+    .yk-row    { padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .yk-row:last-child { border-bottom: none; }
+    .yk-label  { font-size: 13px; color: var(--ink-2); }
+    .yk-val    { font-size: 20px; font-weight: 800; color: var(--ink); }
+
+    /* Rates C: sparkline visualization */
+    .sec-rates-c { background: var(--bg-2); }
+    .rates-spark-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .rate-spark-tile {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 24px;
+    }
+    .rst-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); margin-bottom: 6px; }
+    .rst-val   { font-size: 32px; font-weight: 800; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+    .rst-chg   { font-size: 12px; font-weight: 700; margin-bottom: 12px; }
+
+    /* Primary Dealer A: explanation + credentials */
+    .sec-pd-a { background: var(--bg); }
+    .pd-a-grid { display: grid; grid-template-columns: 1fr 360px; gap: 64px; align-items: start; }
+    .pd-copy p { font-size: 16px; color: var(--ink-2); line-height: 1.75; }
+    .pd-copy p + p { margin-top: 16px; }
+    .pd-benefits { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+    .pd-benefit {
+      display: flex; align-items: flex-start; gap: 14px;
+      font-size: 15px; color: var(--ink);
+    }
+    .pd-check {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: oklch(0.65 0.165 140 / 0.15);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .cbsl-badge-panel {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 32px; text-align: center;
+    }
+    .cbsl-logo-placeholder {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .cbsl-logo-placeholder svg { width: 36px; height: 36px; }
+    .cbsl-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+    .cbsl-sub   { font-size: 14px; color: var(--ink-2); line-height: 1.5; margin-bottom: 16px; }
+    .cbsl-reg   { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+    /* Primary Dealer B: how to invest steps */
+    .sec-pd-b { background: var(--bg-2); }
+    .invest-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .invest-step { padding: 32px 24px; text-align: center; position: relative; }
+    .invest-step::after {
+      content: '→';
+      position: absolute; top: 48px; right: -10px;
+      font-size: 18px; color: var(--primary); font-weight: 700;
+    }
+    .invest-step:last-child::after { display: none; }
+    .is-num {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 800; color: oklch(1 0 0);
+      margin: 0 auto 16px;
+    }
+    .is-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .is-body  { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+
+    /* Primary Dealer C: auth credentials display */
+    .sec-pd-c { background: var(--primary); }
+    .sec-pd-c .section-label { color: oklch(1 0 0 / 0.55); }
+    .sec-pd-c h2 { color: oklch(1 0 0); }
+    .pd-c-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+    .pd-c-cred {
+      background: oklch(1 0 0 / 0.06);
+      border: 1px solid oklch(1 0 0 / 0.15);
+      border-radius: var(--radius); padding: 28px;
+    }
+    .pdc-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: oklch(1 0 0 / 0.15);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
+    .pdc-title { font-size: 18px; font-weight: 800; color: oklch(1 0 0); margin-bottom: 6px; }
+    .pdc-body  { font-size: 14px; color: oklch(1 0 0 / 0.7); line-height: 1.6; }
+    .pd-c-cta  { margin-top: 40px; display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .prod-grid-3 { grid-template-columns: 1fr 1fr; }
+      .prod-nav-panel { grid-template-columns: 1fr; }
+      .prod-nav { border-radius: var(--radius) var(--radius) 0 0; }
+      .prod-detail { border-left: 1px solid var(--line); border-radius: 0 0 var(--radius) var(--radius); }
+      .rates-grid { grid-template-columns: 1fr; }
+      .rates-spark-grid { grid-template-columns: 1fr 1fr; }
+      .yield-grid { grid-template-columns: 1fr; }
+      .pd-a-grid  { grid-template-columns: 1fr; gap: 36px; }
+      .invest-steps { grid-template-columns: 1fr 1fr; }
+      .invest-step::after { display: none; }
+      .pd-c-grid  { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .prod-grid-3 { grid-template-columns: 1fr; }
+      .rates-spark-grid { grid-template-columns: 1fr; }
+      .invest-steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track motion-continuous">
+    <span class="ticker-item">10Y T-Bond <span class="ticker-val">11.25%</span></span>
+    <span class="ticker-item">5Y T-Bond <span class="ticker-val">10.80%</span></span>
+    <span class="ticker-item">91-Day T-Bill <span class="ticker-val">9.48%</span></span>
+    <span class="ticker-item">182-Day T-Bill <span class="ticker-val">9.85%</span></span>
+    <span class="ticker-item">364-Day T-Bill <span class="ticker-val">10.10%</span></span>
+    <span class="ticker-item">Repo Rate <span class="ticker-val">8.50%</span></span>
+    <span class="ticker-item">10Y T-Bond <span class="ticker-val">11.25%</span></span>
+    <span class="ticker-item">5Y T-Bond <span class="ticker-val">10.80%</span></span>
+    <span class="ticker-item">91-Day T-Bill <span class="ticker-val">9.48%</span></span>
+    <span class="ticker-item">182-Day T-Bill <span class="ticker-val">9.85%</span></span>
+    <span class="ticker-item">364-Day T-Bill <span class="ticker-val">10.10%</span></span>
+    <span class="ticker-item">Repo Rate <span class="ticker-val">8.50%</span></span>
+  </div>
+</div>
+
+<nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../about-us/index.html">About Us</a></li>
+    <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../news/index.html">News</a></li>
+    <li><a href="../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-inner">
+    <span class="section-label">HNB Securities</span>
+    <h1>Invest in government securities at Primary Dealer rates</h1>
+    <p class="page-header-sub">CBSL Licensed Primary Dealer with direct access to CBSL auction allotments. Treasury Bills, Treasury Bonds, and Repo facilities for individual and institutional investors.</p>
+    <div class="page-header-meta">
+      <span class="pill">CBSL Licensed</span>
+      <span class="pill">Primary Dealer</span>
+      <a href="repo/index.html" class="pill" style="cursor:pointer;">Repo Calculator →</a>
+    </div>
+  </div>
+</header>
+
+<div class="page-body">
+
+  <!-- S1: Products -->
+  <section class="section-host" data-section-id="sec-products" data-section-label="Products">
+
+    <!-- A: 3-col product cards -->
+    <div class="variant section-wrap sec-prod-a" data-variant="A" data-variant-label="Simple · Product cards">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Government Securities</span>
+          <h2>Three instruments. One Primary Dealer.</h2>
+        </div>
+        <div class="prod-grid-3">
+          <div class="prod-card scroll-fade">
+            <div class="prod-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 3L12 7 8 3"/></svg>
+            </div>
+            <div class="prod-title">Treasury Bills</div>
+            <p class="prod-body">Short-term government securities with tenors of 91, 182, and 364 days. Zero-coupon instruments issued at a discount to face value. Backed by the Government of Sri Lanka.</p>
+            <div class="prod-rate">
+              <div class="prod-rate-label">364-Day yield</div>
+              <div class="prod-rate-val">10.10%</div>
+            </div>
+            <a href="tbill/index.html" class="prod-cta">Learn about T-Bills →</a>
+          </div>
+          <div class="prod-card scroll-fade">
+            <div class="prod-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="prod-title">Treasury Bonds</div>
+            <p class="prod-body">Medium to long-term government debt securities with tenors from 2 to 30 years. Semi-annual coupon payments. Ideal for long-term income generation and portfolio anchoring.</p>
+            <div class="prod-rate">
+              <div class="prod-rate-label">10-Year yield</div>
+              <div class="prod-rate-val">11.25%</div>
+            </div>
+            <a href="#" class="prod-cta">Learn about T-Bonds →</a>
+          </div>
+          <div class="prod-card scroll-fade">
+            <div class="prod-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            </div>
+            <div class="prod-title">Repo &amp; Reverse Repo</div>
+            <p class="prod-body">Short-term investment and borrowing using government securities as collateral. Flexible tenors from overnight to 12 months. Competitive Primary Dealer rates.</p>
+            <div class="prod-rate">
+              <div class="prod-rate-label">Repo rate</div>
+              <div class="prod-rate-val">8.50%</div>
+            </div>
+            <a href="repo/index.html" class="prod-cta">Repo calculator →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B: side-nav + product panel -->
+    <div class="variant section-wrap sec-prod-b" data-variant="B" data-variant-label="Middle · Nav + panel">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Government Securities</span>
+          <h2>Choose your instrument</h2>
+        </div>
+        <div class="prod-nav-panel scroll-fade">
+          <div class="prod-nav services-menu">
+            <button class="pn-item sm-item active"
+              data-title="Treasury Bills"
+              data-body="Short-term government securities with tenors of 91, 182, and 364 days. Zero-coupon instruments issued at a discount to face value and redeemed at par on maturity. Suitable for short-term cash management and risk-averse investors."
+              data-cta="Learn about Treasury Bills"
+              data-cta-href="tbill/index.html">Treasury Bills</button>
+            <button class="pn-item sm-item"
+              data-title="Treasury Bonds"
+              data-body="Medium to long-term government debt securities with tenors from 2 to 30 years. Pay semi-annual fixed coupons. Ideal for long-term income generation and institutional portfolio anchoring."
+              data-cta="Learn about Treasury Bonds"
+              data-cta-href="#">Treasury Bonds</button>
+            <button class="pn-item sm-item"
+              data-title="Repo &amp; Reverse Repo"
+              data-body="Short-term investment and borrowing facilities secured against government securities. Flexible tenors from overnight to 12 months. Direct access to CBSL repo auction pricing as a Primary Dealer."
+              data-cta="Use the Repo Calculator"
+              data-cta-href="repo/index.html">Repo &amp; Reverse Repo</button>
+            <button class="pn-item sm-item"
+              data-title="Custodial Services"
+              data-body="Safe custody and settlement of government securities via our CBSL-registered custodial account. Securities held in dematerialised form at CBSL CDS. Statement of holdings on request."
+              data-cta="Contact us"
+              data-cta-href="../contact-us/index.html">Custodial Services</button>
+            <button class="pn-item sm-item"
+              data-title="CBSL Auction Allotments"
+              data-body="As a CBSL Licensed Primary Dealer, HNB Securities participates directly in CBSL primary market auctions for T-Bills and T-Bonds. This gives our clients access to auction allotments at primary market rates — not secondary market premiums."
+              data-cta="Invest via HNB Securities"
+              data-cta-href="../contact-us/index.html">Auction Allotments</button>
+          </div>
+          <div class="prod-detail services-panel">
+            <div class="pd-title sp-title">Treasury Bills</div>
+            <p class="pd-body sp-body">Short-term government securities with tenors of 91, 182, and 364 days. Zero-coupon instruments issued at a discount to face value and redeemed at par on maturity. Suitable for short-term cash management and risk-averse investors.</p>
+            <div class="pd-rate">
+              <span class="pdr-label">364-Day indicative yield</span>
+              <span class="pdr-val">10.10%</span>
+            </div>
+            <a href="tbill/index.html" class="pd-cta sp-cta">Learn about Treasury Bills</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C: instrument spectrum (risk/return tier ladder) -->
+    <div class="variant section-wrap sec-prod-c" data-variant="C" data-variant-label="Ambitious · Instrument spectrum">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Government Securities</span>
+          <h2>Government-backed. Tenor-matched. Primary Dealer rates.</h2>
+          <p style="color:var(--ink-2);margin-top:10px;font-size:15px;">Select the instrument that matches your investment horizon. All products are backed by the Government of Sri Lanka.</p>
+        </div>
+        <div class="spectrum scroll-fade">
+          <div class="spectrum-row" style="background:var(--bg-2);padding:20px 20px;border-radius:var(--radius) var(--radius) 0 0;border:1px solid var(--line);">
+            <div>
+              <div class="spec-name">Repo / Reverse Repo</div>
+              <div class="spec-tenor">Overnight – 12 months</div>
+            </div>
+            <div class="spec-bar-wrap"><div class="spec-bar-fill" style="width:35%"></div></div>
+            <div>
+              <div class="spec-rate">8.50%</div>
+              <div class="spec-rate-sub">Indicative rate</div>
+            </div>
+          </div>
+          <div class="spectrum-row" style="background:var(--bg-2);padding:20px 20px;border-left:1px solid var(--line);border-right:1px solid var(--line);">
+            <div>
+              <div class="spec-name">Treasury Bills — 91 Day</div>
+              <div class="spec-tenor">91-day tenor</div>
+            </div>
+            <div class="spec-bar-wrap"><div class="spec-bar-fill" style="width:52%"></div></div>
+            <div>
+              <div class="spec-rate">9.48%</div>
+              <div class="spec-rate-sub">Last auction rate</div>
+            </div>
+          </div>
+          <div class="spectrum-row" style="background:var(--bg-2);padding:20px 20px;border-left:1px solid var(--line);border-right:1px solid var(--line);">
+            <div>
+              <div class="spec-name">Treasury Bills — 182 Day</div>
+              <div class="spec-tenor">182-day tenor</div>
+            </div>
+            <div class="spec-bar-wrap"><div class="spec-bar-fill" style="width:62%"></div></div>
+            <div>
+              <div class="spec-rate">9.85%</div>
+              <div class="spec-rate-sub">Last auction rate</div>
+            </div>
+          </div>
+          <div class="spectrum-row" style="background:var(--bg-2);padding:20px 20px;border-left:1px solid var(--line);border-right:1px solid var(--line);">
+            <div>
+              <div class="spec-name">Treasury Bills — 364 Day</div>
+              <div class="spec-tenor">364-day tenor</div>
+            </div>
+            <div class="spec-bar-wrap"><div class="spec-bar-fill" style="width:72%"></div></div>
+            <div>
+              <div class="spec-rate">10.10%</div>
+              <div class="spec-rate-sub">Last auction rate</div>
+            </div>
+          </div>
+          <div class="spectrum-row" style="background:var(--bg-2);padding:20px 20px;border-left:1px solid var(--line);border-right:1px solid var(--line);">
+            <div>
+              <div class="spec-name">Treasury Bonds — 5 Year</div>
+              <div class="spec-tenor">5-year coupon bond</div>
+            </div>
+            <div class="spec-bar-wrap"><div class="spec-bar-fill" style="width:84%"></div></div>
+            <div>
+              <div class="spec-rate">10.80%</div>
+              <div class="spec-rate-sub">Indicative yield</div>
+            </div>
+          </div>
+          <div class="spectrum-row" style="background:var(--bg-2);padding:20px 20px;border-radius:0 0 var(--radius) var(--radius);border:1px solid var(--line);border-top:none;">
+            <div>
+              <div class="spec-name">Treasury Bonds — 10 Year</div>
+              <div class="spec-tenor">10-year coupon bond</div>
+            </div>
+            <div class="spec-bar-wrap"><div class="spec-bar-fill" style="width:100%"></div></div>
+            <div>
+              <div class="spec-rate">11.25%</div>
+              <div class="spec-rate-sub">Indicative yield</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- S2: Rates -->
+  <section class="section-host" data-section-id="sec-rates" data-section-label="Rates">
+
+    <!-- A: two-col rates tables -->
+    <div class="variant section-wrap sec-rates-a" data-variant="A" data-variant-label="Simple · Rates tables">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Current Rates</span>
+          <h2>Sri Lanka government securities — indicative rates</h2>
+        </div>
+        <div class="rates-grid">
+          <div class="rates-card scroll-fade">
+            <div class="rates-card-title">Treasury Bills <span class="live-label">Live</span></div>
+            <div class="rates-row"><span class="rr-label">91-Day</span><span class="rr-val">9.48%</span></div>
+            <div class="rates-row"><span class="rr-label">182-Day</span><span class="rr-val">9.85%</span></div>
+            <div class="rates-row"><span class="rr-label">364-Day</span><span class="rr-val">10.10%</span></div>
+            <p class="rates-note">Last CBSL auction weighted average rates. Contact HNB Securities for live Primary Dealer quotes.</p>
+          </div>
+          <div class="rates-card scroll-fade">
+            <div class="rates-card-title">Treasury Bonds &amp; Policy Rates</div>
+            <div class="rates-row"><span class="rr-label">2-Year Bond</span><span class="rr-val">10.35%</span></div>
+            <div class="rates-row"><span class="rr-label">5-Year Bond</span><span class="rr-val">10.80%</span></div>
+            <div class="rates-row"><span class="rr-label">10-Year Bond</span><span class="rr-val">11.25%</span></div>
+            <div class="rates-row"><span class="rr-label">CBSL Repo Rate</span><span class="rr-val">8.50%</span></div>
+            <div class="rates-row"><span class="rr-label">CBSL Reverse Repo</span><span class="rr-val">9.50%</span></div>
+            <p class="rates-note">Source: Central Bank of Sri Lanka. Rates indicative. Contact us for live quotes.</p>
+          </div>
+        </div>
+        <div style="margin-top:28px;text-align:center;">
+          <a href="repo/calculator/index.html" class="btn-primary">Repo / Reverse Repo Calculator</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- B: yield curve bar chart -->
+    <div class="variant section-wrap sec-rates-b" data-variant="B" data-variant-label="Middle · Yield curve chart">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Current Rates</span>
+          <h2>Sri Lanka government yield curve</h2>
+        </div>
+        <div class="yield-grid scroll-fade">
+          <div class="yield-chart">
+            <div class="yc-heading">Yield by tenor — Government of Sri Lanka</div>
+            <div class="yc-bars">
+              <div class="yc-bar-col">
+                <div class="yc-rate">8.50%</div>
+                <div class="yc-bar" style="height:64px"></div>
+                <div class="yc-label">O/N Repo</div>
+              </div>
+              <div class="yc-bar-col">
+                <div class="yc-rate">9.48%</div>
+                <div class="yc-bar" style="height:92px"></div>
+                <div class="yc-label">91D T-Bill</div>
+              </div>
+              <div class="yc-bar-col">
+                <div class="yc-rate">9.85%</div>
+                <div class="yc-bar" style="height:104px"></div>
+                <div class="yc-label">182D T-Bill</div>
+              </div>
+              <div class="yc-bar-col">
+                <div class="yc-rate">10.10%</div>
+                <div class="yc-bar" style="height:112px"></div>
+                <div class="yc-label">364D T-Bill</div>
+              </div>
+              <div class="yc-bar-col">
+                <div class="yc-rate">10.35%</div>
+                <div class="yc-bar" style="height:120px"></div>
+                <div class="yc-label">2Y Bond</div>
+              </div>
+              <div class="yc-bar-col">
+                <div class="yc-rate">10.80%</div>
+                <div class="yc-bar" style="height:136px"></div>
+                <div class="yc-label">5Y Bond</div>
+              </div>
+              <div class="yc-bar-col">
+                <div class="yc-rate">11.25%</div>
+                <div class="yc-bar" style="height:160px"></div>
+                <div class="yc-label">10Y Bond</div>
+              </div>
+            </div>
+          </div>
+          <div class="yield-key">
+            <div class="yk-title">Key Rates</div>
+            <div class="yk-row">
+              <div class="yk-label">91-Day T-Bill</div>
+              <div class="yk-val" data-target="9.48" data-decimals="2" data-suffix="%">9.48%</div>
+            </div>
+            <div class="yk-row">
+              <div class="yk-label">10-Year T-Bond</div>
+              <div class="yk-val">11.25%</div>
+            </div>
+            <div class="yk-row">
+              <div class="yk-label">CBSL Repo</div>
+              <div class="yk-val">8.50%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C: sparkline rate tiles -->
+    <div class="variant section-wrap sec-rates-c" data-variant="C" data-variant-label="Ambitious · Sparkline tiles">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Current Rates</span>
+          <h2>Government securities rates — trending lower</h2>
+        </div>
+        <div class="rates-spark-grid scroll-fade">
+          <div class="rate-spark-tile sparkline-wrap">
+            <div class="rst-label">91-Day Treasury Bill</div>
+            <div class="rst-val">9.48%</div>
+            <div class="rst-chg dn">▼ from 11.2% (Jan 2025)</div>
+            <svg class="sparkline-svg-c" viewBox="0 0 200 40" preserveAspectRatio="none" style="width:100%;height:40px;">
+              <path class="sparkline-path" d="M0,36 L30,32 L60,26 L90,22 L120,18 L150,14 L170,12 L200,8" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="rate-spark-tile sparkline-wrap">
+            <div class="rst-label">10-Year Treasury Bond</div>
+            <div class="rst-val">11.25%</div>
+            <div class="rst-chg dn">▼ from 14.5% (Jan 2024)</div>
+            <svg class="sparkline-svg-c" viewBox="0 0 200 40" preserveAspectRatio="none" style="width:100%;height:40px;">
+              <path class="sparkline-path" d="M0,38 L30,34 L60,30 L90,26 L120,22 L150,18 L170,14 L200,10" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="rate-spark-tile sparkline-wrap">
+            <div class="rst-label">CBSL Repo Rate</div>
+            <div class="rst-val">8.50%</div>
+            <div class="rst-chg dn">▼ from 15.5% (mid-2023)</div>
+            <svg class="sparkline-svg-c" viewBox="0 0 200 40" preserveAspectRatio="none" style="width:100%;height:40px;">
+              <path class="sparkline-path" d="M0,38 L30,36 L60,32 L90,24 L120,18 L150,14 L170,12 L200,10" fill="none" stroke="oklch(0.54 0.140 140)" stroke-width="1.5"/>
+            </svg>
+          </div>
+        </div>
+        <div style="margin-top:28px;text-align:center;">
+          <a href="repo/calculator/index.html" class="btn-primary">Repo Calculator</a>
+          <a href="../contact-us/index.html" class="btn-ghost" style="margin-left:12px;">Get a live quote</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- S3: Primary Dealer -->
+  <section class="section-host" data-section-id="primary-dealer" data-section-label="Primary Dealer">
+
+    <!-- A: explanation + credentials badge -->
+    <div class="variant section-wrap sec-pd-a" data-variant="A" data-variant-label="Simple · Explanation + badge">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">CBSL Primary Dealer</span>
+          <h2>What Primary Dealer status means for you</h2>
+        </div>
+        <div class="pd-a-grid">
+          <div class="pd-copy scroll-fade">
+            <p>HNB Securities is one of a small number of institutions licensed by the Central Bank of Sri Lanka as Primary Dealers in government securities. This designation gives us — and our clients — direct access to CBSL primary market auctions, the deepest source of liquidity in Sri Lanka's fixed-income market.</p>
+            <p>When you invest through HNB Securities, you access auction allotments at primary market rates. You are not buying in the secondary market at premiums. Your securities are held in dematerialised form at the CBSL's own CDS.</p>
+            <div class="pd-benefits">
+              <div class="pd-benefit">
+                <div class="pd-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="oklch(0.54 0.140 140)" stroke-width="2"><polyline points="2 6 5 9 10 3"/></svg></div>
+                Direct access to CBSL primary auctions
+              </div>
+              <div class="pd-benefit">
+                <div class="pd-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="oklch(0.54 0.140 140)" stroke-width="2"><polyline points="2 6 5 9 10 3"/></svg></div>
+                Primary market pricing — no secondary premium
+              </div>
+              <div class="pd-benefit">
+                <div class="pd-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="oklch(0.54 0.140 140)" stroke-width="2"><polyline points="2 6 5 9 10 3"/></svg></div>
+                Government-backed securities — zero credit risk
+              </div>
+              <div class="pd-benefit">
+                <div class="pd-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="oklch(0.54 0.140 140)" stroke-width="2"><polyline points="2 6 5 9 10 3"/></svg></div>
+                Dematerialised holding at CBSL CDS
+              </div>
+            </div>
+          </div>
+          <div class="cbsl-badge-panel scroll-fade">
+            <div class="cbsl-logo-placeholder">
+              <svg viewBox="0 0 36 36" width="36" height="36"><path d="M18 3L5 9v9c0 7.88 5.63 15.22 13 16.95C25.37 33.22 31 25.88 31 18V9L18 3z" fill="oklch(1 0 0 / 0.2)" stroke="oklch(1 0 0)" stroke-width="1.5"/><path d="M12 18l4 4 8-8" stroke="oklch(1 0 0)" stroke-width="2" fill="none"/></svg>
+            </div>
+            <div class="cbsl-title">CBSL Licensed Primary Dealer</div>
+            <p class="cbsl-sub">Authorised by the Central Bank of Sri Lanka to deal in and distribute government securities to individual, institutional, and corporate investors.</p>
+            <div class="cbsl-reg">Registration in good standing since 2000</div>
+            <a href="../contact-us/index.html" class="btn-primary" style="margin-top:20px;width:100%;justify-content:center;">Invest in Gov Securities</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B: how to invest process steps -->
+    <div class="variant section-wrap sec-pd-b" data-variant="B" data-variant-label="Middle · Investment process">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">CBSL Primary Dealer</span>
+          <h2>How to invest in government securities through HNB Securities</h2>
+        </div>
+        <div class="invest-steps scroll-fade">
+          <div class="invest-step">
+            <div class="is-num">1</div>
+            <div class="is-title">Open an account</div>
+            <p class="is-body">Contact HNB Securities. Provide NIC, proof of address, and income declaration. Account opened within 2 business days.</p>
+          </div>
+          <div class="invest-step">
+            <div class="is-num">2</div>
+            <div class="is-title">Select your instrument</div>
+            <p class="is-body">Choose Treasury Bills (91–364 days), Treasury Bonds (2–30 years), or Repo facilities based on your investment horizon.</p>
+          </div>
+          <div class="invest-step">
+            <div class="is-num">3</div>
+            <div class="is-title">Place your order</div>
+            <p class="is-body">Instruct by phone, email, or online. We participate in the next CBSL auction or acquire from the secondary market at best available rates.</p>
+          </div>
+          <div class="invest-step">
+            <div class="is-num">4</div>
+            <div class="is-title">Hold and earn</div>
+            <p class="is-body">Securities are held at CBSL CDS. T-Bond coupons are credited semi-annually. T-Bill proceeds credited at maturity. Full statement on request.</p>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:40px;">
+          <a href="../contact-us/index.html" class="btn-primary">Open an Account</a>
+          <a href="repo/calculator/index.html" class="btn-ghost" style="margin-left:12px;">Repo Calculator</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- C: credentials on primary surface -->
+    <div class="variant section-wrap sec-pd-c" data-variant="C" data-variant-label="Ambitious · Credentials on primary">
+      <div class="section-inner">
+        <span class="section-label">CBSL Primary Dealer</span>
+        <h2 style="color:oklch(1 0 0);margin-top:10px;max-width:680px;">Authorised by the Central Bank. Accountable to every investor.</h2>
+        <div class="pd-c-grid scroll-fade">
+          <div class="pd-c-cred">
+            <div class="pdc-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(1 0 0)" stroke-width="2"><path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.5C17.25 22.15 21 17.25 21 12V6L12 2z"/></svg>
+            </div>
+            <div class="pdc-title">CBSL Licensed Primary Dealer</div>
+            <p class="pdc-body">One of a limited number of institutions authorised by the Central Bank of Sri Lanka to participate directly in government securities auctions and distribute to investors.</p>
+          </div>
+          <div class="pd-c-cred">
+            <div class="pdc-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(1 0 0)" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 3L12 7 8 3"/></svg>
+            </div>
+            <div class="pdc-title">Direct Auction Access</div>
+            <p class="pdc-body">We bid directly at CBSL T-Bill and T-Bond auctions. Clients receive primary market allotments at auction-weighted average rates — not secondary market prices.</p>
+          </div>
+          <div class="pd-c-cred">
+            <div class="pdc-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(1 0 0)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="pdc-title">Government-Backed Securities</div>
+            <p class="pdc-body">Treasury Bills and Bonds are direct obligations of the Government of Sri Lanka — the sovereign credit. Zero counterparty credit risk on the instrument itself.</p>
+          </div>
+          <div class="pd-c-cred">
+            <div class="pdc-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(1 0 0)" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg>
+            </div>
+            <div class="pdc-title">HNB Parent Strength</div>
+            <p class="pdc-body">Backed by Hatton National Bank PLC — Sri Lanka's largest listed private bank. Your investment counterparty is one of the country's most capitalised financial institutions.</p>
+          </div>
+        </div>
+        <div class="pd-c-cta scroll-fade">
+          <a href="../contact-us/index.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:oklch(1 0 0);color:var(--primary);font-weight:700;font-size:15px;border-radius:var(--radius);">Invest in Government Securities</a>
+          <a href="repo/calculator/index.html" style="display:inline-flex;align-items:center;gap:8px;padding:11px 23px;border:1.5px solid oklch(1 0 0 / 0.55);color:oklch(1 0 0);font-weight:700;font-size:15px;border-radius:var(--radius);">Repo Calculator</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CTA Final -->
+  <section class="section-cta-final">
+    <div class="cta-final-inner">
+      <div class="cta-final-copy scroll-fade">
+        <span class="section-label">Start investing</span>
+        <h2>Invest in government securities at Primary Dealer rates.</h2>
+        <p>Our fixed-income specialists are available to discuss your investment objectives, explain instrument options, and arrange your first investment. Or call <strong style="color:oklch(1 0 0);">+94 112 206 206</strong>.</p>
+        <p style="margin-top:12px;font-size:14px;color:oklch(1 0 0 / 0.7);">Sub-pages: <a href="repo/index.html" style="color:oklch(1 0 0);">Repo facility →</a> &nbsp; <a href="tbill/index.html" style="color:oklch(1 0 0);">Treasury Bills →</a> &nbsp; <a href="repo/calculator/index.html" style="color:oklch(1 0 0);">Repo Calculator →</a></p>
+      </div>
+      <div class="cta-final-form scroll-fade">
+        <div class="form-group">
+          <label for="hs-name">Full Name</label>
+          <input type="text" id="hs-name" placeholder="Your name" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="hs-email">Email</label>
+          <input type="email" id="hs-email" placeholder="you@company.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="hs-org">Company / Organisation</label>
+          <input type="text" id="hs-org" placeholder="Your organisation" autocomplete="organization">
+        </div>
+        <div class="form-group">
+          <label for="hs-svc">Investment Interest</label>
+          <select id="hs-svc">
+            <option value="">Select instrument</option>
+            <option>Treasury Bills</option>
+            <option>Treasury Bonds</option>
+            <option>Repo facility</option>
+            <option>Custodial services</option>
+          </select>
+        </div>
+        <button type="submit" class="cta-submit">Invest in Gov Securities</button>
+        <p class="form-reassurance">CBSL Licensed · Government-Backed · Since 2000</p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /.page-body -->
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="nav-logo" href="../index.html">
+          <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="28">
+        </a>
+        <p class="footer-tagline">A subsidiary of Hatton National Bank PLC. CBSL Licensed Primary Dealer. SEC Registered Stockbroker. Registered No. PV 62973.</p>
+      </div>
+      <div class="footer-col">
+        <h4>HNB Securities</h4>
+        <ul>
+          <li><a href="repo/index.html">Repo &amp; Reverse Repo</a></li>
+          <li><a href="tbill/index.html">Treasury Bills</a></li>
+          <li><a href="repo/calculator/index.html">Repo Calculator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../about-us/index.html">About Us</a></li>
+          <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+          <li><a href="../contact-us/index.html">Contact</a></li>
+          <li><a href="../news/index.html">News</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>© 2025 HNB Investment Bank Ltd (PV 62973). All rights reserved. Registered at No. 53, Dharmapala Mawatha, Colombo 3.</p>
+      <div class="footer-legal-links">
+        <a href="../privacy-policy/index.html">Privacy Policy</a>
+        <a href="../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<link rel="stylesheet" href="../section-toggle.css">
+<script src="../scripts.js"></script>
+<script src="../section-toggle.js"></script>
+</body>
+</html>

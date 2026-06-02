@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HNB Investment Bank Corporate Finance — capital raising, M&A advisory, and structured finance. LKR 200Bn+ raised across 47+ transactions since 1992.">
+  <meta name="theme-color" content="#3d6db5">
+  <title>Corporate Finance — HNB Investment Bank</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Corporate Finance — HNB Investment Bank">
+  <meta property="og:description" content="LKR 200Bn+ raised. Capital raising, M&A advisory, and structured finance in Sri Lanka.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* ── Corporate Finance page-specific ── */
+
+    /* Services A: 3-col cards */
+    .cf-svc-a { background: var(--bg); }
+    .cf-svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .cf-svc-card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 32px;
+    }
+    .cf-svc-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: oklch(0.43 0.150 248 / 0.10);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .cf-svc-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .cf-svc-body  { font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+    .cf-svc-proof { font-size: 12px; font-weight: 800; color: var(--primary); margin-top: 10px; }
+
+    /* Services B: narrative left + stats right */
+    .cf-svc-b { background: var(--bg-2); }
+    .cf-svc-b-grid { display: grid; grid-template-columns: 1fr 340px; gap: 64px; align-items: start; }
+    .cf-svc-copy p { font-size: 16px; color: var(--ink-2); line-height: 1.75; }
+    .cf-svc-copy p + p { margin-top: 16px; }
+    .cf-svc-list { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+    .cf-svc-item {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 15px; font-weight: 600; color: var(--ink);
+    }
+    .cf-svc-item::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%; background: var(--primary); flex-shrink: 0;
+    }
+    .cf-stat-panel {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); border-top: 3px solid var(--primary);
+      padding: 32px; display: flex; flex-direction: column; gap: 0;
+    }
+    .cf-stat-row {
+      text-align: center; padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .cf-stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .cf-stat-fig   { font-size: 36px; font-weight: 800; color: var(--primary); line-height: 1; }
+    .cf-stat-label { font-size: 13px; color: var(--ink-2); margin-top: 6px; }
+
+    /* Services C: tier table */
+    .cf-svc-c { background: var(--bg); }
+    .cf-tier-table { width: 100%; border-collapse: collapse; }
+    .cf-tier-table th {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--primary);
+      padding: 12px 16px; text-align: left;
+      border-bottom: 2px solid var(--primary);
+    }
+    .cf-tier-table td {
+      padding: 16px; font-size: 14px; color: var(--ink);
+      border-bottom: 1px solid var(--line); vertical-align: top;
+    }
+    .cf-tier-table tr:last-child td { border-bottom: none; }
+    .cf-tier-table tr:hover td { background: var(--bg-2); }
+    .cf-tier-name  { font-weight: 700; }
+    .cf-tier-proof { font-size: 12px; font-weight: 800; color: var(--primary); margin-top: 3px; }
+
+    /* Track record A: deal timeline list */
+    .cf-track-a { background: var(--bg-2); }
+    .deal-timeline { display: flex; flex-direction: column; gap: 0; }
+    .deal-item {
+      display: flex; align-items: flex-start; gap: 28px;
+      padding: 22px 0; border-bottom: 1px solid var(--line);
+      transition: padding-left 200ms var(--ease-out-quart);
+    }
+    .deal-item:first-child { padding-top: 0; }
+    .deal-item:last-child  { border-bottom: none; padding-bottom: 0; }
+    .deal-item:hover { padding-left: 8px; }
+    .deal-year { font-size: 12px; font-weight: 800; color: var(--primary); min-width: 44px; padding-top: 3px; }
+    .deal-name  { font-size: 16px; font-weight: 700; color: var(--ink); }
+    .deal-desc  { font-size: 13px; color: var(--ink-2); margin-top: 3px; line-height: 1.5; }
+    .deal-val   { font-size: 14px; font-weight: 800; color: var(--ink); min-width: 120px; text-align: right; padding-top: 2px; }
+
+    /* Track record B: horizontal bar chart */
+    .cf-track-b { background: var(--bg); }
+    .deal-bars { display: flex; flex-direction: column; gap: 0; }
+    .deal-bar-row {
+      display: flex; align-items: center; gap: 16px;
+      padding: 14px 0; border-bottom: 1px solid var(--line);
+      transition: padding-left 200ms var(--ease-out-quart), background 180ms;
+    }
+    .deal-bar-row:first-child { padding-top: 0; }
+    .deal-bar-row:last-child  { border-bottom: none; }
+    .deal-bar-row:hover { padding-left: 8px; }
+    .dbr-name { font-size: 13px; font-weight: 600; min-width: 160px; color: var(--ink); }
+    .dbr-year { font-size: 11px; color: var(--muted); }
+    .dbr-track { flex: 1; height: 8px; background: var(--bg-2); border-radius: 4px; overflow: hidden; }
+    .dbr-fill  { height: 100%; border-radius: 4px; background: var(--primary); }
+    .dbr-val   { font-size: 13px; font-weight: 700; min-width: 90px; text-align: right; }
+    .dbr-pill  { flex-shrink: 0; }
+
+    /* Track record C: featured deals grid */
+    .cf-track-c { background: var(--bg-2); }
+    .featured-deals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .fd-card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 24px;
+    }
+    .fd-year  { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); margin-bottom: 8px; }
+    .fd-name  { font-size: 16px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+    .fd-role  { font-size: 12px; color: var(--ink-2); margin-bottom: 12px; }
+    .fd-val   { font-size: 20px; font-weight: 800; color: var(--ink); }
+    .fd-sub   { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    /* Advisory A: 3-col approach cards */
+    .cf-adv-a { background: var(--bg); }
+    .adv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .adv-card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 32px;
+    }
+    .adv-step { font-size: 32px; font-weight: 800; color: oklch(0.43 0.150 248 / 0.18); margin-bottom: 12px; line-height: 1; }
+    .adv-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .adv-body  { font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+
+    /* Advisory B: process flow */
+    .cf-adv-b { background: var(--bg-2); }
+    .process-flow { display: flex; align-items: flex-start; gap: 0; position: relative; }
+    .pf-step { flex: 1; text-align: center; padding: 0 16px; position: relative; }
+    .pf-step::after {
+      content: '→';
+      position: absolute; top: 22px; right: -12px;
+      font-size: 18px; color: var(--primary); font-weight: 700;
+      z-index: 2;
+    }
+    .pf-step:last-child::after { display: none; }
+    .pf-dot {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800; color: oklch(1 0 0);
+      margin: 0 auto 16px;
+    }
+    .pf-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .pf-body  { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+
+    /* Advisory C: industry coverage */
+    .cf-adv-c { background: var(--bg); }
+    .industry-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .industry-tile {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 20px 16px; text-align: center;
+    }
+    .it-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: oklch(0.43 0.150 248 / 0.10);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 12px;
+    }
+    .it-name { font-size: 13px; font-weight: 700; }
+    .it-deals { font-size: 11px; color: var(--primary); font-weight: 600; margin-top: 3px; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .cf-svc-grid { grid-template-columns: 1fr 1fr; }
+      .cf-svc-b-grid { grid-template-columns: 1fr; gap: 36px; }
+      .deal-item { flex-wrap: wrap; }
+      .deal-val  { min-width: auto; text-align: left; }
+      .featured-deals { grid-template-columns: 1fr 1fr; }
+      .adv-grid  { grid-template-columns: 1fr 1fr; }
+      .process-flow { flex-direction: column; gap: 24px; }
+      .pf-step::after { display: none; }
+      .pf-step { padding: 0; text-align: left; display: flex; align-items: flex-start; gap: 20px; }
+      .pf-dot { flex-shrink: 0; margin: 0; }
+      .industry-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .cf-svc-grid { grid-template-columns: 1fr; }
+      .featured-deals { grid-template-columns: 1fr; }
+      .adv-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track motion-continuous">
+    <span class="ticker-item">ASPI <span class="ticker-val">22,622.34</span> <span class="ticker-up">▲ 0.32%</span></span>
+    <span class="ticker-item">S&amp;P SL20 <span class="ticker-val">6,225.28</span></span>
+    <span class="ticker-item">10Y T-Bond <span class="ticker-val">11.25%</span></span>
+    <span class="ticker-item">91-Day T-Bill <span class="ticker-val">9.48%</span></span>
+    <span class="ticker-item">Repo Rate <span class="ticker-val">8.50%</span></span>
+    <span class="ticker-item">USD/LKR <span class="ticker-val">298.45</span></span>
+    <span class="ticker-item">ASPI <span class="ticker-val">22,622.34</span> <span class="ticker-up">▲ 0.32%</span></span>
+    <span class="ticker-item">S&amp;P SL20 <span class="ticker-val">6,225.28</span></span>
+    <span class="ticker-item">10Y T-Bond <span class="ticker-val">11.25%</span></span>
+    <span class="ticker-item">91-Day T-Bill <span class="ticker-val">9.48%</span></span>
+    <span class="ticker-item">Repo Rate <span class="ticker-val">8.50%</span></span>
+    <span class="ticker-item">USD/LKR <span class="ticker-val">298.45</span></span>
+  </div>
+</div>
+
+<nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../about-us/index.html">About Us</a></li>
+    <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../news/index.html">News</a></li>
+    <li><a href="../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-inner">
+    <span class="section-label">Corporate Finance</span>
+    <h1>LKR&nbsp;200Bn+ raised. Sri Lanka's capital markets partner.</h1>
+    <p class="page-header-sub">Capital raising, mergers and acquisitions advisory, structured finance, and privatisation mandates for Sri Lanka's leading corporates, banks, and state enterprises. 47+ transactions since 1992.</p>
+    <div class="page-header-meta">
+      <span class="pill">LKR 200Bn+ Raised</span>
+      <span class="pill">47+ Transactions</span>
+      <span class="pill">Since 1992</span>
+    </div>
+  </div>
+</header>
+
+<div class="page-body">
+
+  <!-- S1: Services -->
+  <section class="section-host" data-section-id="cf-services" data-section-label="Services">
+
+    <!-- A: 3-col service cards -->
+    <div class="variant section-wrap cf-svc-a" data-variant="A" data-variant-label="Simple · Service cards">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">What We Do</span>
+          <h2>The full spectrum of capital market advisory</h2>
+        </div>
+        <div class="cf-svc-grid">
+          <div class="cf-svc-card scroll-fade">
+            <div class="cf-svc-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="cf-svc-title">Capital Raising</div>
+            <p class="cf-svc-body">Equity IPOs, rights issues, private placements, and debenture issuances for corporates, banks, and state enterprises. Full placement agent services.</p>
+            <div class="cf-svc-proof">LKR 200Bn+ arranged</div>
+          </div>
+          <div class="cf-svc-card scroll-fade">
+            <div class="cf-svc-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            </div>
+            <div class="cf-svc-title">Mergers &amp; Acquisitions</div>
+            <p class="cf-svc-body">Buy-side and sell-side advisory for mergers, acquisitions, divestments, and joint ventures. Valuation, due diligence co-ordination, and deal structuring.</p>
+            <div class="cf-svc-proof">Amaya Leisure, Fortis, Hemas transactions</div>
+          </div>
+          <div class="cf-svc-card scroll-fade">
+            <div class="cf-svc-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="cf-svc-title">Structured Finance</div>
+            <p class="cf-svc-body">Interest rate swaps, trust certificates, subordinated debt, and hybrid instruments. Tailored structures for treasury and risk management objectives.</p>
+            <div class="cf-svc-proof">USD 36.5M interest rate swap · LKR 5,600M share swap</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B: narrative + stats panel -->
+    <div class="variant section-wrap cf-svc-b" data-variant="B" data-variant-label="Middle · Narrative + stats">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">What We Do</span>
+          <h2>Deep capital market expertise, proven in every cycle</h2>
+        </div>
+        <div class="cf-svc-b-grid">
+          <div class="cf-svc-copy scroll-fade">
+            <p>HNB Investment Bank's Corporate Finance practice has been at the centre of Sri Lanka's capital market activity since 1992. We have structured some of the most complex and high-profile transactions in the country's history — from the Union Bank IPO that drew 300 times subscription, to the NTT sale that established a new benchmark for cross-border M&A advisory.</p>
+            <p>Our team brings together capital markets structuring, regulatory expertise, and a distribution network built across decades of primary market activity. We advise both buyers and sellers, and we execute.</p>
+            <div class="cf-svc-list">
+              <span class="cf-svc-item">Equity capital markets — IPOs, rights issues, private placements</span>
+              <span class="cf-svc-item">Debt capital markets — debentures, trust certificates, bonds</span>
+              <span class="cf-svc-item">M&A advisory — buy-side, sell-side, valuations</span>
+              <span class="cf-svc-item">Structured products — swaps, hybrids, subordinated debt</span>
+              <span class="cf-svc-item">Privatisation advisory — for state and private sector clients</span>
+            </div>
+          </div>
+          <div class="cf-stat-panel scroll-fade">
+            <div class="cf-stat-row">
+              <div class="cf-stat-fig" data-target="200" data-prefix="LKR " data-suffix="Bn+">LKR 200Bn+</div>
+              <div class="cf-stat-label">Capital raised in Sri Lanka's debt and equity markets</div>
+            </div>
+            <div class="cf-stat-row">
+              <div class="cf-stat-fig" data-target="47" data-suffix="+">47+</div>
+              <div class="cf-stat-label">Transactions since 1992 across sectors</div>
+            </div>
+            <div class="cf-stat-row">
+              <div class="cf-stat-fig">32+</div>
+              <div class="cf-stat-label">Years as Sri Lanka's capital markets partner</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C: tier table -->
+    <div class="variant section-wrap cf-svc-c" data-variant="C" data-variant-label="Ambitious · Service tier table">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">What We Do</span>
+          <h2>A full-service capital market capability</h2>
+        </div>
+        <div class="scroll-fade" style="overflow-x:auto;">
+          <table class="cf-tier-table">
+            <thead>
+              <tr>
+                <th style="width:30%">Service</th>
+                <th style="width:40%">What we do</th>
+                <th style="width:30%">Track record</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="cf-tier-name">Equity Capital Markets</div></td>
+                <td>IPOs, rights issues, private placements, and secondary block sales on the CSE and via private markets.</td>
+                <td><div class="cf-tier-proof">Union Bank IPO — 300x oversubscribed</div></td>
+              </tr>
+              <tr>
+                <td><div class="cf-tier-name">Debt Capital Markets</div></td>
+                <td>Debenture issuances, trust certificates, bonds, and structured notes for corporates and financial institutions.</td>
+                <td><div class="cf-tier-proof">Hayleys Rs 7Bn debenture · Singer Finance LKR 2Bn</div></td>
+              </tr>
+              <tr>
+                <td><div class="cf-tier-name">M&amp;A Advisory</div></td>
+                <td>Buy-side and sell-side mandates, valuations, deal structuring, and regulatory co-ordination across sectors.</td>
+                <td><div class="cf-tier-proof">LKR 32Bn NTT sale · Amaya Leisure 51%</div></td>
+              </tr>
+              <tr>
+                <td><div class="cf-tier-name">Structured Finance</div></td>
+                <td>Interest rate swaps, share swaps, subordinated debt, and bespoke instruments for treasury management.</td>
+                <td><div class="cf-tier-proof">USD 36.5M IRS · LKR 5,600M share swap</div></td>
+              </tr>
+              <tr>
+                <td><div class="cf-tier-name">Privatisation Advisory</div></td>
+                <td>State enterprise advisory, government divestment mandates, and public-private partnership structuring.</td>
+                <td><div class="cf-tier-proof">Multiple state sector mandates</div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- S2: Track Record -->
+  <section class="section-host" data-section-id="track-record" data-section-label="Track Record">
+
+    <!-- A: deal timeline -->
+    <div class="variant section-wrap cf-track-a" data-variant="A" data-variant-label="Simple · Deal timeline">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Track Record</span>
+          <h2>Landmark transactions. Proven execution.</h2>
+          <p style="color:var(--ink-2);margin-top:10px;font-size:15px;">LKR 200Bn+ across 47+ transactions since 1992.</p>
+        </div>
+        <div class="deal-timeline scroll-fade">
+          <div class="deal-item">
+            <span class="deal-year">2022</span>
+            <div>
+              <div class="deal-name">Hayleys PLC Debenture</div>
+              <div class="deal-desc">Joint placement agent for Rs 7 billion Listed Debenture Issue. Sri Lanka's largest corporate debenture at issuance.</div>
+            </div>
+            <span class="deal-val">Rs. 7Bn</span>
+          </div>
+          <div class="deal-item">
+            <span class="deal-year">2021</span>
+            <div>
+              <div class="deal-name">Singer Finance — Subordinated Debt</div>
+              <div class="deal-desc">Full subscription of LKR 2 billion trust certificate offering. Jointly arranged with Serendib Frontier Capital.</div>
+            </div>
+            <span class="deal-val">LKR 2Bn</span>
+          </div>
+          <div class="deal-item">
+            <span class="deal-year">2020</span>
+            <div>
+              <div class="deal-name">Fintrex Finance — High Yield Bond</div>
+              <div class="deal-desc">Sri Lanka's first ever high yield bond issuance. Landmark transaction establishing a new asset class on the local market.</div>
+            </div>
+            <span class="deal-val"><span class="pill pill-accent">First in Sri Lanka</span></span>
+          </div>
+          <div class="deal-item">
+            <span class="deal-year">2019</span>
+            <div>
+              <div class="deal-name">Union Bank of Colombo IPO</div>
+              <div class="deal-desc">Initial public offering generating 300 times subscription — the most oversubscribed IPO in Sri Lanka's history at the time.</div>
+            </div>
+            <span class="deal-val"><span class="pill pill-accent">300x sub.</span></span>
+          </div>
+          <div class="deal-item">
+            <span class="deal-year">2018</span>
+            <div>
+              <div class="deal-name">NTT Sale Advisory</div>
+              <div class="deal-desc">Financial advisor for the LKR 32 billion sale of NTT — the largest M&A transaction in Sri Lanka at the time.</div>
+            </div>
+            <span class="deal-val">LKR 32Bn</span>
+          </div>
+          <div class="deal-item">
+            <span class="deal-year">2016</span>
+            <div>
+              <div class="deal-name">Interest Rate Swap — USD 36.5M</div>
+              <div class="deal-desc">Sri Lanka's first USD interest rate swap involving a domestic counterparty. Structured for a leading conglomerate.</div>
+            </div>
+            <span class="deal-val">USD 36.5M</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B: horizontal bar chart of deal sizes -->
+    <div class="variant section-wrap cf-track-b" data-variant="B" data-variant-label="Middle · Deal bar chart">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Track Record</span>
+          <h2>Scale. Diversity. Execution.</h2>
+          <p style="color:var(--ink-2);margin-top:10px;font-size:15px;">LKR 200Bn+ across 47+ transactions since 1992.</p>
+        </div>
+        <div class="deal-bars scroll-fade">
+          <div class="deal-bar-row">
+            <div><div class="dbr-name">NTT Sale Advisory</div><div class="dbr-year">2018</div></div>
+            <div class="dbr-track"><div class="dbr-fill" style="width:100%"></div></div>
+            <span class="dbr-val">LKR 32Bn</span>
+            <span class="dbr-pill"></span>
+          </div>
+          <div class="deal-bar-row">
+            <div><div class="dbr-name">Hayleys Debenture</div><div class="dbr-year">2022</div></div>
+            <div class="dbr-track"><div class="dbr-fill" style="width:22%"></div></div>
+            <span class="dbr-val">Rs. 7Bn</span>
+            <span class="dbr-pill"></span>
+          </div>
+          <div class="deal-bar-row">
+            <div><div class="dbr-name">Singer Finance Trust Cert.</div><div class="dbr-year">2021</div></div>
+            <div class="dbr-track"><div class="dbr-fill" style="width:6%"></div></div>
+            <span class="dbr-val">LKR 2Bn</span>
+            <span class="dbr-pill"></span>
+          </div>
+          <div class="deal-bar-row">
+            <div><div class="dbr-name">USD Interest Rate Swap</div><div class="dbr-year">2016</div></div>
+            <div class="dbr-track"><div class="dbr-fill" style="width:11%"></div></div>
+            <span class="dbr-val">USD 36.5M</span>
+            <span class="dbr-pill"></span>
+          </div>
+          <div class="deal-bar-row">
+            <div><div class="dbr-name">LKR Share Swap</div><div class="dbr-year">2017</div></div>
+            <div class="dbr-track"><div class="dbr-fill" style="width:18%"></div></div>
+            <span class="dbr-val">LKR 5.6Bn</span>
+            <span class="dbr-pill"></span>
+          </div>
+          <div class="deal-bar-row">
+            <div><div class="dbr-name">Union Bank IPO</div><div class="dbr-year">2019</div></div>
+            <div class="dbr-track"><div class="dbr-fill" style="width:8%"></div></div>
+            <span class="dbr-val">—</span>
+            <span class="dbr-pill"><span class="pill pill-accent">300x sub.</span></span>
+          </div>
+          <div class="deal-bar-row">
+            <div><div class="dbr-name">Fintrex High Yield Bond</div><div class="dbr-year">2020</div></div>
+            <div class="dbr-track"><div class="dbr-fill" style="width:5%;background:var(--accent)"></div></div>
+            <span class="dbr-val">—</span>
+            <span class="dbr-pill"><span class="pill pill-accent">Sri Lanka's first</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C: featured deal cards -->
+    <div class="variant section-wrap cf-track-c" data-variant="C" data-variant-label="Ambitious · Featured deal cards">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Track Record</span>
+          <h2>Transactions that moved Sri Lanka's capital markets</h2>
+        </div>
+        <div class="featured-deals scroll-fade">
+          <div class="fd-card">
+            <div class="fd-year">2022</div>
+            <div class="fd-name">Hayleys PLC Debenture</div>
+            <div class="fd-role">Joint Placement Agent</div>
+            <div class="fd-val">Rs. 7 Billion</div>
+            <div class="fd-sub">Listed debenture issue</div>
+          </div>
+          <div class="fd-card">
+            <div class="fd-year">2020</div>
+            <div class="fd-name">Fintrex Finance</div>
+            <div class="fd-role">Sole Arranger</div>
+            <div class="fd-val"><span class="pill pill-accent">Sri Lanka's first high yield bond</span></div>
+            <div class="fd-sub">High yield bond issuance</div>
+          </div>
+          <div class="fd-card">
+            <div class="fd-year">2019</div>
+            <div class="fd-name">Union Bank of Colombo IPO</div>
+            <div class="fd-role">Managing Underwriter</div>
+            <div class="fd-val"><span class="pill pill-accent">300× oversubscribed</span></div>
+            <div class="fd-sub">Most oversubscribed IPO at time</div>
+          </div>
+          <div class="fd-card">
+            <div class="fd-year">2018</div>
+            <div class="fd-name">NTT Sale</div>
+            <div class="fd-role">Financial Advisor</div>
+            <div class="fd-val">LKR 32 Billion</div>
+            <div class="fd-sub">Largest M&amp;A at time</div>
+          </div>
+          <div class="fd-card">
+            <div class="fd-year">2016</div>
+            <div class="fd-name">USD Interest Rate Swap</div>
+            <div class="fd-role">Structuring Advisor</div>
+            <div class="fd-val">USD 36.5M</div>
+            <div class="fd-sub">Sri Lanka's first USD IRS with domestic counterparty</div>
+          </div>
+          <div class="fd-card">
+            <div class="fd-year">2021</div>
+            <div class="fd-name">Singer Finance</div>
+            <div class="fd-role">Co-Arranger</div>
+            <div class="fd-val">LKR 2 Billion</div>
+            <div class="fd-sub">Subordinated debt trust certificate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- S3: Advisory approach -->
+  <section class="section-host" data-section-id="advisory" data-section-label="Advisory">
+
+    <!-- A: 3-col approach cards -->
+    <div class="variant section-wrap cf-adv-a" data-variant="A" data-variant-label="Simple · Approach cards">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">How We Work</span>
+          <h2>Advisory that executes</h2>
+        </div>
+        <div class="adv-grid">
+          <div class="adv-card scroll-fade">
+            <div class="adv-step">01</div>
+            <div class="adv-title">Mandate and structure</div>
+            <p class="adv-body">We begin with your capital objectives and market conditions. Our team proposes the optimal structure, instrument type, and timing before a single document is drafted.</p>
+          </div>
+          <div class="adv-card scroll-fade">
+            <div class="adv-step">02</div>
+            <div class="adv-title">Regulatory and preparation</div>
+            <p class="adv-body">We manage the regulatory process end-to-end — SEC filings, prospectus preparation, and CSE liaison. Your team focuses on the business while we handle the compliance pathway.</p>
+          </div>
+          <div class="adv-card scroll-fade">
+            <div class="adv-step">03</div>
+            <div class="adv-title">Distribution and close</div>
+            <p class="adv-body">HNB's distribution network — institutional, HNW, and retail — is activated for the placement. We close the transaction and ensure full subscription.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B: process flow visual -->
+    <div class="variant section-wrap cf-adv-b" data-variant="B" data-variant-label="Middle · Process flow">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">How We Work</span>
+          <h2>From mandate to close</h2>
+        </div>
+        <div class="process-flow scroll-fade">
+          <div class="pf-step">
+            <div class="pf-dot">1</div>
+            <div>
+              <div class="pf-title">Engage</div>
+              <p class="pf-body">Initial mandate discussion, NDA execution, and objectives mapping. Typically 1–2 weeks.</p>
+            </div>
+          </div>
+          <div class="pf-step">
+            <div class="pf-dot">2</div>
+            <div>
+              <div class="pf-title">Structure</div>
+              <p class="pf-body">Instrument selection, pricing analysis, and regulatory pathway design. Typically 2–4 weeks.</p>
+            </div>
+          </div>
+          <div class="pf-step">
+            <div class="pf-dot">3</div>
+            <div>
+              <div class="pf-title">Prepare</div>
+              <p class="pf-body">Prospectus / information memorandum, SEC filing, and investor materials. Typically 4–8 weeks.</p>
+            </div>
+          </div>
+          <div class="pf-step">
+            <div class="pf-dot">4</div>
+            <div>
+              <div class="pf-title">Distribute</div>
+              <p class="pf-body">Roadshow, investor outreach, and active placement through HNB's network. Typically 2–4 weeks.</p>
+            </div>
+          </div>
+          <div class="pf-step">
+            <div class="pf-dot">5</div>
+            <div>
+              <div class="pf-title">Close</div>
+              <p class="pf-body">Allotment, settlement, and post-deal reporting. Ongoing relationship management.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C: industry coverage grid -->
+    <div class="variant section-wrap cf-adv-c" data-variant="C" data-variant-label="Ambitious · Industry coverage">
+      <div class="section-inner">
+        <div class="section-header scroll-fade">
+          <span class="section-label">Industry Coverage</span>
+          <h2>Deep in every sector we serve</h2>
+          <p style="color:var(--ink-2);margin-top:10px;font-size:15px;">Our advisory teams bring sector-specific knowledge to every transaction.</p>
+        </div>
+        <div class="industry-grid scroll-fade">
+          <div class="industry-tile">
+            <div class="it-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 3L12 7 8 3"/></svg>
+            </div>
+            <div class="it-name">Banking &amp; Finance</div>
+            <div class="it-deals">15+ transactions</div>
+          </div>
+          <div class="industry-tile">
+            <div class="it-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="it-name">Real Estate</div>
+            <div class="it-deals">8+ transactions</div>
+          </div>
+          <div class="industry-tile">
+            <div class="it-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3"/></svg>
+            </div>
+            <div class="it-name">Energy</div>
+            <div class="it-deals">6+ transactions</div>
+          </div>
+          <div class="industry-tile">
+            <div class="it-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <div class="it-name">Healthcare</div>
+            <div class="it-deals">4+ transactions</div>
+          </div>
+          <div class="industry-tile">
+            <div class="it-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            </div>
+            <div class="it-name">Diversified Conglomerates</div>
+            <div class="it-deals">10+ transactions</div>
+          </div>
+          <div class="industry-tile">
+            <div class="it-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            </div>
+            <div class="it-name">Manufacturing &amp; Exports</div>
+            <div class="it-deals">5+ transactions</div>
+          </div>
+          <div class="industry-tile">
+            <div class="it-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="it-name">Tourism &amp; Leisure</div>
+            <div class="it-deals">5+ transactions</div>
+          </div>
+          <div class="industry-tile">
+            <div class="it-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(0.43 0.150 248)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="it-name">State Enterprises</div>
+            <div class="it-deals">Multiple mandates</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CTA Final -->
+  <section class="section-cta-final">
+    <div class="cta-final-inner">
+      <div class="cta-final-copy scroll-fade">
+        <span class="section-label">Advisory mandates</span>
+        <h2>Discuss your capital market needs with our team.</h2>
+        <p>We work with corporates, financial institutions, and state enterprises across the full spectrum of capital market activity. Initial consultations are confidential. Or call <strong style="color:oklch(1 0 0);">+94 112 206 206</strong>.</p>
+      </div>
+      <div class="cta-final-form scroll-fade">
+        <div class="form-group">
+          <label for="cf2-name">Full Name</label>
+          <input type="text" id="cf2-name" placeholder="Your name" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="cf2-email">Email</label>
+          <input type="email" id="cf2-email" placeholder="you@company.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="cf2-org">Company / Organisation</label>
+          <input type="text" id="cf2-org" placeholder="Your organisation" autocomplete="organization">
+        </div>
+        <div class="form-group">
+          <label for="cf2-svc">Advisory Need</label>
+          <select id="cf2-svc">
+            <option value="">Select area</option>
+            <option>Capital raising — equity</option>
+            <option>Capital raising — debt</option>
+            <option>M&A advisory — buy-side</option>
+            <option>M&A advisory — sell-side</option>
+            <option>Structured finance</option>
+            <option>IPO management</option>
+          </select>
+        </div>
+        <button type="submit" class="cta-submit">Request a conversation</button>
+        <p class="form-reassurance">Confidential · 32+ Years · LKR 200Bn+ Raised</p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /.page-body -->
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="nav-logo" href="../index.html">
+          <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="28">
+        </a>
+        <p class="footer-tagline">A subsidiary of Hatton National Bank PLC. CBSL Licensed Primary Dealer. SEC Registered Stockbroker. Registered No. PV 62973.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Our Businesses</h4>
+        <ul>
+          <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+          <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+          <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+          <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../about-us/index.html">About Us</a></li>
+          <li><a href="../careers/index.html">Careers</a></li>
+          <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+          <li><a href="../contact-us/index.html">Contact</a></li>
+          <li><a href="../news/index.html">News</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>© 2025 HNB Investment Bank Ltd (PV 62973). All rights reserved. Registered at No. 53, Dharmapala Mawatha, Colombo 3.</p>
+      <div class="footer-legal-links">
+        <a href="../privacy-policy/index.html">Privacy Policy</a>
+        <a href="../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<link rel="stylesheet" href="../section-toggle.css">
+<script src="../scripts.js"></script>
+<script src="../section-toggle.js"></script>
+</body>
+</html>

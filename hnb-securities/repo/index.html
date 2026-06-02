@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Repurchase Agreements (Repos) — HNB Securities</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <style>
+    /* ── What Is a Repo ─────────────────────────────── */
+    .repo-explainer { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .repo-explainer-copy h2 { margin-bottom: 1rem; }
+    .repo-explainer-copy p { color: var(--ink-2); line-height: 1.7; margin-bottom: 1rem; }
+    .repo-how-list { display: flex; flex-direction: column; gap: 0.875rem; margin-top: 1.5rem; }
+    .rhl-step { display: flex; gap: 1rem; align-items: flex-start; }
+    .rhl-num { width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.125rem; }
+    .rhl-body h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.2rem; }
+    .rhl-body p { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+    .repo-stat-panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+    .repo-stat-panel h3 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--line); }
+    .rsp-row { display: flex; justify-content: space-between; align-items: center; padding: 0.625rem 0; border-bottom: 1px solid var(--line); }
+    .rsp-row:last-child { border-bottom: none; }
+    .rsp-label { font-size: 0.82rem; color: var(--ink-2); }
+    .rsp-val { font-size: 1rem; font-weight: 700; color: var(--primary); }
+    .repo-cta-bar { display: flex; gap: 1rem; margin-top: 1.5rem; }
+
+    /* Explainer B — flow diagram */
+    .repo-flow-wrap { display: flex; flex-direction: column; gap: 2rem; }
+    .repo-flow-diagram { display: flex; align-items: center; gap: 0; overflow-x: auto; padding-bottom: 0.5rem; }
+    .rfd-party { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; text-align: center; min-width: 150px; flex-shrink: 0; }
+    .rfd-party h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .rfd-party p { font-size: 0.75rem; color: var(--muted); margin: 0; }
+    .rfd-arrow { display: flex; flex-direction: column; align-items: center; padding: 0 1rem; flex-shrink: 0; }
+    .rfd-arrow .arrow-label { font-size: 0.72rem; color: var(--muted); white-space: nowrap; margin-bottom: 0.25rem; }
+    .rfd-arrow .arrow-line { width: 80px; height: 2px; background: var(--line); position: relative; }
+    .rfd-arrow .arrow-line::after { content: '▶'; position: absolute; right: -8px; top: -7px; font-size: 0.6rem; color: var(--line); }
+    .rfd-arrow-rev .arrow-line::after { content: '◀'; right: auto; left: -8px; }
+    .repo-benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .repo-benefit { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 1.25rem; }
+    .repo-benefit h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.375rem; }
+    .repo-benefit p { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+
+    /* Explainer C — editorial */
+    .repo-c-banner { background: var(--primary); border-radius: var(--radius); padding: 3rem; color: #fff; }
+    .repo-c-banner .section-label { color: oklch(0.65 0.165 140); }
+    .repo-c-banner h2 { color: #fff; margin: 0.75rem 0 1rem; }
+    .repo-c-banner p { color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 1rem; }
+    .repo-c-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2); }
+    .repo-c-kpi .kpi-val { font-size: 1.75rem; font-weight: 800; color: #fff; }
+    .repo-c-kpi .kpi-label { font-size: 0.75rem; color: rgba(255,255,255,0.65); margin-top: 0.25rem; }
+    .btn-primary-inv { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; color: var(--primary); border: none; border-radius: var(--radius); padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+    .btn-ghost-inv { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.45); border-radius: var(--radius); padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+
+    /* ── Repo Rates ─────────────────────────────────── */
+    .rates-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .rate-table { width: 100%; border-collapse: collapse; }
+    .rate-table th { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; text-align: left; padding: 0.625rem 0.875rem; background: var(--bg-2); border-bottom: 2px solid var(--line); }
+    .rate-table td { padding: 0.75rem 0.875rem; border-bottom: 1px solid var(--line); font-size: 0.875rem; color: var(--ink-2); vertical-align: middle; }
+    .rate-table tr:last-child td { border-bottom: none; }
+    .rate-table td:last-child { font-weight: 700; color: var(--primary); }
+    .rate-table td.highlight { background: oklch(0.43 0.150 248 / 0.05); }
+    .rates-panel-title { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.875rem; }
+
+    /* Rates B — yield visualization */
+    .repo-yc-wrap { display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; align-items: start; }
+    .repo-bar-grid { display: flex; flex-direction: column; gap: 0.875rem; }
+    .rbg-row { display: grid; grid-template-columns: 120px 1fr 80px; gap: 0.75rem; align-items: center; }
+    .rbg-label { font-size: 0.82rem; color: var(--ink-2); }
+    .rbg-track { height: 12px; background: var(--bg-2); border-radius: 6px; overflow: hidden; }
+    .rbg-fill { height: 100%; border-radius: 6px; background: var(--primary); transition: width 0.8s var(--ease-out-quart); }
+    .rbg-fill.accent { background: var(--accent); }
+    .rbg-rate { font-size: 0.875rem; font-weight: 700; color: var(--primary); text-align: right; }
+    .repo-policy-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+    .repo-policy-card h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; border-bottom: 1px solid var(--line); padding-bottom: 0.75rem; }
+    .rpc-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--line); }
+    .rpc-row:last-child { border-bottom: none; }
+    .rpc-label { font-size: 0.8rem; color: var(--ink-2); }
+    .rpc-val { font-size: 0.925rem; font-weight: 700; color: var(--ink); }
+
+    /* Rates C — sparkline tiles */
+    .rates-spark-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .spark-tile { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+    .spark-tile h4 { font-size: 0.82rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.375rem; }
+    .spark-tile .st-rate { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 0.25rem; }
+    .spark-tile .st-change { font-size: 0.8rem; margin-bottom: 1rem; }
+    .spark-tile .st-change.up { color: oklch(0.45 0.14 145); }
+    .spark-tile .st-change.dn { color: oklch(0.45 0.18 25); }
+    .sparkline-wrap { height: 60px; }
+    .sparkline-wrap svg { width: 100%; height: 100%; }
+    .sparkline-path { fill: none; stroke: var(--primary); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .spark-tile .st-meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.625rem; }
+
+    /* ── How to Invest ──────────────────────────────── */
+    .invest-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .invest-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+    .invest-icon { width: 44px; height: 44px; border-radius: 10px; background: oklch(0.43 0.150 248 / 0.08); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+    .invest-icon svg { width: 22px; height: 22px; stroke: var(--primary); fill: none; }
+    .invest-card h4 { font-size: 0.925rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+    .invest-card p { font-size: 0.83rem; color: var(--ink-2); line-height: 1.65; margin: 0; }
+    .invest-steps-h { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; margin-bottom: 2.5rem; }
+    .invest-steps-h::before { content: ''; position: absolute; top: 28px; left: 12.5%; right: 12.5%; height: 2px; background: var(--line); z-index: 0; }
+    .inv-step { text-align: center; position: relative; z-index: 1; padding: 0 0.75rem; }
+    .inv-step-circle { width: 56px; height: 56px; border-radius: 50%; background: var(--bg); border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1rem; font-weight: 800; color: var(--primary); }
+    .inv-step h4 { font-size: 0.82rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .inv-step p { font-size: 0.75rem; color: var(--ink-2); line-height: 1.5; }
+    .invest-c-wrap { background: var(--primary); border-radius: var(--radius); padding: 3rem; color: #fff; }
+    .invest-c-wrap .section-label { color: oklch(0.65 0.165 140); }
+    .invest-c-wrap h2 { color: #fff; margin: 0.75rem 0 1rem; }
+    .invest-c-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
+    .icg-col h4 { font-size: 0.925rem; font-weight: 700; color: #fff; margin-bottom: 0.875rem; }
+    .icg-col ul { list-style: none; padding: 0; }
+    .icg-col ul li { font-size: 0.83rem; color: rgba(255,255,255,0.75); padding: 0.375rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 0.5rem; }
+    .icg-col ul li::before { content: '→'; color: oklch(0.65 0.165 140); flex-shrink: 0; }
+    .invest-c-ctas { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+
+    @media (max-width: 900px) {
+      .repo-explainer, .rates-grid-2, .repo-yc-wrap, .invest-c-grid { grid-template-columns: 1fr; }
+      .repo-c-kpis { grid-template-columns: repeat(2, 1fr); }
+      .invest-grid-3, .rates-spark-grid-3, .repo-benefits-grid { grid-template-columns: repeat(2, 1fr); }
+      .invest-steps-h { grid-template-columns: repeat(2, 1fr); }
+      .invest-steps-h::before { display: none; }
+    }
+    @media (max-width: 600px) {
+      .invest-grid-3, .rates-spark-grid-3, .repo-benefits-grid, .repo-c-kpis { grid-template-columns: 1fr; }
+      .invest-steps-h { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Ticker ── -->
+  <div class="ticker" aria-label="Market data">
+    <div class="ticker-track">
+      <span class="ticker-item">CBSL Repo Rate <strong>8.50%</strong></span>
+      <span class="ticker-item">Reverse Repo Rate <strong>9.50%</strong></span>
+      <span class="ticker-item">91-Day T-Bill <strong>9.48%</strong></span>
+      <span class="ticker-item">182-Day T-Bill <strong>9.85%</strong></span>
+      <span class="ticker-item">364-Day T-Bill <strong>10.10%</strong></span>
+      <span class="ticker-item">5Y T-Bond <strong>10.80%</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong></span>
+      <span class="ticker-item">CBSL Repo Rate <strong>8.50%</strong></span>
+      <span class="ticker-item">Reverse Repo Rate <strong>9.50%</strong></span>
+      <span class="ticker-item">91-Day T-Bill <strong>9.48%</strong></span>
+      <span class="ticker-item">182-Day T-Bill <strong>9.85%</strong></span>
+      <span class="ticker-item">364-Day T-Bill <strong>10.10%</strong></span>
+      <span class="ticker-item">5Y T-Bond <strong>10.80%</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+    </div>
+  </div>
+
+  <!-- ── Navigation ── -->
+  <nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../../index.html">
+    <img src="../../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../../about-us/index.html">About Us</a></li>
+    <li><a href="../../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../../news/index.html">News</a></li>
+    <li><a href="../../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+  <!-- ── Page Header ── -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <span class="section-label">HNB Securities · Products</span>
+      <h1>Repurchase Agreements</h1>
+      <p class="page-header-sub">Short-term, government-securities-backed instruments offering competitive yields with same-day settlement. Sri Lanka's lowest-risk domestic investment category.</p>
+      <div class="page-header-meta">
+        <span class="pill">Current Repo Rate: 8.50%</span>
+        <span class="pill-accent">Overnight to 1 Year</span>
+        <span class="pill">CBSL Primary Dealer</span>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 1.5rem;">
+      <a href="calculator/index.html" class="btn-primary" style="display:inline-flex; gap:0.5rem; align-items:center;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+        Calculate My Return →
+      </a>
+    </div>
+  </header>
+
+  <!-- ── Page Body ── -->
+  <div class="page-body">
+    <div class="page-bg-map" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1: WHAT IS A REPO
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="what-is-repo" data-section-label="What Is a Repo">
+
+      <!-- VARIANT A: Two-col copy + stat panel -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="repo-explainer">
+              <div class="repo-explainer-copy">
+                <span class="section-label">What Is a Repo</span>
+                <h2>Government-Backed Returns, Daily Liquidity</h2>
+                <p>A Repurchase Agreement (Repo) is a short-term secured borrowing arrangement. When you invest in a Repo through HNB Securities, you purchase government securities from us under an agreement to sell them back at a fixed price on a specified date. The difference between the purchase and repurchase price is your return — fully known at the time you invest.</p>
+                <p>Because the underlying collateral is Government of Sri Lanka Treasury Bills or Treasury Bonds — guaranteed instruments — Repos are considered the lowest credit-risk domestic investment available in the Sri Lankan market.</p>
+                <div class="repo-how-list">
+                  <div class="rhl-step">
+                    <div class="rhl-num">1</div>
+                    <div class="rhl-body"><h4>You Invest</h4><p>Deposit minimum LKR 100,000. Choose tenor from overnight to 364 days. Rate is locked at entry.</p></div>
+                  </div>
+                  <div class="rhl-step">
+                    <div class="rhl-num">2</div>
+                    <div class="rhl-body"><h4>Securities Held as Collateral</h4><p>HNB Securities registers the government securities in your name in the LankaSecure depository system (operated by CBSL).</p></div>
+                  </div>
+                  <div class="rhl-step">
+                    <div class="rhl-num">3</div>
+                    <div class="rhl-body"><h4>On Maturity</h4><p>Your principal plus the agreed interest is credited to your account on the maturity date. Same-day settlement via RTGS.</p></div>
+                  </div>
+                  <div class="rhl-step">
+                    <div class="rhl-num">4</div>
+                    <div class="rhl-body"><h4>Roll or Redeem</h4><p>At maturity you may roll into a new Repo at prevailing rates or redeem in full. No penalty for redemption on maturity date.</p></div>
+                  </div>
+                </div>
+                <div class="repo-cta-bar" style="margin-top: 1.5rem;">
+                  <a href="calculator/index.html" class="btn-primary">Calculate My Return</a>
+                  <a href="../../contact-us/index.html" class="btn-ghost">Open Repo Account</a>
+                </div>
+              </div>
+              <div>
+                <div class="repo-stat-panel">
+                  <h3>Current Repo Rates</h3>
+                  <div class="rsp-row"><span class="rsp-label">Overnight</span><span class="rsp-val">8.50%</span></div>
+                  <div class="rsp-row"><span class="rsp-label">1 Week</span><span class="rsp-val">8.65%</span></div>
+                  <div class="rsp-row"><span class="rsp-label">2 Weeks</span><span class="rsp-val">8.78%</span></div>
+                  <div class="rsp-row"><span class="rsp-label">1 Month</span><span class="rsp-val">8.95%</span></div>
+                  <div class="rsp-row"><span class="rsp-label">3 Months</span><span class="rsp-val">9.20%</span></div>
+                  <div class="rsp-row"><span class="rsp-label">6 Months</span><span class="rsp-val">9.55%</span></div>
+                  <div class="rsp-row"><span class="rsp-label">1 Year</span><span class="rsp-val">9.85%</span></div>
+                </div>
+                <div style="background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; margin-top: 1rem;">
+                  <div style="font-size: 0.75rem; color: var(--muted);">Minimum Investment: <strong style="color: var(--ink);">LKR 100,000</strong></div>
+                  <div style="font-size: 0.75rem; color: var(--muted); margin-top: 0.375rem;">Tenors: <strong style="color: var(--ink);">Overnight to 364 days</strong></div>
+                  <div style="font-size: 0.75rem; color: var(--muted); margin-top: 0.375rem;">Settlement: <strong style="color: var(--ink);">Same-day RTGS</strong></div>
+                  <div style="font-size: 0.72rem; color: var(--muted); margin-top: 0.75rem; font-style: italic;">Rates as of 27 May 2025. Subject to change without notice.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Flow diagram + benefits -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">What Is a Repo</span>
+              <h2>How a Repurchase Agreement Works</h2>
+              <p>A Repo is structurally simple: you buy government securities today, the dealer agrees to buy them back at a fixed price in the future. The spread is your return.</p>
+            </div>
+            <div class="repo-flow-wrap">
+              <div class="repo-flow-diagram">
+                <div class="rfd-party">
+                  <h4>Investor</h4>
+                  <p>You (min. LKR 100,000)</p>
+                </div>
+                <div class="rfd-arrow">
+                  <span class="arrow-label">Cash →</span>
+                  <div class="arrow-line"></div>
+                </div>
+                <div class="rfd-party" style="background: var(--primary); color: #fff; border-color: var(--primary);">
+                  <h4 style="color:#fff;">HNB Securities</h4>
+                  <p style="color:rgba(255,255,255,0.7);">CBSL Primary Dealer</p>
+                </div>
+                <div class="rfd-arrow rfd-arrow-rev">
+                  <span class="arrow-label">← Gov't Securities (collateral)</span>
+                  <div class="arrow-line"></div>
+                </div>
+                <div class="rfd-party">
+                  <h4>LankaSecure</h4>
+                  <p>CBSL Depository (settlement)</p>
+                </div>
+              </div>
+              <div style="display: flex; gap: 1rem; align-items: center; margin: 0.5rem 0; font-size: 0.8rem; color: var(--muted);">
+                <span>↕ On Maturity</span>
+                <span style="flex:1; height: 1px; background: var(--line);"></span>
+              </div>
+              <div class="repo-flow-diagram">
+                <div class="rfd-party">
+                  <h4>Investor</h4>
+                  <p>Receives principal + interest</p>
+                </div>
+                <div class="rfd-arrow rfd-arrow-rev">
+                  <span class="arrow-label">← Cash + Return</span>
+                  <div class="arrow-line"></div>
+                </div>
+                <div class="rfd-party" style="background: var(--primary); color: #fff; border-color: var(--primary);">
+                  <h4 style="color:#fff;">HNB Securities</h4>
+                  <p style="color:rgba(255,255,255,0.7);">Repurchases securities</p>
+                </div>
+                <div class="rfd-arrow">
+                  <span class="arrow-label">Gov't Securities back →</span>
+                  <div class="arrow-line"></div>
+                </div>
+                <div class="rfd-party">
+                  <h4>LankaSecure</h4>
+                  <p>Settlement confirmed</p>
+                </div>
+              </div>
+              <div class="repo-benefits-grid">
+                <div class="repo-benefit">
+                  <h4>Government-Guaranteed Collateral</h4>
+                  <p>Underlying Treasury Bills and Bonds are obligations of the Government of Sri Lanka — the highest credit quality domestic instrument available.</p>
+                </div>
+                <div class="repo-benefit">
+                  <h4>Rate Fixed at Entry</h4>
+                  <p>No market risk. Your return is fully determined when you place the Repo — regardless of what rates do during the tenor.</p>
+                </div>
+                <div class="repo-benefit">
+                  <h4>Primary Dealer Access</h4>
+                  <p>As a CBSL-licensed Primary Dealer, HNB Securities has direct access to the government securities market — passing better rates to clients than commercial banks typically offer.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Editorial on primary -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="repo-c-banner">
+              <span class="section-label">What Is a Repo</span>
+              <h2>The Safest Yield in Sri Lanka — Now More Accessible</h2>
+              <p>Repurchase Agreements have historically been the instrument of banks and large corporates. HNB Securities opens this market to individual investors at LKR 100,000 — with the same government-backed security, same competitive rates, and same same-day settlement that institutional clients receive.</p>
+              <p>At 8.50–9.85% depending on tenor, Repos currently outperform most fixed deposits while carrying lower credit risk than any bank liability.</p>
+              <div class="repo-c-kpis">
+                <div class="repo-c-kpi"><div class="kpi-val">8.50%</div><div class="kpi-label">Overnight Rate</div></div>
+                <div class="repo-c-kpi"><div class="kpi-val">9.85%</div><div class="kpi-label">12-Month Rate</div></div>
+                <div class="repo-c-kpi"><div class="kpi-val">LKR 100k</div><div class="kpi-label">Min. Investment</div></div>
+                <div class="repo-c-kpi"><div class="kpi-val">T+0</div><div class="kpi-label">Settlement</div></div>
+              </div>
+              <div style="display:flex; gap:1rem; margin-top:2rem; flex-wrap:wrap;">
+                <a href="calculator/index.html" class="btn-primary-inv">Calculate My Return</a>
+                <a href="../../contact-us/index.html" class="btn-ghost-inv">Open Repo Account</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /what-is-repo -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2: CURRENT RATES
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="current-rates" data-section-label="Current Rates">
+
+      <!-- VARIANT A: Table grid -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade" style="background: var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Current Rates</span>
+              <h2>Repo Rates by Tenor</h2>
+              <p>All rates are net of WHT (as applicable). Rates are indicative and subject to change at the opening of each business day.</p>
+            </div>
+            <div class="rates-grid-2">
+              <div>
+                <div class="rates-panel-title">Repo Rates (Selling Rate — Investor Receives)</div>
+                <table class="rate-table">
+                  <thead>
+                    <tr><th>Tenor</th><th>Rate (p.a.)</th><th>LKR 1Mn earns (approx.)</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Overnight</td><td class="highlight">8.50%</td><td>LKR 233 / night</td></tr>
+                    <tr><td>1 Week</td><td class="highlight">8.65%</td><td>LKR 1,655</td></tr>
+                    <tr><td>2 Weeks</td><td class="highlight">8.78%</td><td>LKR 3,370</td></tr>
+                    <tr><td>1 Month</td><td class="highlight">8.95%</td><td>LKR 7,458</td></tr>
+                    <tr><td>3 Months</td><td class="highlight">9.20%</td><td>LKR 22,959</td></tr>
+                    <tr><td>6 Months</td><td class="highlight">9.55%</td><td>LKR 47,096</td></tr>
+                    <tr><td>1 Year</td><td class="highlight">9.85%</td><td>LKR 98,500</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <div class="rates-panel-title">Policy &amp; Reference Rates</div>
+                <table class="rate-table">
+                  <thead>
+                    <tr><th>Instrument</th><th>Rate</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>CBSL Standing Deposit Facility (SDF)</td><td>8.50%</td></tr>
+                    <tr><td>CBSL Standing Lending Facility (SLF)</td><td>9.50%</td></tr>
+                    <tr><td>91-Day Treasury Bill</td><td>9.48%</td></tr>
+                    <tr><td>182-Day Treasury Bill</td><td>9.85%</td></tr>
+                    <tr><td>364-Day Treasury Bill</td><td>10.10%</td></tr>
+                    <tr><td>5Y Treasury Bond</td><td>10.80%</td></tr>
+                    <tr><td>10Y Treasury Bond</td><td>11.25%</td></tr>
+                  </tbody>
+                </table>
+                <div style="font-size:0.72rem; color:var(--muted); margin-top:0.75rem; font-style:italic;">
+                  Sources: CBSL, Colombo Stock Exchange. Rates as of 27 May 2025.
+                </div>
+                <a href="calculator/index.html" class="btn-primary" style="display:inline-flex; margin-top:1.25rem;">Calculate Your Return →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Bar chart + policy panel -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade" style="background: var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Current Rates</span>
+              <h2>Rate Visualisation Across Tenors</h2>
+              <p>The Repo yield curve is upward-sloping at current market conditions — longer tenors deliver materially higher returns.</p>
+            </div>
+            <div class="repo-yc-wrap">
+              <div>
+                <div class="rates-panel-title" style="margin-bottom:1.25rem;">Repo Selling Rate (% p.a.) by Tenor</div>
+                <div class="repo-bar-grid">
+                  <div class="rbg-row"><span class="rbg-label">Overnight</span><div class="rbg-track"><div class="rbg-fill" style="width:73%"></div></div><span class="rbg-rate">8.50%</span></div>
+                  <div class="rbg-row"><span class="rbg-label">1 Week</span><div class="rbg-track"><div class="rbg-fill" style="width:74.5%"></div></div><span class="rbg-rate">8.65%</span></div>
+                  <div class="rbg-row"><span class="rbg-label">2 Weeks</span><div class="rbg-track"><div class="rbg-fill" style="width:75.5%"></div></div><span class="rbg-rate">8.78%</span></div>
+                  <div class="rbg-row"><span class="rbg-label">1 Month</span><div class="rbg-track"><div class="rbg-fill" style="width:77%"></div></div><span class="rbg-rate">8.95%</span></div>
+                  <div class="rbg-row"><span class="rbg-label">3 Months</span><div class="rbg-track"><div class="rbg-fill" style="width:79%"></div></div><span class="rbg-rate">9.20%</span></div>
+                  <div class="rbg-row"><span class="rbg-label">6 Months</span><div class="rbg-track"><div class="rbg-fill" style="width:82%"></div></div><span class="rbg-rate">9.55%</span></div>
+                  <div class="rbg-row"><span class="rbg-label">1 Year</span><div class="rbg-track"><div class="rbg-fill" style="width:85%"></div></div><span class="rbg-rate">9.85%</span></div>
+                </div>
+              </div>
+              <div>
+                <div class="repo-policy-card">
+                  <h4>CBSL Policy Corridor</h4>
+                  <div class="rpc-row"><span class="rpc-label">SDF (floor)</span><span class="rpc-val">8.50%</span></div>
+                  <div class="rpc-row"><span class="rpc-label">SLF (ceiling)</span><span class="rpc-val">9.50%</span></div>
+                  <div class="rpc-row"><span class="rpc-label">Corridor width</span><span class="rpc-val">100 bps</span></div>
+                  <div class="rpc-row"><span class="rpc-label">Last CBSL decision</span><span class="rpc-val">On Hold</span></div>
+                  <div class="rpc-row"><span class="rpc-label">Next MPC meeting</span><span class="rpc-val">Jun 2025</span></div>
+                </div>
+                <div class="repo-policy-card" style="margin-top:1rem;">
+                  <h4>T-Bill Benchmark</h4>
+                  <div class="rpc-row"><span class="rpc-label">91-Day</span><span class="rpc-val">9.48%</span></div>
+                  <div class="rpc-row"><span class="rpc-label">182-Day</span><span class="rpc-val">9.85%</span></div>
+                  <div class="rpc-row"><span class="rpc-label">364-Day</span><span class="rpc-val">10.10%</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Sparkline tiles -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade" style="background: var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Current Rates</span>
+              <h2>Rate Trends — Last 12 Months</h2>
+              <p>Rates have stabilised following CBSL's easing cycle. The current corridor signals a floor for near-term repo pricing.</p>
+            </div>
+            <div class="rates-spark-grid-3">
+              <div class="spark-tile">
+                <h4>Overnight Repo</h4>
+                <div class="st-rate">8.50%</div>
+                <div class="st-change dn">▼ 150 bps vs 12M ago</div>
+                <div class="sparkline-wrap">
+                  <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                    <polyline class="sparkline-path" points="0,50 20,48 40,45 60,42 80,38 100,36 120,30 140,28 160,25 180,22 200,22" />
+                  </svg>
+                </div>
+                <div class="st-meta">CBSL SDF rate. Policy corridor floor.</div>
+              </div>
+              <div class="spark-tile">
+                <h4>3-Month Repo</h4>
+                <div class="st-rate">9.20%</div>
+                <div class="st-change dn">▼ 180 bps vs 12M ago</div>
+                <div class="sparkline-wrap">
+                  <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                    <polyline class="sparkline-path" points="0,55 20,52 40,48 60,44 80,40 100,37 120,33 140,30 160,28 180,25 200,23" />
+                  </svg>
+                </div>
+                <div class="st-meta">Most popular tenor for retail investors.</div>
+              </div>
+              <div class="spark-tile">
+                <h4>1-Year Repo</h4>
+                <div class="st-rate">9.85%</div>
+                <div class="st-change dn">▼ 220 bps vs 12M ago</div>
+                <div class="sparkline-wrap">
+                  <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                    <polyline class="sparkline-path" points="0,58 20,56 40,52 60,47 80,44 100,40 120,36 140,33 160,30 180,27 200,25" />
+                  </svg>
+                </div>
+                <div class="st-meta">Highest fixed rate in the Repo product range.</div>
+              </div>
+            </div>
+            <div style="text-align:center; margin-top:2rem;">
+              <a href="calculator/index.html" class="btn-primary">Use the Repo Calculator to see your return →</a>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /current-rates -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 3: HOW TO INVEST
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="how-to-invest" data-section-label="How to Invest">
+
+      <!-- VARIANT A: 3-col cards -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">How to Invest</span>
+              <h2>Open a Repo Account in Three Steps</h2>
+              <p>Existing HNB Group customers can activate Repo investment within one business day. New customers complete full onboarding in 48–72 hours.</p>
+            </div>
+            <div class="invest-grid-3">
+              <div class="invest-card">
+                <div class="invest-icon">
+                  <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <h4>1. Open Your Account</h4>
+                <p>Complete the HNB Securities client application — NIC, proof of address, and source of funds declaration. Existing HNB Bank current account holders require only a one-page supplementary form.</p>
+              </div>
+              <div class="invest-card">
+                <div class="invest-icon">
+                  <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                </div>
+                <h4>2. Fund Your Account</h4>
+                <p>Transfer your investment amount (minimum LKR 100,000) to your HNB Securities settlement account via CEFTS or RTGS. Same-day credits accepted until 2:00 PM on business days.</p>
+              </div>
+              <div class="invest-card">
+                <div class="invest-icon">
+                  <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <h4>3. Place Your Repo</h4>
+                <p>Call, email, or use the HNB Securities client portal to specify your tenor and amount. Your rate is confirmed immediately. Securities are registered in LankaSecure the same day.</p>
+              </div>
+            </div>
+            <div style="background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; margin-top: 2rem; display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+              <div>
+                <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:0.375rem;">Documents Required</div>
+                <div style="font-size:0.83rem; color:var(--ink-2);">National ID / Passport · Bank statement (3 months) · Source of funds declaration · Tax Identification Number (TIN)</div>
+              </div>
+              <a href="../../contact-us/index.html" class="btn-primary" style="white-space:nowrap;">Open Account</a>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Horizontal steps + requirements -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">How to Invest</span>
+              <h2>From Decision to First Repo in 48 Hours</h2>
+            </div>
+            <div class="invest-steps-h">
+              <div class="inv-step">
+                <div class="inv-step-circle">1</div>
+                <h4>Contact Us</h4>
+                <p>Call +94 11 250 0000 or visit any HNB Securities branch to express interest.</p>
+              </div>
+              <div class="inv-step">
+                <div class="inv-step-circle">2</div>
+                <h4>KYC &amp; Account Opening</h4>
+                <p>Submit NIC, address proof, and source of funds. Account opened within one business day for HNB customers.</p>
+              </div>
+              <div class="inv-step">
+                <div class="inv-step-circle">3</div>
+                <h4>Fund Settlement Account</h4>
+                <p>Transfer your investment via CEFTS/RTGS to your HNB Securities account. Min. LKR 100,000.</p>
+              </div>
+              <div class="inv-step">
+                <div class="inv-step-circle">4</div>
+                <h4>Repo Confirmed</h4>
+                <p>Rate locked, securities registered in LankaSecure. Confirmation sent by email and SMS same day.</p>
+              </div>
+            </div>
+            <div class="invest-grid-3" style="margin-top:1rem;">
+              <div class="invest-card">
+                <h4>Eligible Investors</h4>
+                <p>Sri Lankan individuals (resident and non-resident), corporates, trusts, and institutions. Joint accounts available. No minimum age restriction for adults.</p>
+              </div>
+              <div class="invest-card">
+                <h4>Tax Treatment</h4>
+                <p>Interest income from Repos is subject to 5% Withholding Tax (WHT) for resident individuals. Rates quoted are gross; HNB Securities will deduct and remit WHT on your behalf.</p>
+              </div>
+              <div class="invest-card">
+                <h4>Early Redemption</h4>
+                <p>Early redemption is available on request, subject to a breakage fee. Overnight and call repos may be terminated with same-day notice before 11:00 AM.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Editorial on primary -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="invest-c-wrap">
+              <span class="section-label">How to Invest</span>
+              <h2>Your Capital Working From Day One</h2>
+              <p style="color:rgba(255,255,255,0.8); margin-bottom:1rem; line-height:1.7;">HNB Securities processes same-day Repo placements for amounts received by 2:00 PM. There is no waiting period, no lock-in beyond the agreed tenor, and no hidden charges.</p>
+              <div class="invest-c-grid">
+                <div class="icg-col">
+                  <h4>What You Need</h4>
+                  <ul>
+                    <li>National Identity Card or Passport</li>
+                    <li>Recent utility bill or bank statement (address proof)</li>
+                    <li>Tax Identification Number (TIN)</li>
+                    <li>Source of funds declaration</li>
+                    <li>Minimum LKR 100,000 available to invest</li>
+                  </ul>
+                </div>
+                <div class="icg-col">
+                  <h4>What You Get</h4>
+                  <ul>
+                    <li>Rate locked at placement — no variability</li>
+                    <li>Securities registered in your name (LankaSecure)</li>
+                    <li>Same-day settlement on maturity via RTGS</li>
+                    <li>Email and SMS confirmation for every transaction</li>
+                    <li>Dedicated relationship manager for &gt; LKR 10Mn accounts</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="invest-c-ctas">
+                <a href="calculator/index.html" class="btn-primary-inv">Calculate My Return</a>
+                <a href="../../contact-us/index.html" class="btn-ghost-inv">Open Account</a>
+                <a href="../index.html" class="btn-ghost-inv">← Back to HNB Securities</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /how-to-invest -->
+
+
+    <!-- ── Section CTA Final ── -->
+    <section class="section-cta-final scroll-fade">
+      <div class="section-inner">
+        <div class="cta-final-inner">
+          <div class="cta-final-copy">
+            <span class="section-label">Start Earning</span>
+            <h2>Place Your First Repo Today</h2>
+            <p>Deposit from LKR 100,000. Rate confirmed at entry. Government-backed security. Your capital is working the same day it arrives.</p>
+            <div class="stat-proof">
+              <div><strong>8.50–9.85%</strong><span>Current Rate Range</span></div>
+              <div><strong>T+0</strong><span>Same-Day Settlement</span></div>
+              <div><strong>LKR 100k</strong><span>Minimum Investment</span></div>
+            </div>
+          </div>
+          <div class="cta-final-form">
+            <h3>Repo Enquiry</h3>
+            <form>
+              <div class="form-row">
+                <label for="cta-name-repo">Full Name</label>
+                <input type="text" id="cta-name-repo" placeholder="Your name" />
+              </div>
+              <div class="form-row">
+                <label for="cta-email-repo">Email Address</label>
+                <input type="email" id="cta-email-repo" placeholder="you@email.com" />
+              </div>
+              <div class="form-row">
+                <label for="cta-amount-repo">Investment Amount (LKR)</label>
+                <input type="text" id="cta-amount-repo" placeholder="e.g. 500,000" />
+              </div>
+              <div class="form-row">
+                <label for="cta-tenor-repo">Preferred Tenor</label>
+                <input type="text" id="cta-tenor-repo" placeholder="e.g. 3 months, 1 year" />
+              </div>
+              <button type="submit" class="cta-submit">Request Rate Confirmation →</button>
+              <div class="form-reassurance">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Response within 2 hours on business days. No obligation to proceed.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-body -->
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="32" />
+          <p>HNB Securities Limited is licensed as a Primary Dealer in Government Securities by the Central Bank of Sri Lanka.</p>
+        </div>
+        <div class="footer-col">
+          <h4>HNB Securities Products</h4>
+          <ul>
+            <li><a href="../index.html">All Products Overview</a></li>
+            <li><a href="./index.html">Repurchase Agreements</a></li>
+            <li><a href="../tbill/index.html">Treasury Bills</a></li>
+            <li><a href="calculator/index.html">Repo Calculator</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>HNB Investment Bank</h4>
+          <ul>
+            <li><a href="../../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+            <li><a href="../../corporate-finance/index.html">Corporate Finance</a></li>
+            <li><a href="../../about-us/index.html">About Us</a></li>
+            <li><a href="../../contact-us/index.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2025 HNB Securities Limited. Licensed Primary Dealer regulated by the Central Bank of Sri Lanka. Investment in Government Securities involves interest rate risk. Past yields do not guarantee future returns. This page is for informational purposes only and does not constitute investment advice.</p>
+        <div class="footer-legal-links">
+          <a href="../../privacy-policy/index.html">Privacy Policy</a>
+          <a href="../../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <link rel="stylesheet" href="../../section-toggle.css" />
+  <script src="../../scripts.js"></script>
+  <script src="../../section-toggle.js"></script>
+</body>
+</html>

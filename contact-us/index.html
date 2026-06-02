@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — HNB Investment Bank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ── Contact Form ───────────────────────────────── */
+    .contact-layout { display: grid; grid-template-columns: 1fr 400px; gap: 3rem; align-items: start; }
+    .contact-form-wrap { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 2.5rem; }
+    .contact-form-wrap h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+    .contact-form-wrap p { font-size: 0.83rem; color: var(--ink-2); margin-bottom: 1.5rem; }
+    .contact-field { margin-bottom: 1.125rem; }
+    .contact-field label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink-2); margin-bottom: 0.375rem; }
+    .contact-field input, .contact-field select, .contact-field textarea {
+      width: 100%; padding: 0.625rem 0.875rem;
+      background: var(--bg); border: 1.5px solid var(--line);
+      border-radius: var(--radius); font-family: inherit;
+      font-size: 0.925rem; color: var(--ink);
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+    }
+    .contact-field textarea { min-height: 120px; resize: vertical; }
+    .contact-field input:focus, .contact-field select:focus, .contact-field textarea:focus { outline: none; border-color: var(--primary); }
+    .contact-submit { width: 100%; padding: 0.875rem; background: var(--primary); color: #fff; border: none; border-radius: var(--radius); font-family: inherit; font-size: 0.925rem; font-weight: 700; cursor: pointer; margin-top: 0.5rem; }
+    .contact-submit:hover { background: var(--primary-2); }
+    .contact-reassurance { font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 0.75rem; }
+    .contact-details { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-method { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+    .contact-method h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.875rem; display: flex; gap: 0.75rem; align-items: center; }
+    .contact-method h4 svg { width: 18px; height: 18px; stroke: var(--primary); fill: none; flex-shrink: 0; }
+    .contact-method p { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; margin: 0; }
+    .contact-method a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    .contact-method a:hover { text-decoration: underline; }
+
+    /* Contact B — split layout */
+    .contact-b-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+    .dept-contacts { display: flex; flex-direction: column; gap: 0.875rem; }
+    .dept-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; display: flex; gap: 1rem; align-items: flex-start; }
+    .dept-icon { width: 40px; height: 40px; border-radius: 10px; background: oklch(0.43 0.150 248 / 0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .dept-icon svg { width: 20px; height: 20px; stroke: var(--primary); fill: none; }
+    .dept-info h5 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.125rem; }
+    .dept-info p { font-size: 0.78rem; color: var(--ink-2); line-height: 1.5; margin-bottom: 0.25rem; }
+    .dept-info a { font-size: 0.78rem; color: var(--primary); text-decoration: none; font-weight: 600; }
+
+    /* Contact C — minimal big form */
+    .contact-c-wrap { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
+    .contact-c-copy h2 { margin-bottom: 1rem; }
+    .contact-c-copy p { color: var(--ink-2); line-height: 1.7; margin-bottom: 1.25rem; }
+    .contact-c-info { display: flex; flex-direction: column; gap: 1rem; }
+    .cci-item { display: flex; gap: 0.75rem; align-items: flex-start; }
+    .cci-label { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
+    .cci-val { font-size: 0.875rem; color: var(--ink); }
+    .cci-val a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+    /* ── Offices ────────────────────────────────────── */
+    .office-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .office-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+    .office-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.375rem; }
+    .office-card .oc-role { font-size: 0.78rem; color: var(--primary); font-weight: 600; margin-bottom: 1rem; }
+    .office-card address { font-style: normal; font-size: 0.83rem; color: var(--ink-2); line-height: 1.7; margin-bottom: 1rem; }
+    .office-card .oc-contact { font-size: 0.82rem; color: var(--ink-2); line-height: 1.65; }
+    .office-card .oc-contact a { color: var(--primary); text-decoration: none; }
+    .office-map { background: var(--frame); border-radius: var(--radius); height: 200px; display: flex; align-items: center; justify-content: center; margin-top: 1rem; font-size: 0.75rem; color: var(--muted); }
+    .offices-b-map { background: var(--frame); border-radius: var(--radius); height: 300px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; font-size: 0.875rem; color: var(--muted); }
+    .offices-b-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .offices-c-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .offices-c-list { display: flex; flex-direction: column; gap: 0.875rem; }
+    .ocl-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; display: flex; gap: 1rem; align-items: flex-start; }
+    .ocl-marker { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 0.875rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ocl-body h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.125rem; }
+    .ocl-body p { font-size: 0.78rem; color: var(--ink-2); line-height: 1.5; margin: 0; }
+
+    /* ── Departments ──────────────────────────────── */
+    .dept-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .dept-grid-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+    .dept-grid-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.875rem; padding-bottom: 0.625rem; border-bottom: 2px solid var(--primary); }
+    .dept-grid-card table { width: 100%; border-collapse: collapse; }
+    .dept-grid-card table td { font-size: 0.8rem; padding: 0.3rem 0; border-bottom: 1px solid var(--line); color: var(--ink-2); vertical-align: top; }
+    .dept-grid-card table td:first-child { color: var(--muted); width: 40%; }
+    .dept-grid-card table tr:last-child td { border-bottom: none; }
+    .dept-grid-card table a { color: var(--primary); text-decoration: none; }
+
+    @media (max-width: 960px) {
+      .contact-layout, .contact-c-wrap, .offices-c-layout { grid-template-columns: 1fr; }
+      .contact-b-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .office-grid, .offices-b-cards, .dept-grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Ticker ── -->
+  <div class="ticker" aria-label="Market data">
+    <div class="ticker-track">
+      <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">▲ 0.21%</span></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong></span>
+      <span class="ticker-item">CBSL Repo <strong>8.50%</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+      <span class="ticker-item">LVL.N0000 <strong>LKR 17.40</strong></span>
+      <span class="ticker-item">ASPI <strong>22,622.34</strong> <span class="ticker-up">▲ 0.21%</span></span>
+      <span class="ticker-item">USD/LKR <strong>297.40</strong></span>
+      <span class="ticker-item">CBSL Repo <strong>8.50%</strong></span>
+      <span class="ticker-item">10Y T-Bond <strong>11.25%</strong></span>
+    </div>
+  </div>
+
+  <!-- ── Navigation ── -->
+  <nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../about-us/index.html">About Us</a></li>
+    <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../news/index.html">News</a></li>
+    <li><a href="../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+  <!-- ── Page Header ── -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <span class="section-label">HNB Investment Bank</span>
+      <h1>Contact Us</h1>
+      <p class="page-header-sub">Reach the right team directly — no call-centre queues, no chatbots. We respond to all enquiries within one business day.</p>
+      <div class="page-header-meta">
+        <span class="pill">Colombo 10, Sri Lanka</span>
+        <span class="pill-accent">Response Within 1 Business Day</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Page Body ── -->
+  <div class="page-body">
+    <div class="page-bg-map" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1: CONTACT FORM
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="contact-form" data-section-label="Contact Form">
+
+      <!-- VARIANT A: Form + details panel -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="contact-layout">
+              <div class="contact-form-wrap">
+                <h3>Send Us a Message</h3>
+                <p>Tell us what you need and the best team member will respond — not a generic inbox.</p>
+                <form>
+                  <div class="contact-field">
+                    <label for="ct-name">Full Name *</label>
+                    <input type="text" id="ct-name" placeholder="Your name" required />
+                  </div>
+                  <div class="contact-field">
+                    <label for="ct-email">Email Address *</label>
+                    <input type="email" id="ct-email" placeholder="you@email.com" required />
+                  </div>
+                  <div class="contact-field">
+                    <label for="ct-phone">Phone Number</label>
+                    <input type="tel" id="ct-phone" placeholder="+94 77 xxx xxxx" />
+                  </div>
+                  <div class="contact-field">
+                    <label for="ct-dept">Department</label>
+                    <select id="ct-dept">
+                      <option value="">— Select a team —</option>
+                      <option>HNB Stockbrokers — Equity Trading</option>
+                      <option>Corporate Finance — M&A Advisory</option>
+                      <option>Corporate Finance — Debt Capital Markets</option>
+                      <option>HNB Securities — Repos &amp; T-Bills</option>
+                      <option>Lanka Ventures / LVL — Venture Capital</option>
+                      <option>Investor Relations</option>
+                      <option>Careers / HR</option>
+                      <option>General Enquiry</option>
+                    </select>
+                  </div>
+                  <div class="contact-field">
+                    <label for="ct-message">Message *</label>
+                    <textarea id="ct-message" placeholder="Describe your enquiry in a sentence or two..." required></textarea>
+                  </div>
+                  <button type="submit" class="contact-submit">Send Message →</button>
+                  <div class="contact-reassurance">🔒 Your message is sent directly to our team. We do not sell or share contact information.</div>
+                </form>
+              </div>
+              <div class="contact-details">
+                <div class="contact-method">
+                  <h4><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Head Office</h4>
+                  <address style="font-style:normal; font-size:0.82rem; color:var(--ink-2); line-height:1.7;">
+                    HNB Investment Bank Limited<br/>
+                    479, T B Jayah Mawatha<br/>
+                    Colombo 10<br/>
+                    Sri Lanka
+                  </address>
+                </div>
+                <div class="contact-method">
+                  <h4><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 9.13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2H6.6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.61 9.91a16 16 0 0 0 6.37 6.32l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Phone</h4>
+                  <p><a href="tel:+94112500000">+94 11 250 0000</a><br/>Monday–Friday 8:30 AM – 5:30 PM</p>
+                </div>
+                <div class="contact-method">
+                  <h4><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</h4>
+                  <p><a href="mailto:info@hnbib.lk">info@hnbib.lk</a> — General<br/><a href="mailto:ir@hnbib.lk">ir@hnbib.lk</a> — Investor Relations<br/><a href="mailto:hr@hnbib.lk">hr@hnbib.lk</a> — Careers</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Split with dept contacts -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="contact-b-grid">
+              <div>
+                <span class="section-label">Contact Form</span>
+                <h2 style="margin:0.75rem 0 1rem;">Get in Touch</h2>
+                <div class="contact-form-wrap" style="padding:2rem;">
+                  <form>
+                    <div class="contact-field"><label for="cb-name">Name</label><input type="text" id="cb-name" placeholder="Your name" /></div>
+                    <div class="contact-field"><label for="cb-email">Email</label><input type="email" id="cb-email" placeholder="you@email.com" /></div>
+                    <div class="contact-field"><label for="cb-dept">Department</label>
+                      <select id="cb-dept">
+                        <option value="">— Select team —</option>
+                        <option>HNB Stockbrokers</option>
+                        <option>Corporate Finance</option>
+                        <option>HNB Securities</option>
+                        <option>Lanka Ventures / LVL</option>
+                        <option>Investor Relations</option>
+                        <option>Careers</option>
+                      </select>
+                    </div>
+                    <div class="contact-field"><label for="cb-msg">Message</label><textarea id="cb-msg" placeholder="Your enquiry..."></textarea></div>
+                    <button type="submit" class="contact-submit">Send →</button>
+                  </form>
+                </div>
+              </div>
+              <div>
+                <span class="section-label">Direct Contacts</span>
+                <h2 style="margin:0.75rem 0 1rem;">Reach the Right Team</h2>
+                <div class="dept-contacts">
+                  <div class="dept-card"><div class="dept-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="dept-info"><h5>HNB Stockbrokers</h5><p>Equity trading, CDS accounts, market data</p><a href="mailto:stockbrokers@hnbib.lk">stockbrokers@hnbib.lk</a></div></div>
+                  <div class="dept-card"><div class="dept-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div class="dept-info"><h5>Corporate Finance</h5><p>M&A advisory, DCM, IPOs, structured finance</p><a href="mailto:corpfin@hnbib.lk">corpfin@hnbib.lk</a></div></div>
+                  <div class="dept-card"><div class="dept-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="dept-info"><h5>HNB Securities</h5><p>Repos, Treasury Bills, Primary Dealer</p><a href="mailto:securities@hnbib.lk">securities@hnbib.lk</a></div></div>
+                  <div class="dept-card"><div class="dept-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="dept-info"><h5>Investor Relations</h5><p>IR enquiries, financial data, governance</p><a href="mailto:ir@hnbib.lk">ir@hnbib.lk</a></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Minimal with large copy -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="contact-c-wrap">
+              <div>
+                <span class="section-label">Contact Us</span>
+                <h2 style="margin:0.75rem 0 1rem;">No Automated Responses. Real People.</h2>
+                <p style="color:var(--ink-2); line-height:1.7; margin-bottom:1.25rem;">Every message sent through this form reaches a named team member — not a shared inbox monitored by a junior admin. If you're working on a transaction, considering an investment, or have a governance question, you'll hear from the right person within one business day.</p>
+                <div class="contact-c-info">
+                  <div><div class="cci-label">Head Office</div><div class="cci-val">479, T B Jayah Mawatha, Colombo 10</div></div>
+                  <div><div class="cci-label">Phone</div><div class="cci-val"><a href="tel:+94112500000">+94 11 250 0000</a></div></div>
+                  <div><div class="cci-label">General</div><div class="cci-val"><a href="mailto:info@hnbib.lk">info@hnbib.lk</a></div></div>
+                  <div><div class="cci-label">Investor Relations</div><div class="cci-val"><a href="mailto:ir@hnbib.lk">ir@hnbib.lk</a></div></div>
+                  <div><div class="cci-label">Careers</div><div class="cci-val"><a href="mailto:hr@hnbib.lk">hr@hnbib.lk</a></div></div>
+                  <div><div class="cci-label">Office Hours</div><div class="cci-val">Mon–Fri 8:30 AM – 5:30 PM</div></div>
+                </div>
+              </div>
+              <div class="contact-form-wrap">
+                <h3>Send a Message</h3>
+                <form>
+                  <div class="contact-field"><label for="cc-name">Name</label><input type="text" id="cc-name" placeholder="Your name" /></div>
+                  <div class="contact-field"><label for="cc-email">Email</label><input type="email" id="cc-email" placeholder="you@email.com" /></div>
+                  <div class="contact-field"><label for="cc-subject">Subject</label><input type="text" id="cc-subject" placeholder="Brief description of your enquiry" /></div>
+                  <div class="contact-field"><label for="cc-msg">Message</label><textarea id="cc-msg" placeholder="How can we help?"></textarea></div>
+                  <button type="submit" class="contact-submit">Send Message →</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /contact-form -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2: OFFICES
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="offices" data-section-label="Offices">
+
+      <!-- VARIANT A: Office cards -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header"><span class="section-label">Offices</span><h2>Where to Find Us</h2></div>
+            <div class="office-grid">
+              <div class="office-card">
+                <h4>Colombo Head Office</h4>
+                <div class="oc-role">HNB Investment Bank — All Businesses</div>
+                <address>479, T B Jayah Mawatha (Darley Road)<br/>Colombo 10<br/>Sri Lanka</address>
+                <div class="oc-contact"><a href="tel:+94112500000">+94 11 250 0000</a><br/><a href="mailto:info@hnbib.lk">info@hnbib.lk</a></div>
+                <div class="office-map">📍 Map placeholder — Colombo 10</div>
+              </div>
+              <div class="office-card">
+                <h4>Kandy Branch</h4>
+                <div class="oc-role">HNB Stockbrokers</div>
+                <address>HNB Tower, Dalada Veediya<br/>Kandy<br/>Sri Lanka</address>
+                <div class="oc-contact"><a href="tel:+94812200000">+94 81 220 0000</a><br/><a href="mailto:kandy@hnbib.lk">kandy@hnbib.lk</a></div>
+                <div class="office-map">📍 Map placeholder — Kandy</div>
+              </div>
+              <div class="office-card">
+                <h4>Galle Branch</h4>
+                <div class="oc-role">HNB Stockbrokers</div>
+                <address>4, Church Street<br/>Galle<br/>Sri Lanka</address>
+                <div class="oc-contact"><a href="tel:+94912200000">+94 91 220 0000</a><br/><a href="mailto:galle@hnbib.lk">galle@hnbib.lk</a></div>
+                <div class="office-map">📍 Map placeholder — Galle</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Map + cards -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header"><span class="section-label">Offices</span><h2>3 Locations Across Sri Lanka</h2></div>
+            <div class="offices-b-map">🗺️ Sri Lanka map with office pin markers — Colombo · Kandy · Galle</div>
+            <div class="offices-b-cards">
+              <div class="office-card"><h4>Colombo 10</h4><div class="oc-role">Head Office</div><address>479, T B Jayah Mawatha<br/>Colombo 10</address><div class="oc-contact"><a href="tel:+94112500000">+94 11 250 0000</a></div></div>
+              <div class="office-card"><h4>Kandy</h4><div class="oc-role">Branch</div><address>HNB Tower, Dalada Veediya<br/>Kandy</address><div class="oc-contact"><a href="tel:+94812200000">+94 81 220 0000</a></div></div>
+              <div class="office-card"><h4>Galle</h4><div class="oc-role">Branch</div><address>4, Church Street<br/>Galle</address><div class="oc-contact"><a href="tel:+94912200000">+94 91 220 0000</a></div></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: List + map -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header"><span class="section-label">Offices</span><h2>Find Us</h2></div>
+            <div class="offices-c-layout">
+              <div class="offices-c-list">
+                <div class="ocl-item"><div class="ocl-marker">1</div><div class="ocl-body"><h4>Colombo Head Office</h4><p>479, T B Jayah Mawatha, Colombo 10 · +94 11 250 0000 · All business lines</p></div></div>
+                <div class="ocl-item"><div class="ocl-marker">2</div><div class="ocl-body"><h4>Kandy Branch</h4><p>HNB Tower, Dalada Veediya, Kandy · +94 81 220 0000 · Stockbrokers</p></div></div>
+                <div class="ocl-item"><div class="ocl-marker">3</div><div class="ocl-body"><h4>Galle Branch</h4><p>4, Church Street, Galle · +94 91 220 0000 · Stockbrokers</p></div></div>
+              </div>
+              <div class="office-map" style="height:300px; margin:0;">🗺️ Sri Lanka map — office locations</div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /offices -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 3: DEPARTMENTS
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="departments" data-section-label="Departments">
+
+      <!-- VARIANT A: 3-col department cards -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header"><span class="section-label">Departments</span><h2>Direct Contact by Team</h2></div>
+            <div class="dept-grid-3">
+              <div class="dept-grid-card">
+                <h4>HNB Stockbrokers</h4>
+                <table>
+                  <tr><td>Trading Desk</td><td><a href="mailto:trading@hnbib.lk">trading@hnbib.lk</a></td></tr>
+                  <tr><td>New Accounts</td><td><a href="mailto:accounts@hnbib.lk">accounts@hnbib.lk</a></td></tr>
+                  <tr><td>Research</td><td><a href="mailto:research@hnbib.lk">research@hnbib.lk</a></td></tr>
+                  <tr><td>Phone</td><td>+94 11 250 0100</td></tr>
+                </table>
+              </div>
+              <div class="dept-grid-card">
+                <h4>Corporate Finance</h4>
+                <table>
+                  <tr><td>M&amp;A Advisory</td><td><a href="mailto:manda@hnbib.lk">manda@hnbib.lk</a></td></tr>
+                  <tr><td>Debt Capital Mkts</td><td><a href="mailto:dcm@hnbib.lk">dcm@hnbib.lk</a></td></tr>
+                  <tr><td>Equity Capital Mkts</td><td><a href="mailto:ecm@hnbib.lk">ecm@hnbib.lk</a></td></tr>
+                  <tr><td>Phone</td><td>+94 11 250 0200</td></tr>
+                </table>
+              </div>
+              <div class="dept-grid-card">
+                <h4>HNB Securities</h4>
+                <table>
+                  <tr><td>Fixed Income</td><td><a href="mailto:securities@hnbib.lk">securities@hnbib.lk</a></td></tr>
+                  <tr><td>Repo Desk</td><td><a href="mailto:repo@hnbib.lk">repo@hnbib.lk</a></td></tr>
+                  <tr><td>T-Bill Enquiries</td><td><a href="mailto:tbill@hnbib.lk">tbill@hnbib.lk</a></td></tr>
+                  <tr><td>Phone</td><td>+94 11 250 0300</td></tr>
+                </table>
+              </div>
+              <div class="dept-grid-card">
+                <h4>Lanka Ventures / LVL</h4>
+                <table>
+                  <tr><td>Co-Investment</td><td><a href="mailto:lvl@hnbib.lk">lvl@hnbib.lk</a></td></tr>
+                  <tr><td>Portfolio Queries</td><td><a href="mailto:portfolio@hnbib.lk">portfolio@hnbib.lk</a></td></tr>
+                  <tr><td>Phone</td><td>+94 11 250 0400</td></tr>
+                </table>
+              </div>
+              <div class="dept-grid-card">
+                <h4>Investor Relations</h4>
+                <table>
+                  <tr><td>General IR</td><td><a href="mailto:ir@hnbib.lk">ir@hnbib.lk</a></td></tr>
+                  <tr><td>Analyst Briefings</td><td><a href="mailto:ir@hnbib.lk">ir@hnbib.lk</a></td></tr>
+                  <tr><td>CSE Disclosures</td><td><a href="mailto:cse@hnbib.lk">cse@hnbib.lk</a></td></tr>
+                  <tr><td>Phone</td><td>+94 11 250 4200</td></tr>
+                </table>
+              </div>
+              <div class="dept-grid-card">
+                <h4>HR &amp; Careers</h4>
+                <table>
+                  <tr><td>Applications</td><td><a href="mailto:hr@hnbib.lk">hr@hnbib.lk</a></td></tr>
+                  <tr><td>Employment Verify</td><td><a href="mailto:hr@hnbib.lk">hr@hnbib.lk</a></td></tr>
+                  <tr><td>Phone</td><td>+94 11 250 0500</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Department directory -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header"><span class="section-label">Departments</span><h2>Department Directory</h2></div>
+            <div class="dept-contacts">
+              <div class="dept-card"><div class="dept-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="dept-info"><h5>HNB Stockbrokers</h5><p>Equity dealing, CDS accounts, research publications, margin accounts</p><a href="mailto:stockbrokers@hnbib.lk">stockbrokers@hnbib.lk</a> · +94 11 250 0100</div></div>
+              <div class="dept-card"><div class="dept-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div class="dept-info"><h5>Corporate Finance</h5><p>M&A advisory, debt and equity capital markets, IPO management, structured finance</p><a href="mailto:corpfin@hnbib.lk">corpfin@hnbib.lk</a> · +94 11 250 0200</div></div>
+              <div class="dept-card"><div class="dept-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="dept-info"><h5>HNB Securities (Fixed Income / Primary Dealer)</h5><p>Repos, Treasury Bills, T-Bonds, primary market allocations, yield curve information</p><a href="mailto:securities@hnbib.lk">securities@hnbib.lk</a> · +94 11 250 0300</div></div>
+              <div class="dept-card"><div class="dept-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg></div><div class="dept-info"><h5>Lanka Ventures / LVL Energy Fund</h5><p>Co-investment enquiries, LVL.N0000 shareholder queries, portfolio company information</p><a href="mailto:lvl@hnbib.lk">lvl@hnbib.lk</a> · +94 11 250 0400</div></div>
+              <div class="dept-card"><div class="dept-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div><div class="dept-info"><h5>Investor Relations</h5><p>Financial results, analyst briefings, CSE disclosures, governance enquiries</p><a href="mailto:ir@hnbib.lk">ir@hnbib.lk</a> · +94 11 250 4200</div></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Minimal list -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header"><span class="section-label">Departments</span><h2>Reach the Right Person</h2></div>
+            <table style="width:100%; border-collapse:collapse;">
+              <thead>
+                <tr>
+                  <th style="font-size:0.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:left; padding:0.625rem 0.875rem; background:var(--bg-2); border-bottom:2px solid var(--line);">Department</th>
+                  <th style="font-size:0.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:left; padding:0.625rem 0.875rem; background:var(--bg-2); border-bottom:2px solid var(--line);">Handles</th>
+                  <th style="font-size:0.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:left; padding:0.625rem 0.875rem; background:var(--bg-2); border-bottom:2px solid var(--line);">Email</th>
+                  <th style="font-size:0.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:left; padding:0.625rem 0.875rem; background:var(--bg-2); border-bottom:2px solid var(--line);">Ext.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; font-weight:700; color:var(--ink);">HNB Stockbrokers</td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">Trading, CDS accounts, research</td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem;"><a href="mailto:stockbrokers@hnbib.lk" style="color:var(--primary); text-decoration:none;">stockbrokers@hnbib.lk</a></td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">0100</td></tr>
+                <tr><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; font-weight:700; color:var(--ink);">Corporate Finance</td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">M&A, DCM, ECM, IPOs</td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem;"><a href="mailto:corpfin@hnbib.lk" style="color:var(--primary); text-decoration:none;">corpfin@hnbib.lk</a></td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">0200</td></tr>
+                <tr><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; font-weight:700; color:var(--ink);">HNB Securities</td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">Repos, T-Bills, Primary Dealer</td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem;"><a href="mailto:securities@hnbib.lk" style="color:var(--primary); text-decoration:none;">securities@hnbib.lk</a></td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">0300</td></tr>
+                <tr><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; font-weight:700; color:var(--ink);">Lanka Ventures / LVL</td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">Co-investment, LVL.N0000, portfolio</td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem;"><a href="mailto:lvl@hnbib.lk" style="color:var(--primary); text-decoration:none;">lvl@hnbib.lk</a></td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">0400</td></tr>
+                <tr><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; font-weight:700; color:var(--ink);">Investor Relations</td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">Financial results, analyst queries</td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem;"><a href="mailto:ir@hnbib.lk" style="color:var(--primary); text-decoration:none;">ir@hnbib.lk</a></td><td style="padding:0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">4200</td></tr>
+                <tr><td style="padding:0.875rem; font-size:0.875rem; font-weight:700; color:var(--ink);">Careers / HR</td><td style="padding:0.875rem; font-size:0.875rem; color:var(--ink-2);">Job applications, employment</td><td style="padding:0.875rem; font-size:0.875rem;"><a href="mailto:hr@hnbib.lk" style="color:var(--primary); text-decoration:none;">hr@hnbib.lk</a></td><td style="padding:0.875rem; font-size:0.875rem; color:var(--ink-2);">0500</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /departments -->
+
+  </div><!-- /page-body -->
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="32" />
+          <p>479, T B Jayah Mawatha, Colombo 10, Sri Lanka · +94 11 250 0000 · info@hnbib.lk</p>
+        </div>
+        <div class="footer-col">
+          <h4>Our Businesses</h4>
+          <ul>
+            <li><a href="../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+            <li><a href="../corporate-finance/index.html">Corporate Finance</a></li>
+            <li><a href="../hnb-securities/index.html">HNB Securities</a></li>
+            <li><a href="../lanka-ventures-lvl/index.html">Lanka Ventures / LVL</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../about-us/index.html">About Us</a></li>
+            <li><a href="../investor-relations/index.html">Investor Relations</a></li>
+            <li><a href="../careers/index.html">Careers</a></li>
+            <li><a href="../news/index.html">News</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2025 HNB Investment Bank Limited. Regulated by the Securities and Exchange Commission of Sri Lanka.</p>
+        <div class="footer-legal-links">
+          <a href="../privacy-policy/index.html">Privacy Policy</a>
+          <a href="../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <link rel="stylesheet" href="../section-toggle.css" />
+  <script src="../scripts.js"></script>
+  <script src="../section-toggle.js"></script>
+</body>
+</html>

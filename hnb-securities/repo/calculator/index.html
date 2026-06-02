@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Repo Return Calculator — HNB Securities</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../styles.css" />
+  <style>
+    /* ── Calculator core ──────────────────────────── */
+    .calc-layout { display: grid; grid-template-columns: 400px 1fr; gap: 2.5rem; align-items: start; }
+    .calc-form-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 2rem; position: sticky; top: calc(56px + 2rem); }
+    .calc-form-card h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 1.5rem; padding-bottom: 0.875rem; border-bottom: 1px solid var(--line); }
+    .calc-field { margin-bottom: 1.125rem; }
+    .calc-field label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink-2); margin-bottom: 0.375rem; }
+    .calc-field input, .calc-field select {
+      width: 100%; padding: 0.625rem 0.875rem;
+      background: var(--bg); border: 1.5px solid var(--line);
+      border-radius: var(--radius); font-family: inherit;
+      font-size: 0.925rem; color: var(--ink);
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+    }
+    .calc-field input:focus, .calc-field select:focus { outline: none; border-color: var(--primary); }
+    .calc-field .field-hint { font-size: 0.72rem; color: var(--muted); margin-top: 0.25rem; }
+    .calc-btn { width: 100%; padding: 0.875rem; background: var(--primary); color: #fff; border: none; border-radius: var(--radius); font-family: inherit; font-size: 0.925rem; font-weight: 700; cursor: pointer; transition: background 0.15s; margin-top: 0.5rem; }
+    .calc-btn:hover { background: var(--primary-2); }
+    .calc-reset { display: block; text-align: center; font-size: 0.8rem; color: var(--muted); cursor: pointer; margin-top: 0.75rem; background: none; border: none; font-family: inherit; }
+    .calc-reset:hover { color: var(--ink-2); }
+
+    /* Results panel */
+    .calc-results { display: flex; flex-direction: column; gap: 1.5rem; }
+    .results-summary { background: var(--primary); border-radius: var(--radius); padding: 2rem; color: #fff; }
+    .results-summary h4 { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 1.5rem; }
+    .results-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .res-kpi .rk-label { font-size: 0.75rem; color: rgba(255,255,255,0.65); margin-bottom: 0.25rem; }
+    .res-kpi .rk-val { font-size: 1.75rem; font-weight: 800; color: #fff; }
+    .res-kpi .rk-sub { font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-top: 0.125rem; }
+    .results-empty { text-align: center; padding: 3rem; color: var(--muted); font-size: 0.875rem; }
+    .results-empty .empty-icon { font-size: 2.5rem; margin-bottom: 0.875rem; opacity: 0.5; }
+
+    /* Breakdown table */
+    .breakdown-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .breakdown-card h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); padding: 1.125rem 1.5rem; border-bottom: 1px solid var(--line); }
+    .breakdown-table { width: 100%; border-collapse: collapse; }
+    .breakdown-table th { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; padding: 0.625rem 1rem; background: var(--bg-2); text-align: left; border-bottom: 1px solid var(--line); }
+    .breakdown-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--line); font-size: 0.875rem; color: var(--ink-2); }
+    .breakdown-table tr:last-child td { border-bottom: none; font-weight: 700; color: var(--ink); }
+    .breakdown-table td:not(:first-child) { text-align: right; }
+    .breakdown-table td.positive { color: oklch(0.45 0.14 145); font-weight: 700; }
+
+    /* Tenor comparison (Variant B only) */
+    .tenor-compare { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .tenor-compare h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); padding: 1.125rem 1.5rem; border-bottom: 1px solid var(--line); }
+    .compare-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .compare-col { padding: 1.25rem; border-right: 1px solid var(--line); }
+    .compare-col:last-child { border-right: none; }
+    .compare-col.active { background: oklch(0.43 0.150 248 / 0.04); }
+    .cc-tenor { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.5rem; }
+    .cc-rate { font-size: 1.25rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem; }
+    .cc-return { font-size: 0.875rem; font-weight: 700; color: oklch(0.45 0.14 145); margin-bottom: 0.25rem; }
+    .cc-maturity { font-size: 1rem; font-weight: 800; color: var(--ink); margin-bottom: 0.25rem; }
+    .cc-label { font-size: 0.72rem; color: var(--muted); }
+
+    /* Variant C — compact calculator with chart */
+    .calc-c-layout { display: grid; grid-template-columns: 360px 1fr; gap: 2.5rem; align-items: start; }
+    .calc-c-chart { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+    .calc-c-chart h4 { font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 1.25rem; }
+    .growth-bar-wrap { display: flex; flex-direction: column; gap: 0.875rem; }
+    .gbw-row { display: grid; grid-template-columns: 100px 1fr 110px; gap: 0.75rem; align-items: center; }
+    .gbw-label { font-size: 0.82rem; color: var(--ink-2); }
+    .gbw-track { height: 14px; background: var(--bg-2); border-radius: 7px; overflow: hidden; }
+    .gbw-fill { height: 100%; background: var(--primary); border-radius: 7px; transition: width 0.8s var(--ease-out-quart); }
+    .gbw-val { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-align: right; }
+
+    /* Rate guide */
+    .rate-guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .rg-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+    .rg-card .rg-tenor { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.5rem; }
+    .rg-card .rg-rate { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 0.375rem; }
+    .rg-card .rg-label { font-size: 0.78rem; color: var(--muted); margin-bottom: 1rem; }
+    .rg-card table { width: 100%; border-collapse: collapse; }
+    .rg-card table td { font-size: 0.8rem; padding: 0.3rem 0; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+    .rg-card table tr:last-child td { border-bottom: none; }
+    .rg-card table td:last-child { text-align: right; font-weight: 700; color: var(--ink); }
+
+    @media (max-width: 960px) {
+      .calc-layout, .calc-c-layout { grid-template-columns: 1fr; }
+      .calc-form-card { position: static; }
+      .compare-grid { grid-template-columns: 1fr 1fr; }
+      .results-kpis { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .compare-grid, .rate-guide-grid, .results-kpis { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Ticker ── -->
+  <div class="ticker" aria-label="Market data">
+    <div class="ticker-track">
+      <span class="ticker-item">Overnight Repo <strong>8.50%</strong></span>
+      <span class="ticker-item">1-Month Repo <strong>8.95%</strong></span>
+      <span class="ticker-item">3-Month Repo <strong>9.20%</strong></span>
+      <span class="ticker-item">6-Month Repo <strong>9.55%</strong></span>
+      <span class="ticker-item">1-Year Repo <strong>9.85%</strong></span>
+      <span class="ticker-item">CBSL SDF <strong>8.50%</strong></span>
+      <span class="ticker-item">91-Day T-Bill <strong>9.48%</strong></span>
+      <span class="ticker-item">Overnight Repo <strong>8.50%</strong></span>
+      <span class="ticker-item">1-Month Repo <strong>8.95%</strong></span>
+      <span class="ticker-item">3-Month Repo <strong>9.20%</strong></span>
+      <span class="ticker-item">6-Month Repo <strong>9.55%</strong></span>
+      <span class="ticker-item">1-Year Repo <strong>9.85%</strong></span>
+    </div>
+  </div>
+
+  <!-- ── Navigation ── -->
+  <nav class="global-nav" aria-label="Main navigation">
+  <a class="nav-logo" href="../../../index.html">
+    <img src="../../../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-has-drop">
+      <a href="../../../hnb-stockbrokers/index.html">Our Businesses</a>
+      <ul class="nav-drop">
+        <li><a href="../../../hnb-stockbrokers/index.html">HNB Stockbrokers</a></li>
+        <li><a href="../../../hnb-securities/index.html">HNB Securities</a></li>
+        <li><a href="../../../corporate-finance/index.html">Corporate Finance</a></li>
+        <li><a href="../../../lanka-ventures-lvl/index.html">Lanka Ventures</a></li>
+      </ul>
+    </li>
+    <li><a href="../../../about-us/index.html">About Us</a></li>
+    <li><a href="../../../investor-relations/index.html">Investor Relations</a></li>
+    <li><a href="../../../news/index.html">News</a></li>
+    <li><a href="../../../careers/index.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="../../../contact-us/index.html">Contact Us</a>
+  </div>
+</nav>
+
+  <!-- ── Page Header ── -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <span class="section-label">HNB Securities · Repo</span>
+      <h1>Repo Return Calculator</h1>
+      <p class="page-header-sub">Enter your investment amount and tenor to see your exact return — gross and net of Withholding Tax. No sign-in required.</p>
+      <div class="page-header-meta">
+        <span class="pill">Live Indicative Rates</span>
+        <span class="pill-accent">WHT-Adjusted Results</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Page Body ── -->
+  <div class="page-body">
+    <div class="page-bg-map" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1: CALCULATOR
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="calculator" data-section-label="Calculator">
+
+      <!-- VARIANT A: Simple calculator + results -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="calc-layout" id="calc-a">
+              <!-- Form -->
+              <div class="calc-form-card">
+                <h3>Calculate Your Repo Return</h3>
+                <div class="calc-field">
+                  <label for="ca-principal">Investment Amount (LKR)</label>
+                  <input type="number" id="ca-principal" placeholder="e.g. 1000000" min="100000" step="50000" value="1000000" />
+                  <div class="field-hint">Minimum LKR 100,000</div>
+                </div>
+                <div class="calc-field">
+                  <label for="ca-tenor">Tenor</label>
+                  <select id="ca-tenor">
+                    <option value="1,8.50">Overnight (1 day) — 8.50%</option>
+                    <option value="7,8.65">1 Week (7 days) — 8.65%</option>
+                    <option value="14,8.78">2 Weeks (14 days) — 8.78%</option>
+                    <option value="30,8.95">1 Month (30 days) — 8.95%</option>
+                    <option value="91,9.20" selected>3 Months (91 days) — 9.20%</option>
+                    <option value="182,9.55">6 Months (182 days) — 9.55%</option>
+                    <option value="364,9.85">1 Year (364 days) — 9.85%</option>
+                  </select>
+                </div>
+                <div class="calc-field">
+                  <label for="ca-wht">Withholding Tax</label>
+                  <select id="ca-wht">
+                    <option value="5" selected>5% — Resident Individual</option>
+                    <option value="0">0% — Corporate / Institutional</option>
+                    <option value="14">14% — Non-Resident</option>
+                  </select>
+                </div>
+                <button class="calc-btn" onclick="calcRepoA()">Calculate Return</button>
+                <button class="calc-reset" onclick="resetCalcA()">Reset</button>
+              </div>
+              <!-- Results -->
+              <div class="calc-results" id="ca-results">
+                <div class="results-empty">
+                  <div class="empty-icon">📊</div>
+                  <p>Enter your investment details and click <strong>Calculate Return</strong> to see your projected earnings.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Calculator with tenor comparison -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="calc-layout" id="calc-b">
+              <!-- Form -->
+              <div class="calc-form-card">
+                <h3>Compare Returns Across Tenors</h3>
+                <div class="calc-field">
+                  <label for="cb-principal">Investment Amount (LKR)</label>
+                  <input type="number" id="cb-principal" placeholder="e.g. 1000000" min="100000" step="50000" value="1000000" />
+                  <div class="field-hint">Minimum LKR 100,000</div>
+                </div>
+                <div class="calc-field">
+                  <label for="cb-wht">Withholding Tax Rate</label>
+                  <select id="cb-wht">
+                    <option value="5" selected>5% — Resident Individual</option>
+                    <option value="0">0% — Corporate / Institutional</option>
+                    <option value="14">14% — Non-Resident</option>
+                  </select>
+                </div>
+                <button class="calc-btn" onclick="calcRepoB()">Compare All Tenors</button>
+                <button class="calc-reset" onclick="resetCalcB()">Reset</button>
+                <div style="margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--line);">
+                  <div style="font-size:0.75rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.625rem;">Current Rates</div>
+                  <div style="font-size:0.8rem; color:var(--ink-2); line-height:1.9;">
+                    Overnight: 8.50% &nbsp;·&nbsp; 1W: 8.65%<br/>
+                    1M: 8.95% &nbsp;·&nbsp; 3M: 9.20%<br/>
+                    6M: 9.55% &nbsp;·&nbsp; 1Y: 9.85%
+                  </div>
+                </div>
+              </div>
+              <!-- Results -->
+              <div class="calc-results" id="cb-results">
+                <div class="results-empty">
+                  <div class="empty-icon">📊</div>
+                  <p>Enter your investment amount and click <strong>Compare All Tenors</strong> to see returns side-by-side across all available tenors.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Calculator with visual bar chart -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="calc-c-layout" id="calc-c">
+              <!-- Form -->
+              <div class="calc-form-card">
+                <h3>Repo Calculator</h3>
+                <div class="calc-field">
+                  <label for="cc-principal">Investment Amount (LKR)</label>
+                  <input type="number" id="cc-principal" placeholder="e.g. 1000000" min="100000" step="50000" value="1000000" />
+                </div>
+                <div class="calc-field">
+                  <label for="cc-tenor">Tenor</label>
+                  <select id="cc-tenor">
+                    <option value="1,8.50">Overnight — 8.50%</option>
+                    <option value="7,8.65">1 Week — 8.65%</option>
+                    <option value="14,8.78">2 Weeks — 8.78%</option>
+                    <option value="30,8.95">1 Month — 8.95%</option>
+                    <option value="91,9.20" selected>3 Months — 9.20%</option>
+                    <option value="182,9.55">6 Months — 9.55%</option>
+                    <option value="364,9.85">1 Year — 9.85%</option>
+                  </select>
+                </div>
+                <div class="calc-field">
+                  <label for="cc-wht">WHT Rate</label>
+                  <select id="cc-wht">
+                    <option value="5" selected>5% (Resident Individual)</option>
+                    <option value="0">0% (Corporate)</option>
+                    <option value="14">14% (Non-Resident)</option>
+                  </select>
+                </div>
+                <button class="calc-btn" onclick="calcRepoC()">Calculate</button>
+                <button class="calc-reset" onclick="resetCalcC()">Reset</button>
+              </div>
+              <!-- Chart + results -->
+              <div id="cc-output">
+                <div class="calc-c-chart">
+                  <h4>Return Comparison — All Tenors</h4>
+                  <div class="growth-bar-wrap" id="cc-bars">
+                    <!-- Populated by JS -->
+                    <div style="color:var(--muted); font-size:0.875rem; text-align:center; padding:2rem 0;">Enter an amount to see tenor comparison.</div>
+                  </div>
+                </div>
+                <div id="cc-summary" style="margin-top:1.5rem;">
+                  <div class="results-empty">
+                    <div class="empty-icon">🧮</div>
+                    <p>Click <strong>Calculate</strong> to see your results.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /calculator -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2: RATE GUIDE
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="rate-guide" data-section-label="Rate Guide">
+
+      <!-- VARIANT A: 3-col cards -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Rate Guide</span>
+              <h2>Current Repo Rates — 27 May 2025</h2>
+              <p>Rates are indicative and reset daily at 8:30 AM. The table below shows the return on LKR 1,000,000 for each tenor.</p>
+            </div>
+            <div class="rate-guide-grid">
+              <div class="rg-card">
+                <div class="rg-tenor">Short-Term (≤ 2 Weeks)</div>
+                <div class="rg-rate">8.50–8.78%</div>
+                <div class="rg-label">Overnight · 1 Week · 2 Weeks</div>
+                <table>
+                  <tr><td>Overnight</td><td>8.50%</td></tr>
+                  <tr><td>1 Week</td><td>8.65%</td></tr>
+                  <tr><td>2 Weeks</td><td>8.78%</td></tr>
+                  <tr><td>Min. on LKR 1Mn (O/N)</td><td>LKR 233</td></tr>
+                </table>
+              </div>
+              <div class="rg-card">
+                <div class="rg-tenor">Medium-Term (1–3 Months)</div>
+                <div class="rg-rate">8.95–9.20%</div>
+                <div class="rg-label">1 Month · 3 Months</div>
+                <table>
+                  <tr><td>1 Month</td><td>8.95%</td></tr>
+                  <tr><td>3 Months</td><td>9.20%</td></tr>
+                  <tr><td>Return on LKR 1Mn (1M)</td><td>LKR 7,458</td></tr>
+                  <tr><td>Return on LKR 1Mn (3M)</td><td>LKR 22,959</td></tr>
+                </table>
+              </div>
+              <div class="rg-card">
+                <div class="rg-tenor">Long-Term (6M–1Y)</div>
+                <div class="rg-rate">9.55–9.85%</div>
+                <div class="rg-label">6 Months · 1 Year</div>
+                <table>
+                  <tr><td>6 Months</td><td>9.55%</td></tr>
+                  <tr><td>1 Year</td><td>9.85%</td></tr>
+                  <tr><td>Return on LKR 1Mn (6M)</td><td>LKR 47,096</td></tr>
+                  <tr><td>Return on LKR 1Mn (1Y)</td><td>LKR 98,500</td></tr>
+                </table>
+              </div>
+            </div>
+            <div style="font-size:0.72rem; color:var(--muted); margin-top:1.25rem; font-style:italic;">
+              All returns shown are gross (before 5% WHT for resident individuals). WHT deducted and remitted by HNB Securities. Rates subject to change at market open. Not investment advice.
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Full comparison table -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Rate Guide</span>
+              <h2>Full Rate Table — All Amounts &amp; Tenors</h2>
+            </div>
+            <table style="width:100%; border-collapse:collapse;">
+              <thead>
+                <tr>
+                  <th style="font-size:0.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:left; padding:0.625rem 0.875rem; background:var(--bg-2); border-bottom:2px solid var(--line);">Tenor</th>
+                  <th style="font-size:0.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:right; padding:0.625rem 0.875rem; background:var(--bg-2); border-bottom:2px solid var(--line);">Rate p.a.</th>
+                  <th style="font-size:0.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:right; padding:0.625rem 0.875rem; background:var(--bg-2); border-bottom:2px solid var(--line);">LKR 500k gross</th>
+                  <th style="font-size:0.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:right; padding:0.625rem 0.875rem; background:var(--bg-2); border-bottom:2px solid var(--line);">LKR 1Mn gross</th>
+                  <th style="font-size:0.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:right; padding:0.625rem 0.875rem; background:var(--bg-2); border-bottom:2px solid var(--line);">LKR 5Mn gross</th>
+                  <th style="font-size:0.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:right; padding:0.625rem 0.875rem; background:var(--bg-2); border-bottom:2px solid var(--line);">Net (after 5% WHT)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">Overnight (1 day)</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; font-weight:700; color:var(--primary); text-align:right;">8.50%</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 116</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 233</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 1,164</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:oklch(0.45 0.14 145); font-weight:700; text-align:right;">−5%</td>
+                </tr>
+                <tr>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">1 Month (30 days)</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; font-weight:700; color:var(--primary); text-align:right;">8.95%</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 3,729</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 7,458</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 37,192</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:oklch(0.45 0.14 145); font-weight:700; text-align:right;">−5%</td>
+                </tr>
+                <tr>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">3 Months (91 days)</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; font-weight:700; color:var(--primary); text-align:right;">9.20%</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 11,479</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 22,959</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 114,795</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:oklch(0.45 0.14 145); font-weight:700; text-align:right;">−5%</td>
+                </tr>
+                <tr>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2);">6 Months (182 days)</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; font-weight:700; color:var(--primary); text-align:right;">9.55%</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 23,548</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 47,096</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 235,479</td>
+                  <td style="padding:0.75rem 0.875rem; border-bottom:1px solid var(--line); font-size:0.875rem; color:oklch(0.45 0.14 145); font-weight:700; text-align:right;">−5%</td>
+                </tr>
+                <tr>
+                  <td style="padding:0.75rem 0.875rem; font-size:0.875rem; color:var(--ink-2);">1 Year (364 days)</td>
+                  <td style="padding:0.75rem 0.875rem; font-size:0.875rem; font-weight:700; color:var(--primary); text-align:right;">9.85%</td>
+                  <td style="padding:0.75rem 0.875rem; font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 49,250</td>
+                  <td style="padding:0.75rem 0.875rem; font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 98,500</td>
+                  <td style="padding:0.75rem 0.875rem; font-size:0.875rem; color:var(--ink-2); text-align:right;">LKR 492,500</td>
+                  <td style="padding:0.75rem 0.875rem; font-size:0.875rem; color:oklch(0.45 0.14 145); font-weight:700; text-align:right;">−5%</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size:0.72rem; color:var(--muted); margin-top:0.875rem; font-style:italic;">
+              Returns shown are approximations for illustration. Actual amounts may vary slightly. WHT column shows rate applied to gross interest — click Calculate above for net figures.
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Visual rate bars -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade" style="background:var(--bg-2);">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Rate Guide</span>
+              <h2>Visual Rate Ladder</h2>
+              <p>Longer tenor = higher rate. The current Repo yield curve is positively sloped — rewarding investors who can commit for longer periods.</p>
+            </div>
+            <div class="growth-bar-wrap">
+              <div class="gbw-row"><span class="gbw-label">Overnight</span><div class="gbw-track"><div class="gbw-fill" style="width:68%"></div></div><span class="gbw-val">8.50% — LKR 233/night per Mn</span></div>
+              <div class="gbw-row"><span class="gbw-label">1 Week</span><div class="gbw-track"><div class="gbw-fill" style="width:69%"></div></div><span class="gbw-val">8.65% — LKR 1,655 per Mn</span></div>
+              <div class="gbw-row"><span class="gbw-label">2 Weeks</span><div class="gbw-track"><div class="gbw-fill" style="width:70%"></div></div><span class="gbw-val">8.78% — LKR 3,370 per Mn</span></div>
+              <div class="gbw-row"><span class="gbw-label">1 Month</span><div class="gbw-track"><div class="gbw-fill" style="width:72%"></div></div><span class="gbw-val">8.95% — LKR 7,458 per Mn</span></div>
+              <div class="gbw-row"><span class="gbw-label">3 Months</span><div class="gbw-track"><div class="gbw-fill" style="width:74%"></div></div><span class="gbw-val">9.20% — LKR 22,959 per Mn</span></div>
+              <div class="gbw-row"><span class="gbw-label">6 Months</span><div class="gbw-track"><div class="gbw-fill" style="width:76%"></div></div><span class="gbw-val">9.55% — LKR 47,096 per Mn</span></div>
+              <div class="gbw-row"><span class="gbw-label">1 Year</span><div class="gbw-track"><div class="gbw-fill" style="width:79%"></div></div><span class="gbw-val">9.85% — LKR 98,500 per Mn</span></div>
+            </div>
+            <div style="font-size:0.72rem; color:var(--muted); margin-top:1rem; font-style:italic;">
+              Gross returns per LKR 1,000,000 invested. Rates as of 27 May 2025.
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /rate-guide -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 3: HOW RETURNS ARE CALCULATED
+    ═══════════════════════════════════════════════ -->
+    <section class="section-host" data-section-id="methodology" data-section-label="Methodology">
+
+      <!-- VARIANT A: Three-col explanation -->
+      <div class="variant" data-variant="A" data-variant-label="Simple">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Methodology</span>
+              <h2>How Your Return Is Calculated</h2>
+            </div>
+            <div class="rate-guide-grid">
+              <div class="rg-card">
+                <div class="rg-tenor">Step 1: Gross Interest</div>
+                <div style="font-size:0.82rem; color:var(--ink-2); line-height:1.7; margin-bottom:1rem;">
+                  <code style="background:var(--bg-2); border:1px solid var(--line); border-radius:4px; padding:0.125rem 0.4rem; font-size:0.78rem; color:var(--primary); font-family:monospace; display:block; margin-bottom:0.5rem;">Interest = Principal × Rate × Days / 365</code>
+                  Example: LKR 1,000,000 × 9.20% × 91/365 = <strong>LKR 22,959</strong>
+                </div>
+              </div>
+              <div class="rg-card">
+                <div class="rg-tenor">Step 2: WHT Deduction</div>
+                <div style="font-size:0.82rem; color:var(--ink-2); line-height:1.7; margin-bottom:1rem;">
+                  <code style="background:var(--bg-2); border:1px solid var(--line); border-radius:4px; padding:0.125rem 0.4rem; font-size:0.78rem; color:var(--primary); font-family:monospace; display:block; margin-bottom:0.5rem;">WHT = Gross Interest × WHT Rate</code>
+                  At 5%: LKR 22,959 × 5% = <strong>LKR 1,148</strong> deducted
+                </div>
+              </div>
+              <div class="rg-card">
+                <div class="rg-tenor">Step 3: Net Maturity Value</div>
+                <div style="font-size:0.82rem; color:var(--ink-2); line-height:1.7; margin-bottom:1rem;">
+                  <code style="background:var(--bg-2); border:1px solid var(--line); border-radius:4px; padding:0.125rem 0.4rem; font-size:0.78rem; color:var(--primary); font-family:monospace; display:block; margin-bottom:0.5rem;">Maturity = Principal + Net Interest</code>
+                  LKR 1,000,000 + (22,959 − 1,148) = <strong>LKR 1,021,811</strong>
+                </div>
+              </div>
+            </div>
+            <div style="background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:1.25rem; margin-top:1.25rem; font-size:0.8rem; color:var(--ink-2); line-height:1.7;">
+              <strong style="color:var(--ink);">Important notes:</strong> WHT is deducted at source by HNB Securities and remitted to the IRD. For resident individuals, WHT is the final tax — no further income tax declaration required on Repo income. Corporates are exempt from WHT but must include Repo income in taxable profits. Non-residents are subject to 14% WHT unless a DTA applies.
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant A -->
+
+      <!-- VARIANT B: Two-col with FAQ -->
+      <div class="variant" data-variant="B" data-variant-label="Middle">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div class="section-header">
+              <span class="section-label">Methodology</span>
+              <h2>Calculation Basis &amp; Frequently Asked Questions</h2>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; align-items:start;">
+              <div>
+                <h4 style="font-size:0.95rem; font-weight:700; color:var(--ink); margin-bottom:1.25rem;">The Formula</h4>
+                <div style="background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:1.5rem; font-family:monospace; font-size:0.85rem; line-height:2; color:var(--ink-2);">
+                  <span style="color:var(--muted);">// Step 1: Gross interest</span><br/>
+                  grossInt = principal × (rate/100) × (days/365)<br/><br/>
+                  <span style="color:var(--muted);">// Step 2: WHT (if applicable)</span><br/>
+                  wht = grossInt × (whtRate/100)<br/><br/>
+                  <span style="color:var(--muted);">// Step 3: Net maturity value</span><br/>
+                  maturityValue = principal + grossInt − wht
+                </div>
+                <div style="background:oklch(0.43 0.150 248 / 0.04); border:1px solid oklch(0.43 0.150 248 / 0.12); border-radius:var(--radius); padding:1.25rem; margin-top:1.25rem; font-size:0.82rem; color:var(--ink-2); line-height:1.65;">
+                  <strong style="color:var(--primary);">Day count convention:</strong> Actual/365. CBSL uses the actual number of days in the Repo period divided by 365, regardless of whether the year is a leap year.
+                </div>
+              </div>
+              <div>
+                <h4 style="font-size:0.95rem; font-weight:700; color:var(--ink); margin-bottom:1.25rem;">Common Questions</h4>
+                <div style="display:flex; flex-direction:column; gap:1rem;">
+                  <div style="background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:1.125rem;">
+                    <div style="font-size:0.875rem; font-weight:700; color:var(--ink); margin-bottom:0.375rem;">Is my return guaranteed?</div>
+                    <div style="font-size:0.82rem; color:var(--ink-2); line-height:1.6;">Yes — the rate is contractually fixed at placement. HNB Securities' obligation is backed by government securities held in your name in LankaSecure.</div>
+                  </div>
+                  <div style="background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:1.125rem;">
+                    <div style="font-size:0.875rem; font-weight:700; color:var(--ink); margin-bottom:0.375rem;">Can I roll over on maturity?</div>
+                    <div style="font-size:0.82rem; color:var(--ink-2); line-height:1.6;">Yes. HNB Securities will contact you before maturity with the prevailing rate for your next tenor. You can roll over principal only or principal plus interest.</div>
+                  </div>
+                  <div style="background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:1.125rem;">
+                    <div style="font-size:0.875rem; font-weight:700; color:var(--ink); margin-bottom:0.375rem;">What if I need funds before maturity?</div>
+                    <div style="font-size:0.82rem; color:var(--ink-2); line-height:1.6;">Early termination is possible subject to a breakage fee (typically 0.5–1% of interest accrued). Overnight and call repos may be terminated with same-day notice before 11:00 AM.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant B -->
+
+      <!-- VARIANT C: Editorial with CTA to open account -->
+      <div class="variant" data-variant="C" data-variant-label="Ambitious">
+        <div class="section-wrap scroll-fade">
+          <div class="section-inner">
+            <div style="background:var(--primary); border-radius:var(--radius); padding:3rem; color:#fff;">
+              <span style="font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase; color:oklch(0.65 0.165 140);">Methodology</span>
+              <h2 style="color:#fff; margin:0.75rem 0 1rem;">No Surprises. Every Variable Is Known at Entry.</h2>
+              <p style="color:rgba(255,255,255,0.8); line-height:1.7; margin-bottom:1rem;">The calculator on this page uses the same formula HNB Securities uses at settlement: <code style="background:rgba(255,255,255,0.1); padding:0.125rem 0.4rem; border-radius:4px; font-family:monospace;">Interest = Principal × Rate × Days ÷ 365</code>. WHT is deducted at source and remitted to the IRD — your net amount arrives in your account on maturity day, no action required.</p>
+              <p style="color:rgba(255,255,255,0.8); line-height:1.7; margin-bottom:2rem;">Ready to invest? Open your HNB Securities account today. Existing HNB Bank customers complete account activation in under 24 hours.</p>
+              <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                <a href="../../../contact-us/index.html" style="display:inline-flex; align-items:center; gap:0.5rem; background:#fff; color:var(--primary); border:none; border-radius:var(--radius); padding:0.75rem 1.5rem; font-size:0.875rem; font-weight:700; cursor:pointer; text-decoration:none;">Open Repo Account</a>
+                <a href="../index.html" style="display:inline-flex; align-items:center; gap:0.5rem; background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,0.45); border-radius:var(--radius); padding:0.75rem 1.5rem; font-size:0.875rem; font-weight:700; cursor:pointer; text-decoration:none;">← Back to Repo Products</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /variant C -->
+
+    </section><!-- /methodology -->
+
+  </div><!-- /page-body -->
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../../../assets/logo/hnb-inv-logo.webp" alt="HNB Investment Bank" height="32" />
+          <p>HNB Securities Limited — CBSL Licensed Primary Dealer in Government Securities.</p>
+        </div>
+        <div class="footer-col">
+          <h4>HNB Securities</h4>
+          <ul>
+            <li><a href="../../../hnb-securities/index.html">Products Overview</a></li>
+            <li><a href="../index.html">Repurchase Agreements</a></li>
+            <li><a href="../../tbill/index.html">Treasury Bills</a></li>
+            <li><a href="./index.html">Repo Calculator</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>HNB Investment Bank</h4>
+          <ul>
+            <li><a href="../../../index.html">Home</a></li>
+            <li><a href="../../../about-us/index.html">About Us</a></li>
+            <li><a href="../../../contact-us/index.html">Contact Us</a></li>
+            <li><a href="../../../privacy-policy/index.html">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2025 HNB Securities Limited. Calculator results are indicative estimates only. Actual returns may differ. Not investment advice. Investments in Government Securities are subject to interest rate and liquidity risk.</p>
+        <div class="footer-legal-links">
+          <a href="../../../privacy-policy/index.html">Privacy Policy</a>
+          <a href="../../../terms-and-conditions/index.html">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <link rel="stylesheet" href="../../../section-toggle.css" />
+  <script src="../../../scripts.js"></script>
+
+  <!-- ── Calculator Logic ── -->
+  <script>
+    const RATES = {1:8.5, 7:8.65, 14:8.78, 30:8.95, 91:9.20, 182:9.55, 364:9.85};
+    const TENORS = [
+      {days:1, label:'Overnight', rate:8.50},
+      {days:7, label:'1 Week', rate:8.65},
+      {days:14, label:'2 Weeks', rate:8.78},
+      {days:30, label:'1 Month', rate:8.95},
+      {days:91, label:'3 Months', rate:9.20},
+      {days:182, label:'6 Months', rate:9.55},
+      {days:364, label:'1 Year', rate:9.85}
+    ];
+
+    function calcReturn(principal, days, rate, whtRate) {
+      const grossInt = principal * (rate / 100) * (days / 365);
+      const wht = grossInt * (whtRate / 100);
+      const netInt = grossInt - wht;
+      const maturityVal = principal + netInt;
+      return { grossInt, wht, netInt, maturityVal };
+    }
+
+    function fmtLKR(val) {
+      return 'LKR ' + Math.round(val).toLocaleString('en-LK');
+    }
+
+    // Variant A
+    function calcRepoA() {
+      const principal = parseFloat(document.getElementById('ca-principal').value) || 0;
+      const tenorSel = document.getElementById('ca-tenor').value.split(',');
+      const days = parseInt(tenorSel[0]);
+      const rate = parseFloat(tenorSel[1]);
+      const whtRate = parseFloat(document.getElementById('ca-wht').value);
+      if (principal < 100000) { alert('Minimum investment is LKR 100,000'); return; }
+      const r = calcReturn(principal, days, rate, whtRate);
+      const matDate = new Date(); matDate.setDate(matDate.getDate() + days);
+      const matStr = matDate.toLocaleDateString('en-LK', {day:'2-digit', month:'short', year:'numeric'});
+      document.getElementById('ca-results').innerHTML = `
+        <div class="results-summary">
+          <h4>Your Repo Return</h4>
+          <div class="results-kpis">
+            <div class="res-kpi">
+              <div class="rk-label">Net Interest Earned</div>
+              <div class="rk-val">${fmtLKR(r.netInt)}</div>
+              <div class="rk-sub">After ${whtRate}% WHT</div>
+            </div>
+            <div class="res-kpi">
+              <div class="rk-label">Maturity Value</div>
+              <div class="rk-val">${fmtLKR(r.maturityVal)}</div>
+              <div class="rk-sub">On ${matStr}</div>
+            </div>
+            <div class="res-kpi">
+              <div class="rk-label">Effective Rate (Net)</div>
+              <div class="rk-val">${(rate * (1 - whtRate/100)).toFixed(2)}%</div>
+              <div class="rk-sub">p.a. after WHT</div>
+            </div>
+          </div>
+        </div>
+        <div class="breakdown-card">
+          <h4>Breakdown</h4>
+          <table class="breakdown-table">
+            <thead><tr><th>Item</th><th>Amount</th></tr></thead>
+            <tbody>
+              <tr><td>Principal Invested</td><td>${fmtLKR(principal)}</td></tr>
+              <tr><td>Tenor</td><td>${days} days @ ${rate}% p.a.</td></tr>
+              <tr><td>Gross Interest</td><td>${fmtLKR(r.grossInt)}</td></tr>
+              <tr><td>WHT (${whtRate}%)</td><td>− ${fmtLKR(r.wht)}</td></tr>
+              <tr><td>Net Interest</td><td class="positive">${fmtLKR(r.netInt)}</td></tr>
+              <tr><td>Maturity Amount</td><td>${fmtLKR(r.maturityVal)}</td></tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+    function resetCalcA() { document.getElementById('ca-results').innerHTML = '<div class="results-empty"><div class="empty-icon">📊</div><p>Enter your investment details and click <strong>Calculate Return</strong>.</p></div>'; }
+
+    // Variant B — compare all tenors
+    function calcRepoB() {
+      const principal = parseFloat(document.getElementById('cb-principal').value) || 0;
+      const whtRate = parseFloat(document.getElementById('cb-wht').value);
+      if (principal < 100000) { alert('Minimum investment is LKR 100,000'); return; }
+      const cols = TENORS.map(t => {
+        const r = calcReturn(principal, t.days, t.rate, whtRate);
+        return `<div class="compare-col">
+          <div class="cc-tenor">${t.label}</div>
+          <div class="cc-rate">${t.rate}%</div>
+          <div class="cc-label" style="margin-bottom:0.25rem;">Net Interest</div>
+          <div class="cc-return">${fmtLKR(r.netInt)}</div>
+          <div class="cc-label" style="margin-bottom:0.25rem;">Maturity</div>
+          <div class="cc-maturity">${fmtLKR(r.maturityVal)}</div>
+        </div>`;
+      }).join('');
+      const maxNetInt = Math.max(...TENORS.map(t => calcReturn(principal, t.days, t.rate, whtRate).netInt));
+      document.getElementById('cb-results').innerHTML = `
+        <div class="results-summary">
+          <h4>Returns on ${fmtLKR(principal)} at ${whtRate}% WHT</h4>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+            <div class="res-kpi">
+              <div class="rk-label">Best Return (1 Year)</div>
+              <div class="rk-val">${fmtLKR(calcReturn(principal,364,9.85,whtRate).netInt)}</div>
+              <div class="rk-sub">Net after ${whtRate}% WHT</div>
+            </div>
+            <div class="res-kpi">
+              <div class="rk-label">1-Year Maturity Value</div>
+              <div class="rk-val">${fmtLKR(calcReturn(principal,364,9.85,whtRate).maturityVal)}</div>
+              <div class="rk-sub">Principal + net interest</div>
+            </div>
+          </div>
+        </div>
+        <div class="tenor-compare">
+          <h4>Side-by-Side Tenor Comparison</h4>
+          <div class="compare-grid">${cols}</div>
+        </div>
+      `;
+    }
+    function resetCalcB() { document.getElementById('cb-results').innerHTML = '<div class="results-empty"><div class="empty-icon">📊</div><p>Enter an amount and click <strong>Compare All Tenors</strong>.</p></div>'; }
+
+    // Variant C — bar chart
+    function calcRepoC() {
+      const principal = parseFloat(document.getElementById('cc-principal').value) || 0;
+      const tenorSel = document.getElementById('cc-tenor').value.split(',');
+      const selDays = parseInt(tenorSel[0]);
+      const selRate = parseFloat(tenorSel[1]);
+      const whtRate = parseFloat(document.getElementById('cc-wht').value);
+      if (principal < 100000) { alert('Minimum investment is LKR 100,000'); return; }
+      const maxNetInt = Math.max(...TENORS.map(t => calcReturn(principal, t.days, t.rate, whtRate).netInt));
+      const bars = TENORS.map(t => {
+        const r = calcReturn(principal, t.days, t.rate, whtRate);
+        const pct = maxNetInt > 0 ? (r.netInt / maxNetInt * 90) : 0;
+        const isActive = t.days === selDays ? 'style="background:var(--accent);"' : '';
+        return `<div class="gbw-row">
+          <span class="gbw-label">${t.label}</span>
+          <div class="gbw-track"><div class="gbw-fill" ${isActive} style="width:${pct}%;${t.days===selDays?' background:var(--accent);':''}"></div></div>
+          <span class="gbw-val">${fmtLKR(r.netInt)}</span>
+        </div>`;
+      }).join('');
+      document.getElementById('cc-bars').innerHTML = bars;
+      const selR = calcReturn(principal, selDays, selRate, whtRate);
+      const matDate = new Date(); matDate.setDate(matDate.getDate() + selDays);
+      document.getElementById('cc-summary').innerHTML = `
+        <div class="results-summary">
+          <h4>Selected Tenor: ${TENORS.find(t=>t.days===selDays).label} @ ${selRate}%</h4>
+          <div class="results-kpis">
+            <div class="res-kpi"><div class="rk-label">Gross Interest</div><div class="rk-val">${fmtLKR(selR.grossInt)}</div></div>
+            <div class="res-kpi"><div class="rk-label">Net Interest</div><div class="rk-val">${fmtLKR(selR.netInt)}</div><div class="rk-sub">After ${whtRate}% WHT</div></div>
+            <div class="res-kpi"><div class="rk-label">Maturity Value</div><div class="rk-val">${fmtLKR(selR.maturityVal)}</div></div>
+          </div>
+        </div>
+      `;
+    }
+    function resetCalcC() {
+      document.getElementById('cc-bars').innerHTML = '<div style="color:var(--muted);font-size:0.875rem;text-align:center;padding:2rem 0;">Enter an amount to see tenor comparison.</div>';
+      document.getElementById('cc-summary').innerHTML = '<div class="results-empty"><div class="empty-icon">🧮</div><p>Click <strong>Calculate</strong> to see your results.</p></div>';
+    }
+  </script>
+
+  <script src="../../../section-toggle.js"></script>
+</body>
+</html>
