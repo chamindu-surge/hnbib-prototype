@@ -174,7 +174,8 @@
       if (!panel) return;
       var items = menu.querySelectorAll('.sm-item');
       Array.prototype.forEach.call(items, function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
           Array.prototype.forEach.call(items, function (b) {
             b.classList.remove('active');
           });
