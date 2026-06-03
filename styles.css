@@ -70,7 +70,7 @@ p { max-width: 68ch; line-height: 1.7; }
 /* Canonical eyebrow — single definition, do not override */
 .section-label {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -139,7 +139,7 @@ p { max-width: 68ch; line-height: 1.7; }
   display: inline-block;
   padding: 3px 10px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   background: oklch(0.43 0.150 248 / 0.12);
   color: var(--primary);
@@ -392,7 +392,7 @@ body.motion-reduced .ticker-track { animation: none !important; }
 .cta-final-form .form-group { margin-bottom: 16px; }
 .cta-final-form label {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: oklch(1 0 0 / 0.6);
   margin-bottom: 5px;
@@ -411,10 +411,10 @@ body.motion-reduced .ticker-track { animation: none !important; }
   appearance: none;
   -webkit-appearance: none;
 }
-.cta-final-form input::placeholder { color: oklch(1 0 0 / 0.40); }
+.cta-final-form input::placeholder { color: oklch(1 0 0 / 0.65); }
 .cta-final-form input:focus,
 .cta-final-form select:focus {
-  outline: 2px solid oklch(1 0 0 / 0.40);
+  outline: 2px solid oklch(1 0 0 / 0.65);
   outline-offset: 0;
 }
 .cta-final-form option { background: var(--primary-2); color: oklch(1 0 0); }
@@ -434,8 +434,8 @@ body.motion-reduced .ticker-track { animation: none !important; }
 .cta-submit:hover { background: var(--accent-2); transform: translateY(-1px); }
 .form-reassurance {
   text-align: center;
-  font-size: 11px;
-  color: oklch(1 0 0 / 0.45);
+  font-size: 12px;
+  color: oklch(1 0 0 / 0.72);
   margin-top: 12px;
 }
 
@@ -468,11 +468,11 @@ body.motion-reduced .ticker-track { animation: none !important; }
   max-width: 280px;
 }
 .footer-col h4 {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: oklch(1 0 0 / 0.40);
+  color: oklch(1 0 0 / 0.65);
   margin-bottom: 18px;
 }
 .footer-col ul { display: flex; flex-direction: column; gap: 11px; }
@@ -491,7 +491,7 @@ body.motion-reduced .ticker-track { animation: none !important; }
 }
 .footer-legal p, .footer-legal a {
   font-size: 12px;
-  color: oklch(1 0 0 / 0.38);
+  color: oklch(1 0 0 / 0.65);
 }
 .footer-legal a:hover { color: oklch(1 0 0 / 0.65); }
 .footer-legal-links { display: flex; gap: 20px; }
@@ -521,7 +521,7 @@ body.motion-reduced .scroll-fade {
   display: inline-block;
   padding: 3px 9px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   background: oklch(0.43 0.150 248 / 0.12);
   color: var(--primary);
@@ -530,7 +530,7 @@ body.motion-reduced .scroll-fade {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--accent-2);
 }
@@ -556,7 +556,7 @@ body.motion-reduced .scroll-fade {
   display: inline-block;
   padding: 3px 10px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   background: oklch(0.43 0.150 248 / 0.10);
   color: var(--primary);
@@ -707,17 +707,17 @@ body.motion-reduced .scroll-fade {
 }
 .footer-col > a:hover { color: oklch(1 0 0); }
 .footer-col h4 {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: oklch(1 0 0 / 0.40);
+  color: oklch(1 0 0 / 0.65);
   margin-bottom: 16px;
 }
 /* .footer-bottom mirrors .footer-legal */
 .footer-bottom {
   font-size: 12px;
-  color: oklch(1 0 0 / 0.38);
+  color: oklch(1 0 0 / 0.65);
   line-height: 1.65;
 }
 
