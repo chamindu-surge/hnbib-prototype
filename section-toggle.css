@@ -164,3 +164,6 @@ body.motion-off *::after {
 body.motion-reduced .motion-continuous {
   animation: none !important;
 }
+
+/* Variant toggle panel hidden — defaults are locked in via data-default-variant */
+.section-toggle-rail { display: none !important; }
