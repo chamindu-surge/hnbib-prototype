@@ -165,6 +165,31 @@
     });
   }
 
+  /* ─── Filter bar (news categories) ─────────────────────── */
+  function initFilterBars() {
+    var bars = document.querySelectorAll('.filter-bar');
+    Array.prototype.forEach.call(bars, function (bar) {
+      var grid = bar.nextElementSibling;
+      if (!grid || !grid.classList.contains('filtered-grid')) return;
+      var cards = Array.prototype.slice.call(grid.querySelectorAll('.filtered-card'));
+      var btns  = Array.prototype.slice.call(bar.querySelectorAll('.filter-btn'));
+      btns.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          btns.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          var filter = (btn.getAttribute('data-filter') || 'all').toLowerCase();
+          var filters = filter.split(' '); // support multi-value e.g. "macro strategy"
+          cards.forEach(function (card) {
+            var cat = (card.getAttribute('data-cat') || '').toLowerCase();
+            var show = filter === 'all' || filters.indexOf(cat) !== -1;
+            card.style.display = show ? '' : 'none';
+          });
+        });
+      });
+    });
+  }
+
   /* ─── Services tab-switch ───────────────────────────────── */
   function initServicesTabs() {
     var menus = document.querySelectorAll('.services-menu');
@@ -210,6 +235,7 @@
     observe();
     initNavScroll();
     initBurger();
+    initFilterBars();
     initServicesTabs();
   }
 
