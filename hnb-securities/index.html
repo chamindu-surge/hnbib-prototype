@@ -48,10 +48,12 @@
       padding: 8px 0;
     }
     .pn-item {
-      display: block; padding: 14px 20px;
+      display: block; width: 100%; text-align: left;
+      padding: 14px 20px;
       font-size: 14px; font-weight: 600; color: var(--ink-2);
       cursor: pointer; transition: background 180ms, color 180ms;
       border-left: 3px solid transparent;
+      background: none; border-top: none; border-right: none; border-bottom: none;
     }
     .pn-item:hover { background: var(--bg-2); color: var(--ink); }
     .pn-item.active {
@@ -353,7 +355,7 @@
           <span class="section-label">Government Securities</span>
           <h2>Choose your instrument</h2>
         </div>
-        <div class="prod-nav-panel scroll-fade">
+        <div class="prod-nav-panel services-b scroll-fade">
           <div class="prod-nav services-menu">
             <button class="pn-item sm-item active"
               data-title="Treasury Bills"
