@@ -377,13 +377,40 @@ body.motion-reduced .ticker-track { animation: none !important; }
   gap: 64px;
   align-items: start;
 }
-.cta-final-copy .section-label { color: oklch(1 0 0 / 0.55); }
-.cta-final-copy h2 {
-  color: oklch(1 0 0);
-  margin-top: 10px;
-  margin-bottom: 16px;
+/* Blanket white overrides — all text inside CTA section is on dark primary bg */
+.section-cta-final h2,
+.section-cta-final h3 { color: oklch(1 0 0); }
+.section-cta-final p   { color: oklch(1 0 0 / 0.85); }
+.section-cta-final .section-label { color: oklch(1 0 0 / 0.62); }
+.section-cta-final .form-reassurance { color: oklch(1 0 0 / 0.65); }
+.section-cta-final label { color: oklch(1 0 0 / 0.65); }
+
+/* Backwards-compat: old .cta-final-copy selectors kept for specificity */
+.cta-final-copy .section-label { color: oklch(1 0 0 / 0.62); }
+.cta-final-copy h2 { color: oklch(1 0 0); margin-top: 10px; margin-bottom: 16px; }
+.cta-final-copy p  { color: oklch(1 0 0 / 0.85); max-width: 480px; }
+
+/* stat-proof (3-col stats inside CTA copy) */
+.stat-proof {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: 24px;
 }
-.cta-final-copy p { color: oklch(1 0 0 / 0.8); max-width: 480px; }
+.stat-proof > div { display: flex; flex-direction: column; gap: 3px; }
+.section-cta-final .stat-proof strong {
+  color: oklch(1 0 0);
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.section-cta-final .stat-proof span {
+  color: oklch(1 0 0 / 0.62);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 .cta-final-form {
   background: oklch(1 0 0 / 0.06);
   border-radius: var(--radius);
