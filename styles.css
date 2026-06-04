@@ -416,7 +416,8 @@ body.motion-reduced .ticker-track { animation: none !important; }
   border-radius: var(--radius);
   padding: 36px;
 }
-.cta-final-form .form-group { margin-bottom: 16px; }
+.cta-final-form .form-group,
+.cta-final-form .form-row { margin-bottom: 16px; }
 .cta-final-form label {
   display: block;
   font-size: 12px;
@@ -461,11 +462,16 @@ body.motion-reduced .ticker-track { animation: none !important; }
 .cta-submit:hover { background: var(--accent-2); transform: translateY(-1px); }
 /* Default: dark text for light-background contexts (e.g. home page card form) */
 .form-reassurance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   text-align: center;
   font-size: 12px;
   color: var(--muted);
   margin-top: 12px;
 }
+.form-reassurance svg { flex-shrink: 0; }
 
 /* ═══════════════════════════════════════════════════════════
    12. Site footer
