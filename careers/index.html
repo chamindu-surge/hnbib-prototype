@@ -155,7 +155,7 @@
     <!-- ══════════════════════════════════════════════
          SECTION 1: OPEN POSITIONS
     ═══════════════════════════════════════════════ -->
-    <section class="section-host" data-section-id="open-positions" data-section-label="Open Positions">
+    <section class="section-host" id="open-positions" data-section-id="open-positions" data-section-label="Open Positions">
 
       <!-- VARIANT A: 2-col job cards -->
       <div class="variant" data-variant="A" data-variant-label="Simple">
@@ -226,24 +226,24 @@
               <div>
                 <nav class="dept-filter" aria-label="Department filter">
                   <h4>Department</h4>
-                  <a href="#" class="active">All Departments <span class="dcnt">12</span></a>
-                  <a href="#">Equity Dealing <span class="dcnt">3</span></a>
-                  <a href="#">Corporate Finance <span class="dcnt">2</span></a>
-                  <a href="#">Fixed Income <span class="dcnt">2</span></a>
-                  <a href="#">Research <span class="dcnt">2</span></a>
-                  <a href="#">Venture Capital <span class="dcnt">1</span></a>
-                  <a href="#">Technology <span class="dcnt">2</span></a>
+                  <a href="#" class="active" data-dept="all">All Departments <span class="dcnt">12</span></a>
+                  <a href="#" data-dept="equity">Equity Dealing <span class="dcnt">3</span></a>
+                  <a href="#" data-dept="corp-finance">Corporate Finance <span class="dcnt">2</span></a>
+                  <a href="#" data-dept="fixed-income">Fixed Income <span class="dcnt">2</span></a>
+                  <a href="#" data-dept="research">Research <span class="dcnt">2</span></a>
+                  <a href="#" data-dept="venture-capital">Venture Capital <span class="dcnt">1</span></a>
+                  <a href="#" data-dept="technology">Technology <span class="dcnt">2</span></a>
                 </nav>
               </div>
               <div class="job-list-full">
-                <div class="job-list-item"><div class="jli-info"><h4>Equity Dealer — CSE</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Equity</span></div>
-                <div class="job-list-item"><div class="jli-info"><h4>Associate — M&amp;A Advisory</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Corp. Finance</span></div>
-                <div class="job-list-item"><div class="jli-info"><h4>Fixed Income Analyst</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Fixed Income</span></div>
-                <div class="job-list-item"><div class="jli-info"><h4>Equity Research Analyst</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Q3 2025</span></div></div><span class="jli-dept">Research</span></div>
-                <div class="job-list-item"><div class="jli-info"><h4>Investment Associate — LVL</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Q3 2025</span></div></div><span class="jli-dept">Venture Capital</span></div>
-                <div class="job-list-item"><div class="jli-info"><h4>Software Engineer — Trading Systems</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Technology</span></div>
-                <div class="job-list-item"><div class="jli-info"><h4>Compliance Officer</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Compliance</span></div>
-                <div class="job-list-item"><div class="jli-info"><h4>Institutional Sales — Equities</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Q4 2025</span></div></div><span class="jli-dept">Equity</span></div>
+                <div class="job-list-item" data-dept="equity"><div class="jli-info"><h4>Equity Dealer — CSE</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Equity</span></div>
+                <div class="job-list-item" data-dept="corp-finance"><div class="jli-info"><h4>Associate — M&amp;A Advisory</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Corp. Finance</span></div>
+                <div class="job-list-item" data-dept="fixed-income"><div class="jli-info"><h4>Fixed Income Analyst</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Fixed Income</span></div>
+                <div class="job-list-item" data-dept="research"><div class="jli-info"><h4>Equity Research Analyst</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Q3 2025</span></div></div><span class="jli-dept">Research</span></div>
+                <div class="job-list-item" data-dept="venture-capital"><div class="jli-info"><h4>Investment Associate — LVL</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Q3 2025</span></div></div><span class="jli-dept">Venture Capital</span></div>
+                <div class="job-list-item" data-dept="technology"><div class="jli-info"><h4>Software Engineer — Trading Systems</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Technology</span></div>
+                <div class="job-list-item" data-dept="compliance"><div class="jli-info"><h4>Compliance Officer</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Immediate</span></div></div><span class="jli-dept">Compliance</span></div>
+                <div class="job-list-item" data-dept="equity"><div class="jli-info"><h4>Institutional Sales — Equities</h4><div class="jli-meta"><span>Colombo 10</span><span>·</span><span>Full-time</span><span>·</span><span>Q4 2025</span></div></div><span class="jli-dept">Equity</span></div>
               </div>
             </div>
           </div>
@@ -321,7 +321,7 @@
                 <p>We care more about whether you understand Sri Lanka's T-Bill yield curve than whether you went to a particular school. Our best analysts have come from everywhere from IIT to the University of Kelaniya — what they share is intellectual rigour and genuine curiosity about markets.</p>
                 <p>The team is small enough that everyone's contribution is visible. You will not spend years being invisible in a hierarchy of 10,000 people.</p>
                 <div style="margin-top:1.25rem; display:flex; gap:1rem; flex-wrap:wrap;">
-                  <a href="#apply" class="btn-primary">View Open Positions</a>
+                  <a href="#open-positions" class="btn-primary">View Open Positions</a>
                 </div>
               </div>
               <div>

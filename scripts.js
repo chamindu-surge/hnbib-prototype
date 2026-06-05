@@ -165,6 +165,31 @@
     });
   }
 
+  /* ─── Dept filter (careers sidebar) ────────────────────── */
+  function initDeptFilter() {
+    var links = Array.prototype.slice.call(
+      document.querySelectorAll('.dept-filter a[data-dept]')
+    );
+    if (!links.length) return;
+    var listFull = document.querySelector('.job-list-full');
+    if (!listFull) return;
+    var items = Array.prototype.slice.call(
+      listFull.querySelectorAll('.job-list-item[data-dept]')
+    );
+    links.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        links.forEach(function (l) { l.classList.remove('active'); });
+        link.classList.add('active');
+        var dept = link.getAttribute('data-dept');
+        items.forEach(function (item) {
+          var show = dept === 'all' || item.getAttribute('data-dept') === dept;
+          item.style.display = show ? '' : 'none';
+        });
+      });
+    });
+  }
+
   /* ─── Filter bar (news categories) ─────────────────────── */
   function initFilterBars() {
     var bars = document.querySelectorAll('.filter-bar');
@@ -235,6 +260,7 @@
     observe();
     initNavScroll();
     initBurger();
+    initDeptFilter();
     initFilterBars();
     initServicesTabs();
   }
